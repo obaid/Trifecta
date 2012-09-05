@@ -1,0 +1,268 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2563580A15F80FDC00CA812E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2563580915F80FDC00CA812E /* UIKit.framework */; };
+		2563580C15F80FDC00CA812E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2563580B15F80FDC00CA812E /* Foundation.framework */; };
+		2563580E15F80FDC00CA812E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2563580D15F80FDC00CA812E /* CoreGraphics.framework */; };
+		2563581415F80FDC00CA812E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2563581215F80FDC00CA812E /* InfoPlist.strings */; };
+		2563581615F80FDC00CA812E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2563581515F80FDC00CA812E /* main.m */; };
+		2563581A15F80FDC00CA812E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2563581915F80FDC00CA812E /* AppDelegate.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2563580515F80FDC00CA812E /* Trifecta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trifecta.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2563580915F80FDC00CA812E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2563580B15F80FDC00CA812E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		2563580D15F80FDC00CA812E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2563581115F80FDC00CA812E /* Trifecta-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Trifecta-Info.plist"; sourceTree = "<group>"; };
+		2563581315F80FDC00CA812E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2563581515F80FDC00CA812E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2563581715F80FDC00CA812E /* Trifecta-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Trifecta-Prefix.pch"; sourceTree = "<group>"; };
+		2563581815F80FDC00CA812E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		2563581915F80FDC00CA812E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2563580215F80FDC00CA812E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2563580A15F80FDC00CA812E /* UIKit.framework in Frameworks */,
+				2563580C15F80FDC00CA812E /* Foundation.framework in Frameworks */,
+				2563580E15F80FDC00CA812E /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		256357FA15F80FDC00CA812E = {
+			isa = PBXGroup;
+			children = (
+				2563580F15F80FDC00CA812E /* Trifecta */,
+				2563580815F80FDC00CA812E /* Frameworks */,
+				2563580615F80FDC00CA812E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2563580615F80FDC00CA812E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2563580515F80FDC00CA812E /* Trifecta.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2563580815F80FDC00CA812E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2563580915F80FDC00CA812E /* UIKit.framework */,
+				2563580B15F80FDC00CA812E /* Foundation.framework */,
+				2563580D15F80FDC00CA812E /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2563580F15F80FDC00CA812E /* Trifecta */ = {
+			isa = PBXGroup;
+			children = (
+				2563581815F80FDC00CA812E /* AppDelegate.h */,
+				2563581915F80FDC00CA812E /* AppDelegate.m */,
+				2563581015F80FDC00CA812E /* Supporting Files */,
+			);
+			path = Trifecta;
+			sourceTree = "<group>";
+		};
+		2563581015F80FDC00CA812E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2563581115F80FDC00CA812E /* Trifecta-Info.plist */,
+				2563581215F80FDC00CA812E /* InfoPlist.strings */,
+				2563581515F80FDC00CA812E /* main.m */,
+				2563581715F80FDC00CA812E /* Trifecta-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2563580415F80FDC00CA812E /* Trifecta */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2563581D15F80FDC00CA812E /* Build configuration list for PBXNativeTarget "Trifecta" */;
+			buildPhases = (
+				2563580115F80FDC00CA812E /* Sources */,
+				2563580215F80FDC00CA812E /* Frameworks */,
+				2563580315F80FDC00CA812E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Trifecta;
+			productName = Trifecta;
+			productReference = 2563580515F80FDC00CA812E /* Trifecta.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		256357FC15F80FDC00CA812E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0440;
+				ORGANIZATIONNAME = "Ran Tao";
+			};
+			buildConfigurationList = 256357FF15F80FDC00CA812E /* Build configuration list for PBXProject "Trifecta" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 256357FA15F80FDC00CA812E;
+			productRefGroup = 2563580615F80FDC00CA812E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2563580415F80FDC00CA812E /* Trifecta */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2563580315F80FDC00CA812E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2563581415F80FDC00CA812E /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2563580115F80FDC00CA812E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2563581615F80FDC00CA812E /* main.m in Sources */,
+				2563581A15F80FDC00CA812E /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		2563581215F80FDC00CA812E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2563581315F80FDC00CA812E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2563581B15F80FDC00CA812E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		2563581C15F80FDC00CA812E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2563581E15F80FDC00CA812E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Trifecta/Trifecta-Prefix.pch";
+				INFOPLIST_FILE = "Trifecta/Trifecta-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		2563581F15F80FDC00CA812E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Trifecta/Trifecta-Prefix.pch";
+				INFOPLIST_FILE = "Trifecta/Trifecta-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		256357FF15F80FDC00CA812E /* Build configuration list for PBXProject "Trifecta" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2563581B15F80FDC00CA812E /* Debug */,
+				2563581C15F80FDC00CA812E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2563581D15F80FDC00CA812E /* Build configuration list for PBXNativeTarget "Trifecta" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2563581E15F80FDC00CA812E /* Debug */,
+				2563581F15F80FDC00CA812E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 256357FC15F80FDC00CA812E /* Project object */;
+}
