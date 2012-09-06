@@ -11,4 +11,5 @@
 @interface GameBoardView : UIView
 @property (nonatomic, strong) NSArray *columns;
 -(void) drawGameBoard;
+-(void) touchedAtPoint:(CGPoint) point;
 @end

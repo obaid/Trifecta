@@ -26,8 +26,6 @@
     return self;
 }
 
-// for each column in the column array, layout the x position for that column
-// for each cell in each column, lay out the y position for that cell
 -(void) drawGameBoard {
     [self positionEachColumn];
     [self setNeedsDisplay]; //check if actually needed?
@@ -48,6 +46,32 @@
     
 }
 
+-(void) touchedAtPoint:(CGPoint) point {
+    if ([self touchedACell]) {
+        [self findNeighbors];
+        if([self haveEnoughNeighbors]) {
+            [self deleteCells];
+        }
+    }
+}
+
+-(BOOL) touchedACell {
+    
+    return YES;
+}
+
+-(void) findNeighbors {
+    
+}
+
+-(BOOL) haveEnoughNeighbors {
+    
+    return YES;
+}
+
+-(void) deleteCells {
+    
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.

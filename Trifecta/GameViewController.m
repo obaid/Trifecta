@@ -11,6 +11,7 @@
 #import "GameBoardView.h"
 
 @interface GameViewController ()
+@property (nonatomic, strong) GameBoardView* gameBoard;
 @end
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
@@ -30,8 +31,8 @@
 {
     [super viewDidLoad];
     NSMutableArray *tempColumns = [NSMutableArray new];
-    GameBoardView *gbv = [[GameBoardView alloc] initWithFrame:CGRectMake(12, 20, 296, 440)];
-    [self.view addSubview:gbv];
+    self.gameBoard = [[GameBoardView alloc] initWithFrame:CGRectMake(12, 20, 296, 440)];
+    [self.view addSubview:self.gameBoard];
 
 
     NSArray *arrayOfColors = @[UIColorFromRGB(0xAD00FF), UIColorFromRGB(0xFF0095), UIColorFromRGB(0x0040FF), UIColorFromRGB(0x12C100), UIColorFromRGB(0xFF9000), UIColorFromRGB(0xFFEE00)];
@@ -39,14 +40,14 @@
         Column *column = [Column new];
         column.columnPosition = c;
         for (int r=0; r < 12; r++) {
-            Cell *cell = [[Cell alloc] initWithBoard:gbv withColor:[arrayOfColors objectAtIndex:arc4random() % 6] withRow:r withColumn:c withSize:gbv.frame.size.width / 8];
+            Cell *cell = [[Cell alloc] initWithBoard:self.gameBoard withColor:[arrayOfColors objectAtIndex:arc4random() % 6] withRow:r withColumn:c withSize:self.gameBoard.frame.size.width / 8];
             [column.cells addObject:cell];
         }
         [tempColumns addObject:column];
     }
-    gbv.columns = tempColumns;
-    [gbv drawGameBoard];
-    [gbv setNeedsDisplay];
+    self.gameBoard.columns = tempColumns;
+    [self.gameBoard drawGameBoard];
+    [self.gameBoard setNeedsDisplay];
 	// Do any additional setup after loading the view.
 }
 
@@ -56,9 +57,10 @@
     // Release any retained subviews of the main view.
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    CGPoint touchPoint = [[touches anyObject] locationInView:self.gameBoard];
+    [self.gameBoard touchedAtPoint:touchPoint];
 }
+
 
 @end
