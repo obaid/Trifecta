@@ -13,6 +13,12 @@
 		2563581415F80FDC00CA812E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2563581215F80FDC00CA812E /* InfoPlist.strings */; };
 		2563581615F80FDC00CA812E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2563581515F80FDC00CA812E /* main.m */; };
 		2563581A15F80FDC00CA812E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2563581915F80FDC00CA812E /* AppDelegate.m */; };
+		2563582515F8112A00CA812E /* Column.m in Sources */ = {isa = PBXBuildFile; fileRef = 2563582415F8112A00CA812E /* Column.m */; };
+		2563582B15F8156C00CA812E /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2563582A15F8156C00CA812E /* Cell.m */; };
+		2563582E15F8167200CA812E /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2563582C15F8167200CA812E /* CoreMotion.framework */; };
+		2563582F15F8167200CA812E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2563582D15F8167200CA812E /* QuartzCore.framework */; };
+		2563583215F81FA000CA812E /* GameBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2563583115F81FA000CA812E /* GameBoardView.m */; };
+		2563583515F83A9600CA812E /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2563583415F83A9500CA812E /* GameViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +32,16 @@
 		2563581715F80FDC00CA812E /* Trifecta-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Trifecta-Prefix.pch"; sourceTree = "<group>"; };
 		2563581815F80FDC00CA812E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2563581915F80FDC00CA812E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2563582315F8112900CA812E /* Column.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Column.h; sourceTree = "<group>"; };
+		2563582415F8112A00CA812E /* Column.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Column.m; sourceTree = "<group>"; };
+		2563582915F8156C00CA812E /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell.h; sourceTree = "<group>"; };
+		2563582A15F8156C00CA812E /* Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell.m; sourceTree = "<group>"; };
+		2563582C15F8167200CA812E /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		2563582D15F8167200CA812E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		2563583015F81F9F00CA812E /* GameBoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameBoardView.h; sourceTree = "<group>"; };
+		2563583115F81FA000CA812E /* GameBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameBoardView.m; sourceTree = "<group>"; };
+		2563583315F83A9500CA812E /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		2563583415F83A9500CA812E /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +49,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2563582E15F8167200CA812E /* CoreMotion.framework in Frameworks */,
+				2563582F15F8167200CA812E /* QuartzCore.framework in Frameworks */,
 				2563580A15F80FDC00CA812E /* UIKit.framework in Frameworks */,
 				2563580C15F80FDC00CA812E /* Foundation.framework in Frameworks */,
 				2563580E15F80FDC00CA812E /* CoreGraphics.framework in Frameworks */,
@@ -62,6 +80,8 @@
 		2563580815F80FDC00CA812E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2563582C15F8167200CA812E /* CoreMotion.framework */,
+				2563582D15F8167200CA812E /* QuartzCore.framework */,
 				2563580915F80FDC00CA812E /* UIKit.framework */,
 				2563580B15F80FDC00CA812E /* Foundation.framework */,
 				2563580D15F80FDC00CA812E /* CoreGraphics.framework */,
@@ -72,6 +92,14 @@
 		2563580F15F80FDC00CA812E /* Trifecta */ = {
 			isa = PBXGroup;
 			children = (
+				2563583315F83A9500CA812E /* GameViewController.h */,
+				2563583415F83A9500CA812E /* GameViewController.m */,
+				2563582915F8156C00CA812E /* Cell.h */,
+				2563582A15F8156C00CA812E /* Cell.m */,
+				2563582315F8112900CA812E /* Column.h */,
+				2563582415F8112A00CA812E /* Column.m */,
+				2563583015F81F9F00CA812E /* GameBoardView.h */,
+				2563583115F81FA000CA812E /* GameBoardView.m */,
 				2563581815F80FDC00CA812E /* AppDelegate.h */,
 				2563581915F80FDC00CA812E /* AppDelegate.m */,
 				2563581015F80FDC00CA812E /* Supporting Files */,
@@ -154,6 +182,10 @@
 			files = (
 				2563581615F80FDC00CA812E /* main.m in Sources */,
 				2563581A15F80FDC00CA812E /* AppDelegate.m in Sources */,
+				2563582515F8112A00CA812E /* Column.m in Sources */,
+				2563582B15F8156C00CA812E /* Cell.m in Sources */,
+				2563583215F81FA000CA812E /* GameBoardView.m in Sources */,
+				2563583515F83A9600CA812E /* GameViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
