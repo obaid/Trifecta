@@ -28,7 +28,7 @@
 
 -(void) drawGameBoard {
     [self positionEachColumn];
-    [self setNeedsDisplay]; //check if actually needed?
+    //[self setNeedsDisplay]; //check if actually needed?
 }
 
 
@@ -47,20 +47,25 @@
 }
 
 -(void) touchedAtPoint:(CGPoint) point {
-    if ([self touchedACell]) {
-        [self findNeighbors];
-        if([self haveEnoughNeighbors]) {
-            [self deleteCells];
-        }
-    }
+    Cell *cell = [self touchedACellAtPoint:point];
+    NSLog(@"Cell Column, Row = %d, %d", cell.column, cell.row);
+//    [self findNeighbors:cell];
+//        if([self haveEnoughNeighbors]) {
+//            [self deleteCells];
+//    }
 }
 
--(BOOL) touchedACell {
+-(Cell *) touchedACellAtPoint:(CGPoint)point {
+    int cellAtColumnNumber = floor((point.x / self.frame.size.width) * self.numColumns);
+    int cellAtRowNumber = floor((point.y / self.frame.size.height * self.numRows));
+    NSLog(@"cellAtColumnNumber =  %d", cellAtColumnNumber);
+    NSLog(@"cellAtRowNumber = %d", cellAtRowNumber);
+    Cell *cell = [[[self.columns objectAtIndex:cellAtColumnNumber] cells] objectAtIndex:cellAtRowNumber];
+    return cell;
+}
+
+-(NSMutableArray *) findNeighbors:(Cell *)cell {
     
-    return YES;
-}
-
--(void) findNeighbors {
     
 }
 

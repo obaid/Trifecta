@@ -30,24 +30,36 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.numColumns = 3;
+    double sizeOfCell = 296.0/self.numColumns;
+    int numRows = 456/sizeOfCell;
+    int boardGameWidth = self.numColumns * sizeOfCell;
+    int boardGameHeight = numRows * sizeOfCell;
+    double boardGameYStart = (self.view.frame.size.height - boardGameHeight)/2.0;
+    double boardGameXStart = (self.view.frame.size.width - boardGameWidth)/2.0;
     NSMutableArray *tempColumns = [NSMutableArray new];
-    self.gameBoard = [[GameBoardView alloc] initWithFrame:CGRectMake(12, 20, 296, 440)];
+    self.gameBoard = [[GameBoardView alloc] initWithFrame:CGRectMake(boardGameXStart, boardGameYStart, boardGameWidth, boardGameHeight)];
+    self.gameBoard.numRows = numRows;
+    self.gameBoard.numColumns = self.numColumns;
     [self.view addSubview:self.gameBoard];
 
 
     NSArray *arrayOfColors = @[UIColorFromRGB(0xAD00FF), UIColorFromRGB(0xFF0095), UIColorFromRGB(0x0040FF), UIColorFromRGB(0x12C100), UIColorFromRGB(0xFF9000), UIColorFromRGB(0xFFEE00)];
-    for (int c=0; c < 8; c++) {
+    
+    for (int c=0; c < self.numColumns; c++) {
         Column *column = [Column new];
         column.columnPosition = c;
-        for (int r=0; r < 12; r++) {
-            Cell *cell = [[Cell alloc] initWithBoard:self.gameBoard withColor:[arrayOfColors objectAtIndex:arc4random() % 6] withRow:r withColumn:c withSize:self.gameBoard.frame.size.width / 8];
+        column.numRows = numRows;
+        for (int r=0; r < numRows; r++) {
+            Cell *cell = [[Cell alloc] initWithBoard:self.gameBoard withColor:[arrayOfColors objectAtIndex:arc4random() % 6] withRow:r withColumn:c withSize:self.gameBoard.frame.size.width / self.numColumns];
             [column.cells addObject:cell];
         }
         [tempColumns addObject:column];
     }
     self.gameBoard.columns = tempColumns;
     [self.gameBoard drawGameBoard];
-    [self.gameBoard setNeedsDisplay];
+    //[self.gameBoard setNeedsDisplay];
 	// Do any additional setup after loading the view.
 }
 
@@ -59,7 +71,9 @@
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     CGPoint touchPoint = [[touches anyObject] locationInView:self.gameBoard];
+    NSLog(@"touch ended at: %f, %f", touchPoint.x, touchPoint.y);
     [self.gameBoard touchedAtPoint:touchPoint];
+    
 }
 
 

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface GameViewController : UIViewController
-
+@property (nonatomic) int numColumns;
 @end

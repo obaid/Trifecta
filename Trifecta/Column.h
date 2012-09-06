@@ -10,5 +10,6 @@
 
 @interface Column : NSObject
 @property (nonatomic, strong) NSMutableArray *cells;
+@property (nonatomic) int numRows;
 @property (nonatomic) int columnPosition;
 @end
