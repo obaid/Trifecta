@@ -26,15 +26,22 @@
     return self;
 }
 
+-(void) frameEachCellWithCell:(Cell*) cell {
+    CGPoint gameCornerPosition = CGPointMake(0,self.bounds.size.height);
+    
+    cell.cellLayer.frame = CGRectMake(cell.size*cell.column, gameCornerPosition.y- cell.size*(cell.row+1), cell.size, cell.size);
+}
+
 -(void) drawGameBoard {
     [self positionEachColumn];
-    //[self setNeedsDisplay]; //check if actually needed?
+    [self setNeedsDisplay]; //check if actually needed?
 }
 
 
 -(void) positionEachCellWithCell:(Cell*) cell {
     CGPoint gameCornerPosition = CGPointMake(0,self.bounds.size.height);
-    cell.cellLayer.frame = CGRectMake(cell.size*cell.column, gameCornerPosition.y- cell.size*(cell.row+1), cell.size, cell.size);
+    
+    cell.cellLayer.position = CGPointMake(cell.size*cell.column + (cell.size/2.0), gameCornerPosition.y- cell.size*(cell.row+1) + (cell.size/2.0));
 }
 
 -(void) positionEachColumn {
@@ -47,19 +54,24 @@
 }
 
 -(void) touchedAtPoint:(CGPoint) point {
-    Cell *cell = [self touchedACellAtPoint:point];
-    NSLog(@"Cell Column, Row = %d, %d", cell.column, cell.row);
-//    [self findNeighbors:cell];
-//        if([self haveEnoughNeighbors]) {
-//            [self deleteCells];
-//    }
-}
-
--(Cell *) touchedACellAtPoint:(CGPoint)point {
     int cellAtColumnNumber = floor((point.x / self.frame.size.width) * self.numColumns);
     int cellAtRowNumber = floor(((self.bounds.size.height - point.y) / self.frame.size.height * self.numRows));
     NSLog(@"cellAtColumnNumber =  %d", cellAtColumnNumber);
     NSLog(@"cellAtRowNumber = %d", cellAtRowNumber);
+    if (!(cellAtRowNumber >= [[[self.columns objectAtIndex:cellAtColumnNumber] cells] count])) {
+        Cell *cell = [self touchedACellAtPoint:point withCellAtColumnNumber:cellAtColumnNumber withRowAtColumnNumber:cellAtRowNumber];
+
+        NSLog(@"Cell Column, Row = %d, %d", cell.column, cell.row);
+    //    [self findNeighbors:cell];
+    //        if([self haveEnoughNeighbors]) {
+        NSArray *cellsToDelete = @[cell];
+        [self deleteCells:cellsToDelete];
+    //    }
+    }
+}
+
+-(Cell *) touchedACellAtPoint:(CGPoint)point withCellAtColumnNumber:(int)cellAtColumnNumber withRowAtColumnNumber:(int)cellAtRowNumber {
+
     Cell *cell = [[[self.columns objectAtIndex:cellAtColumnNumber] cells] objectAtIndex:cellAtRowNumber];
     return cell;
 }
@@ -74,8 +86,18 @@
     return YES;
 }
 
--(void) deleteCells {
-    
+-(void) deleteCells: (NSArray *) cells {
+    for (Cell* cell in cells) {
+        Column *columnCellIsIn = [self.columns objectAtIndex:cell.column];
+        for (int i = cell.row+1; i < [columnCellIsIn.cells count]; i++) {
+            Cell* cellToChange = [columnCellIsIn.cells objectAtIndex:i];
+            cellToChange.row -= 1;
+        }
+        [cell.cellLayer removeFromSuperlayer];
+        [[[self.columns objectAtIndex:cell.column] cells] removeObject:cell];
+        [self drawGameBoard];
+
+    }
 }
 
 /*

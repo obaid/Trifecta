@@ -9,6 +9,7 @@
 #import "Column.h"
 #import "Cell.h"
 #import "GameBoardView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface GameViewController ()
 @property (nonatomic, strong) GameBoardView* gameBoard;
@@ -31,7 +32,7 @@
 {
     [super viewDidLoad];
     
-    self.numColumns = 3;
+    self.numColumns = 11;
     double sizeOfCell = 296.0/self.numColumns;
     int numRows = 456/sizeOfCell;
     int boardGameWidth = self.numColumns * sizeOfCell;
@@ -53,12 +54,13 @@
         column.numRows = numRows;
         for (int r=0; r < numRows; r++) {
             Cell *cell = [[Cell alloc] initWithBoard:self.gameBoard withColor:[arrayOfColors objectAtIndex:arc4random() % 6] withRow:r withColumn:c withSize:self.gameBoard.frame.size.width / self.numColumns];
+            [self.gameBoard frameEachCellWithCell:cell];
             [column.cells addObject:cell];
         }
         [tempColumns addObject:column];
     }
     self.gameBoard.columns = tempColumns;
-    [self.gameBoard drawGameBoard];
+//    [self.gameBoard drawGameBoard];
     //[self.gameBoard setNeedsDisplay];
 	// Do any additional setup after loading the view.
 }

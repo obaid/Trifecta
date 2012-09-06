@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Cell;
 
 @interface GameBoardView : UIView
 @property (nonatomic, strong) NSArray *columns;
 @property (nonatomic) int numColumns;
 @property (nonatomic) int numRows;
--(void) drawGameBoard;
+-(void) frameEachCellWithCell:(Cell*) cell;
 -(void) touchedAtPoint:(CGPoint) point;
 @end
