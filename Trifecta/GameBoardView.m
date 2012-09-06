@@ -57,7 +57,7 @@
 
 -(Cell *) touchedACellAtPoint:(CGPoint)point {
     int cellAtColumnNumber = floor((point.x / self.frame.size.width) * self.numColumns);
-    int cellAtRowNumber = floor((point.y / self.frame.size.height * self.numRows));
+    int cellAtRowNumber = floor(((self.bounds.size.height - point.y) / self.frame.size.height * self.numRows));
     NSLog(@"cellAtColumnNumber =  %d", cellAtColumnNumber);
     NSLog(@"cellAtRowNumber = %d", cellAtRowNumber);
     Cell *cell = [[[self.columns objectAtIndex:cellAtColumnNumber] cells] objectAtIndex:cellAtRowNumber];

@@ -72,8 +72,9 @@
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     CGPoint touchPoint = [[touches anyObject] locationInView:self.gameBoard];
     NSLog(@"touch ended at: %f, %f", touchPoint.x, touchPoint.y);
-    [self.gameBoard touchedAtPoint:touchPoint];
-    
+    if (CGRectContainsPoint(self.gameBoard.bounds, touchPoint)){
+        [self.gameBoard touchedAtPoint:touchPoint];
+    }
 }
 
 
