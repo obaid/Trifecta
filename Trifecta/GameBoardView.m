@@ -21,6 +21,7 @@
     if (self) {
         // Initialization code
         self.columns = [NSArray new];
+        self.score = 0;
         self.backgroundColor = [UIColor lightGrayColor];
     }
     return self;
@@ -64,7 +65,8 @@
         NSMutableSet *cellsToDelete = [NSMutableSet setWithObject:cell];
         NSArray *neighborsToDelete = [self findNeighbors:cell withCellsToDelete:cellsToDelete];
         if([neighborsToDelete count] > 2) {
-//            NSArray *cellsToDelete = @[cell];
+            //calculate score
+            [self calculateScore:[neighborsToDelete count]];
             [self deleteCells:neighborsToDelete];
        }
     }
@@ -74,6 +76,11 @@
 
     Cell *cell = [[[self.columns objectAtIndex:cellAtColumnNumber] cells] objectAtIndex:cellAtRowNumber];
     return cell;
+}
+
+-(void) calculateScore:(int) totalToDelete {
+    int scoredPoints = totalToDelete*totalToDelete*100;
+    self.score += scoredPoints;
 }
 
 -(NSArray *) findNeighbors:(Cell *)cell withCellsToDelete:(NSMutableSet *)cellsToDelete {

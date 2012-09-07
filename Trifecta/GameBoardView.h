@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSArray *columns;
 @property (nonatomic) int numColumns;
 @property (nonatomic) int numRows;
+@property (nonatomic) int score;
 -(void) frameEachCellWithCell:(Cell*) cell;
 -(void) touchedAtPoint:(CGPoint) point;
 @end

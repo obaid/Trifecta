@@ -13,6 +13,7 @@
 
 @interface GameViewController ()
 @property (nonatomic, strong) GameBoardView* gameBoard;
+@property (nonatomic, strong) UILabel *scoreTextLabel;
 @end
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
@@ -34,17 +35,23 @@
     
     self.numColumns = 5;
     double sizeOfCell = 296.0/self.numColumns;
-    int numRows = 456/sizeOfCell;
+    int numRows = 416/sizeOfCell;
     int boardGameWidth = self.numColumns * sizeOfCell;
     int boardGameHeight = numRows * sizeOfCell;
-    double boardGameYStart = (self.view.frame.size.height - boardGameHeight)/2.0;
+    double boardGameYStart = (self.view.frame.size.height - boardGameHeight)/2.0 + 20.0;
     double boardGameXStart = (self.view.frame.size.width - boardGameWidth)/2.0;
     NSMutableArray *tempColumns = [NSMutableArray new];
     self.gameBoard = [[GameBoardView alloc] initWithFrame:CGRectMake(boardGameXStart, boardGameYStart, boardGameWidth, boardGameHeight)];
     self.gameBoard.numRows = numRows;
     self.gameBoard.numColumns = self.numColumns;
     [self.view addSubview:self.gameBoard];
-
+    
+    self.scoreTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.view.frame.size.width -20, 40)];
+    self.scoreTextLabel.font = [UIFont fontWithName:@"Helvetica Neue Light" size:24];
+    self.scoreTextLabel.textColor = UIColorFromRGB(0xFF0095);
+    self.scoreTextLabel.text=[NSString stringWithFormat:@"Score: %d",self.gameBoard.score];
+    self.scoreTextLabel.textAlignment = UITextAlignmentCenter;
+    [self.view addSubview:self.scoreTextLabel];
 
     NSArray *arrayOfColors = @[UIColorFromRGB(0xAD00FF), UIColorFromRGB(0xFF0095), UIColorFromRGB(0x0040FF), UIColorFromRGB(0x12C100), UIColorFromRGB(0xFF9000), UIColorFromRGB(0xFFEE00)];
     
@@ -76,6 +83,7 @@
     NSLog(@"touch ended at: %f, %f", touchPoint.x, touchPoint.y);
     if (CGRectContainsPoint(self.gameBoard.bounds, touchPoint)){
         [self.gameBoard touchedAtPoint:touchPoint];
+        self.scoreTextLabel.text = [NSString stringWithFormat:@"Score: %d",self.gameBoard.score];
     }
 }
 
