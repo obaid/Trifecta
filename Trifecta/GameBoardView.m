@@ -87,7 +87,7 @@
         [matchingNeighbors addObject:cellToCompare];
     }
     //check cell above
-    if (cell.row <= [columnOfCell.cells count]) {
+    if (cell.row + 1 < [columnOfCell.cells count]) {
         Cell *cellToCompare = [columnOfCell.cells objectAtIndex:cell.row+1];
         [matchingNeighbors addObject:cellToCompare];
     }
