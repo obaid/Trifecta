@@ -32,7 +32,7 @@
 {
     [super viewDidLoad];
     
-    self.numColumns = 11;
+    self.numColumns = 5;
     double sizeOfCell = 296.0/self.numColumns;
     int numRows = 456/sizeOfCell;
     int boardGameWidth = self.numColumns * sizeOfCell;

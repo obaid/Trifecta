@@ -60,13 +60,13 @@
     NSLog(@"cellAtRowNumber = %d", cellAtRowNumber);
     if (!(cellAtRowNumber >= [[[self.columns objectAtIndex:cellAtColumnNumber] cells] count])) {
         Cell *cell = [self touchedACellAtPoint:point withCellAtColumnNumber:cellAtColumnNumber withRowAtColumnNumber:cellAtRowNumber];
-
         NSLog(@"Cell Column, Row = %d, %d", cell.column, cell.row);
-    //    [self findNeighbors:cell];
-    //        if([self haveEnoughNeighbors]) {
-        NSArray *cellsToDelete = @[cell];
-        [self deleteCells:cellsToDelete];
-    //    }
+        NSMutableSet *cellsToDelete = [NSMutableSet setWithObject:cell];
+        NSArray *neighborsToDelete = [self findNeighbors:cell withCellsToDelete:cellsToDelete];
+        if([neighborsToDelete count] > 2) {
+//            NSArray *cellsToDelete = @[cell];
+            [self deleteCells:neighborsToDelete];
+       }
     }
 }
 
@@ -76,11 +76,58 @@
     return cell;
 }
 
--(NSMutableArray *) findNeighbors:(Cell *)cell {
+-(NSArray *) findNeighbors:(Cell *)cell withCellsToDelete:(NSMutableSet *)cellsToDelete {
+
+    //search for similar neighbors in same column
+    Column *columnOfCell = [self.columns objectAtIndex:cell.column];
+    NSMutableArray *matchingNeighbors = [NSMutableArray new];
+    // check cell below
+    if (cell.row > 0) {
+        Cell *cellToCompare = [columnOfCell.cells objectAtIndex:cell.row-1];
+        [matchingNeighbors addObject:cellToCompare];
+    }
+    //check cell above
+    if (cell.row <= [columnOfCell.cells count]) {
+        Cell *cellToCompare = [columnOfCell.cells objectAtIndex:cell.row+1];
+        [matchingNeighbors addObject:cellToCompare];
+    }
+    //check cell to the left
+    if (cell.column > 0){
+        Column *columnLeftOfCell = [self.columns objectAtIndex:cell.column - 1];
+        if (cell.row < [columnLeftOfCell.cells count]) {
+            Cell *cellToCompare = [columnLeftOfCell.cells objectAtIndex:cell.row];
+            [matchingNeighbors addObject:cellToCompare];
+        }
+    }
+    //check cell to the right
+    if (cell.column + 1 < [self.columns count]){
+        Column *columnRightOfCell = [self.columns objectAtIndex:cell.column + 1];
+        if (cell.row < [columnRightOfCell.cells count]) {
+            Cell *cellToCompare = [columnRightOfCell.cells objectAtIndex:cell.row];
+            [matchingNeighbors addObject:cellToCompare];
+        }
+    }
     
+    for (Cell* neighborCell in matchingNeighbors){
+        if (![cellsToDelete containsObject:neighborCell]) {
+            if ([self compareCell:cell withOtherCell:neighborCell]) {
+                [cellsToDelete addObject:neighborCell];
+                [self findNeighbors:neighborCell withCellsToDelete:cellsToDelete];
+            }
+        }
+    }
     
+    NSArray *letsKillTheseCells = [NSArray arrayWithArray:[cellsToDelete allObjects]];
+    return letsKillTheseCells;
 }
 
+-(BOOL)compareCell:(Cell *)cell withOtherCell:(Cell *)otherCell
+{
+    if ([cell.color isEqual:otherCell.color]) {
+        return YES;
+    }
+    return NO;
+}
 -(BOOL) haveEnoughNeighbors {
     
     return YES;
