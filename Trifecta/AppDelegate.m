@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "GameViewController.h"
+#import "TrifectaViewController.h"
 
 @implementation AppDelegate
 
@@ -16,7 +16,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    self.window.rootViewController = [GameViewController new];
+    self.window.rootViewController = [TrifectaViewController new];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

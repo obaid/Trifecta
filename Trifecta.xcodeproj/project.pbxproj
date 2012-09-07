@@ -23,6 +23,8 @@
 		2563584315F98F3000CA812E /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2563584215F98F3000CA812E /* Icon@2x.png */; };
 		2563584415F9906100CA812E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2563583E15F98F1A00CA812E /* Default.png */; };
 		2563584615F9906600CA812E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2563584515F9906600CA812E /* Default@2x.png */; };
+		2563584B15F9936200CA812E /* TrifectaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2563584915F9936100CA812E /* TrifectaViewController.m */; };
+		2563584C15F9936200CA812E /* TrifectaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2563584A15F9936100CA812E /* TrifectaViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,9 @@
 		2563584015F98F2C00CA812E /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		2563584215F98F3000CA812E /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		2563584515F9906600CA812E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		2563584815F9936100CA812E /* TrifectaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrifectaViewController.h; sourceTree = "<group>"; };
+		2563584915F9936100CA812E /* TrifectaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrifectaViewController.m; sourceTree = "<group>"; };
+		2563584A15F9936100CA812E /* TrifectaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrifectaViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,10 +76,6 @@
 		256357FA15F80FDC00CA812E = {
 			isa = PBXGroup;
 			children = (
-				2563584515F9906600CA812E /* Default@2x.png */,
-				2563584215F98F3000CA812E /* Icon@2x.png */,
-				2563584015F98F2C00CA812E /* Icon.png */,
-				2563583E15F98F1A00CA812E /* Default.png */,
 				2563580F15F80FDC00CA812E /* Trifecta */,
 				2563580815F80FDC00CA812E /* Frameworks */,
 				2563580615F80FDC00CA812E /* Products */,
@@ -112,8 +113,12 @@
 				2563582415F8112A00CA812E /* Column.m */,
 				2563583015F81F9F00CA812E /* GameBoardView.h */,
 				2563583115F81FA000CA812E /* GameBoardView.m */,
+				2563584815F9936100CA812E /* TrifectaViewController.h */,
+				2563584915F9936100CA812E /* TrifectaViewController.m */,
+				2563584A15F9936100CA812E /* TrifectaViewController.xib */,
 				2563581815F80FDC00CA812E /* AppDelegate.h */,
 				2563581915F80FDC00CA812E /* AppDelegate.m */,
+				2563584715F9933200CA812E /* images */,
 				2563581015F80FDC00CA812E /* Supporting Files */,
 			);
 			path = Trifecta;
@@ -128,6 +133,18 @@
 				2563581715F80FDC00CA812E /* Trifecta-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2563584715F9933200CA812E /* images */ = {
+			isa = PBXGroup;
+			children = (
+				2563584515F9906600CA812E /* Default@2x.png */,
+				2563584215F98F3000CA812E /* Icon@2x.png */,
+				2563584015F98F2C00CA812E /* Icon.png */,
+				2563583E15F98F1A00CA812E /* Default.png */,
+			);
+			name = images;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -186,6 +203,7 @@
 				2563584315F98F3000CA812E /* Icon@2x.png in Resources */,
 				2563584415F9906100CA812E /* Default.png in Resources */,
 				2563584615F9906600CA812E /* Default@2x.png in Resources */,
+				2563584C15F9936200CA812E /* TrifectaViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +220,7 @@
 				2563582B15F8156C00CA812E /* Cell.m in Sources */,
 				2563583215F81FA000CA812E /* GameBoardView.m in Sources */,
 				2563583515F83A9600CA812E /* GameViewController.m in Sources */,
+				2563584B15F9936200CA812E /* TrifectaViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
