@@ -12,8 +12,9 @@
 #import <CoreMotion/CoreMotion.h>
 #import <QuartzCore/QuartzCore.h>
 
-@implementation GameBoardView
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
+@implementation GameBoardView
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -22,7 +23,7 @@
         // Initialization code
         self.columns = [NSArray new];
         self.score = 0;
-        self.backgroundColor = [UIColor lightGrayColor];
+        self.backgroundColor = UIColorFromRGB(0xD7F6FD);
     }
     return self;
 }
@@ -57,11 +58,8 @@
 -(void) touchedAtPoint:(CGPoint) point {
     int cellAtColumnNumber = floor((point.x / self.frame.size.width) * self.numColumns);
     int cellAtRowNumber = floor(((self.bounds.size.height - point.y) / self.frame.size.height * self.numRows));
-    NSLog(@"cellAtColumnNumber =  %d", cellAtColumnNumber);
-    NSLog(@"cellAtRowNumber = %d", cellAtRowNumber);
     if (!(cellAtRowNumber >= [[[self.columns objectAtIndex:cellAtColumnNumber] cells] count])) {
         Cell *cell = [self touchedACellAtPoint:point withCellAtColumnNumber:cellAtColumnNumber withRowAtColumnNumber:cellAtRowNumber];
-        NSLog(@"Cell Column, Row = %d, %d", cell.column, cell.row);
         NSMutableSet *cellsToDelete = [NSMutableSet setWithObject:cell];
         NSArray *neighborsToDelete = [self findNeighbors:cell withCellsToDelete:cellsToDelete];
         if([neighborsToDelete count] > 2) {

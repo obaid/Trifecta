@@ -11,9 +11,12 @@
 #import "GameBoardView.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface GameViewController ()
+@interface GameViewController () <UIAlertViewDelegate>
 @property (nonatomic, strong) GameBoardView* gameBoard;
 @property (nonatomic, strong) UILabel *scoreTextLabel;
+@property (nonatomic) CALayer *timeBar;
+@property (nonatomic) int timePast;
+@property (nonatomic, strong) NSTimer *timeBarTimer;
 @end
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
@@ -33,7 +36,34 @@
 {
     [super viewDidLoad];
     
-    self.numColumns = 5;
+    [self setUpGame];
+}
+
+-(void) countdownTimeBar {
+    if (self.timePast <= self.view.frame.size.width) {
+        self.timeBar.frame = CGRectMake(0,0, self.view.frame.size.width - self.timePast, 5);
+        self.timePast +=40;
+    } else {
+        [self.timeBarTimer invalidate];
+        [[[UIAlertView alloc] initWithTitle:@"Time's Up" message:[NSString stringWithFormat:@"Your final score was: %d",self.gameBoard.score] delegate:self cancelButtonTitle:@"Play again" otherButtonTitles: nil] show];
+    }
+}
+
+-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    [self tearDownGame];
+    [self setUpGame];
+}
+-(void)tearDownGame
+{
+    self.view.layer.sublayers = nil;
+}
+
+
+-(void)setUpGame
+{
+    self.numColumns = 12;
+    self.timePast = 0;
     double sizeOfCell = 296.0/self.numColumns;
     int numRows = 416/sizeOfCell;
     int boardGameWidth = self.numColumns * sizeOfCell;
@@ -52,7 +82,15 @@
     self.scoreTextLabel.text=[NSString stringWithFormat:@"Score: %d",self.gameBoard.score];
     self.scoreTextLabel.textAlignment = UITextAlignmentCenter;
     [self.view addSubview:self.scoreTextLabel];
-
+    
+    self.timeBar = [CALayer new];
+    self.timeBar.backgroundColor = [[UIColor redColor] CGColor];
+    self.timeBar.frame = CGRectMake(0,0, self.view.frame.size.width, 5);
+    [self.view.layer addSublayer:self.timeBar];
+    
+    self.timeBarTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countdownTimeBar) userInfo:nil repeats:YES];
+    
+    
     NSArray *arrayOfColors = @[UIColorFromRGB(0xAD00FF), UIColorFromRGB(0xFF0095), UIColorFromRGB(0x0040FF), UIColorFromRGB(0x12C100), UIColorFromRGB(0xFF9000), UIColorFromRGB(0xFFEE00)];
     
     for (int c=0; c < self.numColumns; c++) {
@@ -67,7 +105,7 @@
         [tempColumns addObject:column];
     }
     self.gameBoard.columns = tempColumns;
-//    [self.gameBoard drawGameBoard];
+    //    [self.gameBoard drawGameBoard];
     //[self.gameBoard setNeedsDisplay];
 	// Do any additional setup after loading the view.
 }
@@ -80,7 +118,6 @@
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     CGPoint touchPoint = [[touches anyObject] locationInView:self.gameBoard];
-    NSLog(@"touch ended at: %f, %f", touchPoint.x, touchPoint.y);
     if (CGRectContainsPoint(self.gameBoard.bounds, touchPoint)){
         [self.gameBoard touchedAtPoint:touchPoint];
         self.scoreTextLabel.text = [NSString stringWithFormat:@"Score: %d",self.gameBoard.score];
