@@ -14,6 +14,8 @@
 @property (nonatomic) int numColumns;
 @property (nonatomic) int numRows;
 @property (nonatomic) int score;
+@property (nonatomic) int counter;
 -(void) frameEachCellWithCell:(Cell*) cell;
--(void) touchedAtPoint:(CGPoint) point;
+-(void) touchedAtPoint:(CGPoint) point andEndedMove:(BOOL)didEndMove;
+-(void) addNewCellWithColor:(UIColor *)color withSize:(double)size;
 @end

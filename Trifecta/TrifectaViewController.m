@@ -39,7 +39,7 @@
 
 - (IBAction)startButtonPressed:(UIButton *)sender {
     
-    GameViewController *gameView = [GameViewController new];
-    [self presentModalViewController:gameView animated:YES];
+    GameViewController *gameViewController = [GameViewController new];
+    [self presentModalViewController:gameViewController animated:YES];
 }
 @end

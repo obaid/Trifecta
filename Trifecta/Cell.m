@@ -20,7 +20,6 @@
     if (self != nil)
     {
         self.cellLayer = [CALayer new];
-        //self.cellLayer.delegate = board;
         [board.layer addSublayer:self.cellLayer];
         self.color = color;
         self.row = row;

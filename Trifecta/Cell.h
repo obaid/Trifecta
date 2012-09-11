@@ -13,8 +13,9 @@
 @property (nonatomic) int row;
 @property (nonatomic) int column;
 @property (nonatomic) float size;
-@property (nonatomic, strong) UIColor *color;
-@property (nonatomic, strong) CALayer *cellLayer;
+@property (nonatomic) UIColor *color;
+@property (nonatomic) CALayer *cellLayer;
+@property (nonatomic) bool isFalling;
 
 -(id) initWithBoard:(GameBoardView*) board withColor:(UIColor*) color withRow:(int) row withColumn: (int) column withSize:(float) size;
 @end
