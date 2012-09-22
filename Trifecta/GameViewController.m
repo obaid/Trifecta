@@ -81,7 +81,7 @@
 
 -(void)setUpGame
 {
-    self.numColumns = 20;
+    self.numColumns = 16;
     self.timePast = 0;
     double sizeOfCell = 296.0/self.numColumns;
     int numRows = 416/sizeOfCell;
@@ -116,7 +116,7 @@
         Column *column = [Column new];
         column.columnPosition = c;
         column.numRows = numRows;
-        for (int r=0; r < numRows/2; r++) {
+        for (int r=0; r < numRows; r++) {
             Cell *cell = [[Cell alloc] initWithBoard:self.gameBoard withColor:[self randomColor] withRow:r withColumn:c withSize:self.gameBoard.frame.size.width / self.numColumns];
             cell.isFalling = NO;
             [self.gameBoard frameEachCellWithCell:cell];

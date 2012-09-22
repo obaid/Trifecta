@@ -107,7 +107,7 @@ typedef void (^animationCompletionBlock)(void);
 {
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position.y"];
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-    animation.duration = (endPosition - startPosition)*(.05-(.01 *(self.counter/10)));
+    //animation.duration = (endPosition - startPosition)*(.05-(.01 *(self.counter/10)));
     [animation setFromValue:@(startPosition)];
     [animation setToValue:@(endPosition)];
     int rowToGoTo = cell.row;

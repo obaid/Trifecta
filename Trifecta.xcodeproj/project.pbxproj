@@ -25,6 +25,7 @@
 		2563584615F9906600CA812E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2563584515F9906600CA812E /* Default@2x.png */; };
 		2563584B15F9936200CA812E /* TrifectaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2563584915F9936100CA812E /* TrifectaViewController.m */; };
 		2563584C15F9936200CA812E /* TrifectaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2563584A15F9936100CA812E /* TrifectaViewController.xib */; };
+		25B4011E15FFC78C0020A6C0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25B4011D15FFC78C0020A6C0 /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		2563584815F9936100CA812E /* TrifectaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrifectaViewController.h; sourceTree = "<group>"; };
 		2563584915F9936100CA812E /* TrifectaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrifectaViewController.m; sourceTree = "<group>"; };
 		2563584A15F9936100CA812E /* TrifectaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrifectaViewController.xib; sourceTree = "<group>"; };
+		25B4011D15FFC78C0020A6C0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25B4011E15FFC78C0020A6C0 /* CoreData.framework in Frameworks */,
 				2563582E15F8167200CA812E /* CoreMotion.framework in Frameworks */,
 				2563582F15F8167200CA812E /* QuartzCore.framework in Frameworks */,
 				2563580A15F80FDC00CA812E /* UIKit.framework in Frameworks */,
@@ -93,6 +96,7 @@
 		2563580815F80FDC00CA812E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				25B4011D15FFC78C0020A6C0 /* CoreData.framework */,
 				2563582C15F8167200CA812E /* CoreMotion.framework */,
 				2563582D15F8167200CA812E /* QuartzCore.framework */,
 				2563580915F80FDC00CA812E /* UIKit.framework */,
@@ -328,6 +332,7 @@
 				2563581F15F80FDC00CA812E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
