@@ -294,10 +294,12 @@
 		2563581E15F80FDC00CA812E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: ran Tao (4LLP7NHLP9)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Trifecta/Trifecta-Prefix.pch";
 				INFOPLIST_FILE = "Trifecta/Trifecta-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "8B6806E1-AF5D-47EA-9CB8-AAD391109B3D";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -305,10 +307,12 @@
 		2563581F15F80FDC00CA812E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: ran Tao (4LLP7NHLP9)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Trifecta/Trifecta-Prefix.pch";
 				INFOPLIST_FILE = "Trifecta/Trifecta-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "8B6806E1-AF5D-47EA-9CB8-AAD391109B3D";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

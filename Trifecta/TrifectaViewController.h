@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface TrifectaViewController : UIViewController
-- (IBAction)startButtonPressed:(UIButton *)sender;
+- (IBAction)smallButtonPressed:(UIButton *)sender;
+- (IBAction)mediumButtonPressed:(UIButton *)sender;
+- (IBAction)largeButtonPressed:(UIButton *)sender;
+
+- (IBAction)extraLargeButtonPressed:(UIButton *)sender;
 
 @end

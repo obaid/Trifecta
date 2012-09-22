@@ -32,14 +32,34 @@
 
 - (void)viewDidUnload
 {
+ 
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
 
-- (IBAction)startButtonPressed:(UIButton *)sender {
-    
+
+- (IBAction)smallButtonPressed:(UIButton *)sender {
     GameViewController *gameViewController = [GameViewController new];
+    gameViewController.numColumns = 8;
+    [self presentModalViewController:gameViewController animated:YES];
+}
+
+- (IBAction)mediumButtonPressed:(UIButton *)sender {
+    GameViewController *gameViewController = [GameViewController new];
+    gameViewController.numColumns = 14;
+    [self presentModalViewController:gameViewController animated:YES];
+}
+
+- (IBAction)largeButtonPressed:(UIButton *)sender {
+    GameViewController *gameViewController = [GameViewController new];
+    gameViewController.numColumns = 20;
+    [self presentModalViewController:gameViewController animated:YES];
+}
+
+- (IBAction)extraLargeButtonPressed:(UIButton *)sender {
+    GameViewController *gameViewController = [GameViewController new];
+    gameViewController.numColumns = 40;
     [self presentModalViewController:gameViewController animated:YES];
 }
 @end
