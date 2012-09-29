@@ -93,6 +93,7 @@ typedef void (^animationCompletionBlock)(void);
         [self animateCellAsItDrops:cell withStartPosition:startPosition withEndPosition:endPosition withSpeed:.03];
     }
     else {
+        [self.gameViewController lossByBlocks];
 //        NSLog(@"YOU LOSE");
     }
 }

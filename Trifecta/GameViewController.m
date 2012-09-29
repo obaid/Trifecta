@@ -44,17 +44,24 @@
 -(void) countdownTimeBar {
     if (self.timePast <= self.view.frame.size.width) {
         self.timeBar.frame = CGRectMake(0,0, self.view.frame.size.width - self.timePast, 5);
-        self.timePast +=10;
+        self.timePast +=5;
     } else {
-        [self.timeBarTimer invalidate];
-        [self.addCellsTimer invalidate];
-        self.highScore = [self getHighScoreFromUserDefaults];
-        if (self.gameBoard.score > self.highScore) {
-            self.highScore = self.gameBoard.score;
-            [self saveLocationsToUserDefaults:self.gameBoard.score];
-        }
+        [self gameOver];
         [[[UIAlertView alloc] initWithTitle:@"Time's up! Play again?" message:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
         
+    }
+}
+-(void) lossByBlocks {
+    [self gameOver];
+    [[[UIAlertView alloc] initWithTitle:@"Too many blocks! Play again?" message:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
+}
+-(void) gameOver {
+    [self.timeBarTimer invalidate];
+    [self.addCellsTimer invalidate];
+    self.highScore = [self getHighScoreFromUserDefaults];
+    if (self.gameBoard.score > self.highScore) {
+        self.highScore = self.gameBoard.score;
+        [self saveLocationsToUserDefaults:self.gameBoard.score];
     }
 }
 -(NSInteger) getHighScoreFromUserDefaults {
@@ -126,7 +133,7 @@
     [self.view.layer addSublayer:self.timeBar];
     
     self.timeBarTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countdownTimeBar) userInfo:nil repeats:YES];
-    self.addCellsTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(addNewCells) userInfo:nil repeats:YES];
+    self.addCellsTimer = [NSTimer scheduledTimerWithTimeInterval:.3 target:self selector:@selector(addNewCells) userInfo:nil repeats:YES];
     
     
     for (int c=0; c < self.numColumns; c++) {
