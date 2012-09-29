@@ -16,6 +16,7 @@
 @property (nonatomic) UILabel *scoreTextLabel;
 @property (nonatomic) CALayer *timeBar;
 @property (nonatomic) int timePast;
+@property (nonatomic) NSInteger highScore;
 @property (nonatomic, strong) NSTimer *timeBarTimer;
 @property (nonatomic, strong) NSTimer *addCellsTimer;
 @end
@@ -47,8 +48,24 @@
     } else {
         [self.timeBarTimer invalidate];
         [self.addCellsTimer invalidate];
-        [[[UIAlertView alloc] initWithTitle:@"Time's up! Play again?" message:[NSString stringWithFormat:@"Your final score was: %d",self.gameBoard.score] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
+        self.highScore = [self getHighScoreFromUserDefaults];
+        if (self.gameBoard.score > self.highScore) {
+            self.highScore = self.gameBoard.score;
+            [self saveLocationsToUserDefaults:self.gameBoard.score];
+        }
+        [[[UIAlertView alloc] initWithTitle:@"Time's up! Play again?" message:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
+        
     }
+}
+-(NSInteger) getHighScoreFromUserDefaults {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSInteger score = [userDefaults integerForKey:@"score"];
+    return score;
+}
+
+-(void) saveLocationsToUserDefaults:(NSInteger) score {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setInteger:score forKey:@"score"];
 }
 -(void) addNewCells {
     [self.gameBoard addNewCellWithColor:[self randomColor]withSize:self.gameBoard.frame.size.width / self.numColumns];
@@ -133,9 +150,21 @@
 }
 -(UIColor *)randomColor
 {
-    NSArray *arrayOfColors = @[UIColorFromRGB(0xAD00FF), UIColorFromRGB(0xFF0095), UIColorFromRGB(0x0040FF), UIColorFromRGB(0x12C100), UIColorFromRGB(0xFF9000), UIColorFromRGB(0xFFEE00)];
+    NSArray *arrayOfColors = [NSArray new];
+    if (self.numColumns < 10) {
+        arrayOfColors = @[UIColorFromRGB(0xAD00FF), UIColorFromRGB(0xFF0095), UIColorFromRGB(0x0040FF)];
+        return [arrayOfColors objectAtIndex:arc4random() % 3];
+        
+    } else if (self.numColumns < 20){
+        arrayOfColors = @[UIColorFromRGB(0x12C100), UIColorFromRGB(0xAD00FF), UIColorFromRGB(0xFF0095), UIColorFromRGB(0x0040FF)];
+        return [arrayOfColors objectAtIndex:arc4random() % 4];
+        
+    } else {
+        arrayOfColors = @[UIColorFromRGB(0xAD00FF), UIColorFromRGB(0xFF0095), UIColorFromRGB(0x0040FF), UIColorFromRGB(0x12C100), UIColorFromRGB(0xFF9000), UIColorFromRGB(0xFFEE00)];
+        return [arrayOfColors objectAtIndex:arc4random() % 6];
+        
+    }
     
-    return [arrayOfColors objectAtIndex:arc4random() % 6];
 }
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     CGPoint touchPoint = [[touches anyObject] locationInView:self.gameBoard];

@@ -41,11 +41,11 @@
     if (sender.tag == 0) {
         gameViewController.numColumns = 8;
     } else if (sender.tag == 1) {
-        gameViewController.numColumns = 16;
+        gameViewController.numColumns = 14;
     } else if (sender.tag == 2) {
-        gameViewController.numColumns = 24;
+        gameViewController.numColumns = 20;
     } else {
-        gameViewController.numColumns = 50;
+        gameViewController.numColumns = 40;
     }
     [self presentModalViewController:gameViewController animated:YES];
 }
