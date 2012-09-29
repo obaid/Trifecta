@@ -2,8 +2,8 @@
 //  TrifectaViewController.m
 //  Trifecta
 //
-//  Created by Ran Tao on 9.6.12.
-//  Copyright (c) 2012 Ran Tao. All rights reserved.
+//  Created by Kris Fields & Ran Tao on 9.6.12.
+//  Copyright (c) 2012 Kris Fields & Ran Tao. All rights reserved.
 //
 
 #import "TrifectaViewController.h"
@@ -33,13 +33,20 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (IBAction)startButtonPressed:(UIButton *)sender {
     
     GameViewController *gameViewController = [GameViewController new];
+    if (sender.tag == 0) {
+        gameViewController.numColumns = 8;
+    } else if (sender.tag == 1) {
+        gameViewController.numColumns = 16;
+    } else if (sender.tag == 2) {
+        gameViewController.numColumns = 24;
+    } else {
+        gameViewController.numColumns = 50;
+    }
     [self presentModalViewController:gameViewController animated:YES];
 }
 @end

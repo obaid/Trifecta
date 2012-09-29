@@ -2,8 +2,8 @@
 //  GameBoardView.m
 //  Trifecta
 //
-//  Created by Ran Tao on 9.5.12.
-//  Copyright (c) 2012 Ran Tao. All rights reserved.
+//  Created by Kris Fields & Ran Tao on 9.5.12.
+//  Copyright (c) 2012 Kris Fields & Ran Tao. All rights reserved.
 //
 
 #import "GameBoardView.h"
@@ -11,6 +11,7 @@
 #import "Cell.h"
 #import <CoreMotion/CoreMotion.h>
 #import <QuartzCore/QuartzCore.h>
+#import "GameViewController.h"
 
 typedef void (^animationCompletionBlock)(void);
 #define kAnimationCompletionBlock @"animationCompletionBlock"
@@ -34,39 +35,30 @@ typedef void (^animationCompletionBlock)(void);
     return self;
 }
 
--(void) frameEachCellWithCell:(Cell*) cell {    
-    cell.cellLayer.frame = CGRectMake(cell.size*cell.column, self.bounds.size.height - cell.size*(cell.row+1), cell.size, cell.size);
-}
-
 -(void) drawGameBoard {
     [self positionEachColumn];
 }
-
-
--(void) positionEachCellWithCell:(Cell*) cell {
-    [CATransaction begin];
-    if (cell.isFalling) {
-        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
-    }   
-    cell.cellLayer.position = CGPointMake(cell.size*cell.column + (cell.size/2.0), self.bounds.size.height - cell.size*(cell.row+1) + (cell.size/2.0));
-
-    [CATransaction commit];
-}
-
 -(void) positionEachColumn {
     for (Column* column in self.columns) {
         for (Cell* cell in column.cells) {
-            [self positionEachCellWithCell:cell];
+            [self frameEachCellWithCell:cell];
         }
     }
     
 }
 
+-(void) frameEachCellWithCell:(Cell*) cell {
+    [CATransaction begin];
+    [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+    cell.cellLayer.frame = CGRectMake(cell.size*cell.column, self.bounds.size.height - cell.size*(cell.row+1), cell.size, cell.size);
+    [CATransaction commit];
+}
+
 -(void) touchedAtPoint:(CGPoint) point andEndedMove:(BOOL)didEndMove {
-    int cellAtColumnNumber = floor((point.x / self.frame.size.width) * self.numColumns);
+    int cellAtColumnNumber = floor((point.x / self.frame.size.width) * self.gameViewController.numColumns);
     int cellAtRowNumber = floor(((self.bounds.size.height - point.y) / self.frame.size.height * self.numRows));
     if (!(cellAtRowNumber >= [[[self.columns objectAtIndex:cellAtColumnNumber] cells] count])) {
-        Cell *cell = [self touchedACellAtPoint:point withCellAtColumnNumber:cellAtColumnNumber withRowAtColumnNumber:cellAtRowNumber];
+        Cell *cell = [[[self.columns objectAtIndex:cellAtColumnNumber] cells] objectAtIndex:cellAtRowNumber];
         if (didEndMove) {
             NSMutableSet *cellsToDelete = [NSMutableSet setWithObject:cell];
             NSArray *neighborsToDelete = [self findNeighbors:cell withCellsToDelete:cellsToDelete];
@@ -81,10 +73,11 @@ typedef void (^animationCompletionBlock)(void);
         }
     }
 }
+
 -(void) addNewCellWithColor:(UIColor *)color withSize:(double)size
 {
     self.counter ++;
-    int columnNumberToAddTo = arc4random() % self.numColumns;
+    int columnNumberToAddTo = arc4random() % self.gameViewController.numColumns;
     //check if column is full
     Column *columnToAddTo = [self.columns objectAtIndex:columnNumberToAddTo];
     if ([columnToAddTo.cells count] < columnToAddTo.numRows) {
@@ -92,54 +85,48 @@ typedef void (^animationCompletionBlock)(void);
         cell.isFalling = YES;
         [columnToAddTo.cells addObject:cell];
         [self frameEachCellWithCell:cell];
-        double startPosition = self.frame.size.height -  columnToAddTo.numRows * cell.size;
+//        cell.cellLayer.frame = CGRectMake(cell.size*cell.column, 0.0, cell.size, cell.size);
+        //kinda cool - makes blocks rise from below:
+        double startPosition = cell.cellLayer.position.y + (cell.size / 2);
+//        double startPosition = self.frame.size.height -  columnToAddTo.numRows * cell.size;
         double endPosition = self.frame.size.height - (cell.size * [columnToAddTo.cells count] - cell.size/2);
-        [self animateCellAsItDrops:cell withStartPosition:startPosition withEndPosition:endPosition];
-        
-        
+        [self animateCellAsItDrops:cell withStartPosition:startPosition withEndPosition:endPosition withSpeed:.03];
     }
     else {
-        //you lose motherfucker
-        NSLog(@"YOU LOSE");
+//        NSLog(@"YOU LOSE");
     }
 }
--(void)animateCellAsItDrops:(Cell*)cell withStartPosition:(double)startPosition withEndPosition:(double)endPosition
+-(void)animateCellAsItDrops:(Cell*)cell withStartPosition:(double)startPosition withEndPosition:(double)endPosition withSpeed:(double)speed
 {
+    cell.isFalling = YES;
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position.y"];
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-    animation.duration = (endPosition - startPosition)*(.05-(.01 *(self.counter/10)));
+    animation.duration = (endPosition - startPosition)*speed /**(self.counter/10)))*/;
     [animation setFromValue:@(startPosition)];
-    [animation setToValue:@(endPosition)];
     int rowToGoTo = cell.row;
     animationCompletionBlock theBlock = ^void(void)
     {
-        //Code to execute after the animation completes goes here
+        //Code to execute after the animation completes 
         if (cell.row == rowToGoTo) {
-//            [self positionEachCellWithCell:cell];
             cell.isFalling = NO;
         } else {
             //repeat animation
+            cell.isFalling = YES;    
             double newStartPosition = endPosition;
             double newEndPosition = endPosition + (cell.size*(rowToGoTo-cell.row));
-            [self animateCellAsItDrops:cell withStartPosition:newStartPosition withEndPosition:newEndPosition];
+            [self animateCellAsItDrops:cell withStartPosition:newStartPosition withEndPosition:newEndPosition withSpeed:speed];
         }
-        
     };
     animation.delegate = self;
     [animation setValue: theBlock forKey: kAnimationCompletionBlock];
     [cell.cellLayer addAnimation:animation forKey:nil];
+    [self frameEachCellWithCell:cell];
 }
-- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
-{
+
+- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag {
     animationCompletionBlock theBlock = [theAnimation valueForKey: kAnimationCompletionBlock];
     if (theBlock)
         theBlock();
-}
-
--(Cell *) touchedACellAtPoint:(CGPoint)point withCellAtColumnNumber:(int)cellAtColumnNumber withRowAtColumnNumber:(int)cellAtRowNumber {
-
-    Cell *cell = [[[self.columns objectAtIndex:cellAtColumnNumber] cells] objectAtIndex:cellAtRowNumber];
-    return cell;
 }
 
 -(void) calculateScore:(int) totalToDelete {
@@ -148,7 +135,6 @@ typedef void (^animationCompletionBlock)(void);
 }
 
 -(NSArray *) findNeighbors:(Cell *)cell withCellsToDelete:(NSMutableSet *)cellsToDelete {
-
     //search for similar neighbors in same column
     Column *columnOfCell = [self.columns objectAtIndex:cell.column];
     NSMutableArray *matchingNeighbors = [NSMutableArray new];
@@ -195,35 +181,56 @@ typedef void (^animationCompletionBlock)(void);
 -(BOOL)compareCell:(Cell *)cell withOtherCell:(Cell *)otherCell
 {
     if ([cell.color isEqual:otherCell.color]) {
+        if (cell.isFalling || otherCell.isFalling) {
+            return NO;
+        }
         return YES;
     }
     return NO;
 }
 
 -(void) deleteCells: (NSArray *) cells {
+    NSMutableSet *cellsToChange = [NSMutableSet new];
     for (Cell* cell in cells) {
         Column *columnCellIsIn = [self.columns objectAtIndex:cell.column];
         for (int i = cell.row+1; i < [columnCellIsIn.cells count]; i++) {
             Cell* cellToChange = [columnCellIsIn.cells objectAtIndex:i];
+            [cellsToChange addObject:cellToChange];
             cellToChange.row -= 1;
         }
-        if (!cell.isFalling) {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                [self animateCellUponDeletion:cell];
-            });
+    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [self animateCellsUponDeletion:cells];
+    });
+    for (Cell *cellToChange in cellsToChange) {
+        if (!cellToChange.isFalling) {
+            double endPosition =  self.bounds.size.height - cellToChange.size*(cellToChange.row+1) + (cellToChange.size/2.0);
+            [self animateCellAsItDrops:cellToChange withStartPosition:cellToChange.cellLayer.position.y withEndPosition:endPosition withSpeed:.02];
         }
     }
-}
+    
 
+}
+-(void)animateCellsUponDeletion:(NSArray *)cells
+{
+    [CATransaction begin];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (Cell *cell in cells) {
+            [self deleteCell:(Cell *)cell];
+        }
+    });
+    [CATransaction commit];
+    
+}
 - (void)animateCellUponDeletion:(Cell *)cell
 {
     [CATransaction begin];
-    CAKeyframeAnimation *bounce = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-    CATransform3D forward = CATransform3DMakeScale(9.3, 9.3, 21);
-    [bounce setValues:@[                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         [NSValue valueWithCATransform3D:forward]]
-     ];
+//    CAKeyframeAnimation *bounce = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+//    CATransform3D forward = CATransform3DMakeScale(9.3, 9.3, 21);
+//    [bounce setValues:@[                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         [NSValue valueWithCATransform3D:forward]]
+//     ];
     // Set the duration
-    [bounce setDuration:20];
+//    [bounce setDuration:1110];
     // Animate the layer
     dispatch_async(dispatch_get_main_queue(), ^{
 //        [[cell cellLayer] addAnimation:bounce forKey:@"bounceAnimation"];
@@ -244,15 +251,7 @@ typedef void (^animationCompletionBlock)(void);
 -(void) deleteCell: (Cell *)cell {
     [cell.cellLayer removeFromSuperlayer];
     [[[self.columns objectAtIndex:cell.column] cells] removeObject:cell];
-    [self drawGameBoard];
 }
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
+
 
 @end

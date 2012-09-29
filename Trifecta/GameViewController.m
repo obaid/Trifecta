@@ -2,8 +2,8 @@
 //  GameViewController.m
 //  Trifecta
 //
-//  Created by Ran Tao on 9.5.12.
-//  Copyright (c) 2012 Ran Tao. All rights reserved.
+//  Created by Kris Fields & Ran Tao on 9.5.12.
+//  Copyright (c) 2012 Kris Fields & Ran Tao. All rights reserved.
 //
 #import "GameViewController.h"
 #import "Column.h"
@@ -29,7 +29,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.view.backgroundColor = [UIColor whiteColor];
     }
     return self;
 }
@@ -37,7 +36,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     [self setUpGame];
 }
 
@@ -81,7 +80,7 @@
 
 -(void)setUpGame
 {
-    self.numColumns = 20;
+//    self.numColumns = 20;
     self.timePast = 0;
     double sizeOfCell = 296.0/self.numColumns;
     int numRows = 416/sizeOfCell;
@@ -93,7 +92,8 @@
     self.gameBoard = [[GameBoardView alloc] initWithFrame:CGRectMake(boardGameXStart, boardGameYStart, boardGameWidth, boardGameHeight)];
     self.gameBoard.counter = 0;
     self.gameBoard.numRows = numRows;
-    self.gameBoard.numColumns = self.numColumns;
+    self.gameBoard.gameViewController = self;
+    
     [self.view addSubview:self.gameBoard];
     
     self.scoreTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.view.frame.size.width -20, 40)];
