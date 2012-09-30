@@ -10,5 +10,6 @@
 
 @interface GameViewController : UIViewController
 @property (nonatomic) int numColumns;
+@property (nonatomic) int gameType;
 -(void) lossByBlocks;
 @end

@@ -14,6 +14,7 @@
 @interface GameViewController () <UIAlertViewDelegate>
 @property (nonatomic, strong) GameBoardView* gameBoard;
 @property (nonatomic) UILabel *scoreTextLabel;
+@property (nonatomic) UIButton *pauseButton;
 @property (nonatomic) CALayer *timeBar;
 @property (nonatomic) int timePast;
 @property (nonatomic) NSInteger highScore;
@@ -52,8 +53,10 @@
     }
 }
 -(void) lossByBlocks {
-    [self gameOver];
-    [[[UIAlertView alloc] initWithTitle:@"Too many blocks! Play again?" message:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
+    if (self.gameType == 1) {
+        [self gameOver];
+        [[[UIAlertView alloc] initWithTitle:@"Too many blocks! Play again?" message:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
+    }
 }
 -(void) gameOver {
     [self.timeBarTimer invalidate];
@@ -79,14 +82,24 @@
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{    
-    if (buttonIndex == 0) {
-        [self dismissModalViewControllerAnimated:YES];
-    }
-    else {
-        [self tearDownGame];
-        [self setUpGame];
-    }
+{
+    if (alertView.tag ==1) {
+        if (buttonIndex == 0) {
+            [self setupCellsTimerWithInterval:0.3];
+            [self setupTimerBarWithInterval:1.0];
+        } else if (buttonIndex == 1){
+            //end game
+            [self dismissModalViewControllerAnimated:YES];
+        }
+    } else {
+            if (buttonIndex == 0) {
+                [self dismissModalViewControllerAnimated:YES];
+            }
+            else {
+                [self tearDownGame];
+                [self setUpGame];
+            }
+       }
 }
 //-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 //{
@@ -119,7 +132,7 @@
     self.gameBoard.gameViewController = self;
     
     [self.view addSubview:self.gameBoard];
-    
+        
     self.scoreTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.view.frame.size.width -20, 40)];
     self.scoreTextLabel.font = [UIFont fontWithName:@"Helvetica Neue Light" size:24];
     self.scoreTextLabel.textColor = UIColorFromRGB(0xFF0095);
@@ -127,20 +140,35 @@
     self.scoreTextLabel.textAlignment = UITextAlignmentCenter;
     [self.view addSubview:self.scoreTextLabel];
     
-    self.timeBar = [CALayer new];
-    self.timeBar.backgroundColor = [[UIColor redColor] CGColor];
-    self.timeBar.frame = CGRectMake(0,0, self.view.frame.size.width, 5);
-    [self.view.layer addSublayer:self.timeBar];
+    // LATER ADD CUSTOM PAUSE IMAGE HERE
+    self.pauseButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+                
+    self.pauseButton.frame = CGRectMake(self.view.frame.size.width -40, 10, 30, 40);
+    self.pauseButton.titleLabel.font =  [UIFont fontWithName:@"Helvetica Neue Bold" size:24];
+    [self.pauseButton setTitleColor: UIColorFromRGB(0xff0000) forState:UIControlStateNormal];
+    self.pauseButton.layer.borderColor = [[UIColor clearColor] CGColor];
+    [self.pauseButton setTitle:@"||" forState:UIControlStateNormal];
+    [self.pauseButton addTarget:self action:@selector(pauseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.pauseButton];
     
-    self.timeBarTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countdownTimeBar) userInfo:nil repeats:YES];
-    self.addCellsTimer = [NSTimer scheduledTimerWithTimeInterval:.3 target:self selector:@selector(addNewCells) userInfo:nil repeats:YES];
+
+    if (self.gameType == 0) {
+        self.timeBar = [CALayer new];
+        self.timeBar.backgroundColor = [[UIColor redColor] CGColor];
+        self.timeBar.frame = CGRectMake(0,0, self.view.frame.size.width, 5);
+        [self.view.layer addSublayer:self.timeBar];
+        [self setupTimerBarWithInterval:1.0];
+        
+    }
+    [self setupCellsTimerWithInterval:0.3];
     
+
     
     for (int c=0; c < self.numColumns; c++) {
         Column *column = [Column new];
         column.columnPosition = c;
         column.numRows = numRows;
-        for (int r=0; r < numRows/2; r++) {
+        for (int r=0; r < numRows/(self.gameType+1); r++) {
             Cell *cell = [[Cell alloc] initWithBoard:self.gameBoard withColor:[self randomColor] withRow:r withColumn:c withSize:self.gameBoard.frame.size.width / self.numColumns];
             cell.isFalling = NO;
             [self.gameBoard frameEachCellWithCell:cell];
@@ -155,6 +183,25 @@
 {
     [super viewDidUnload];
 }
+
+
+-(void) setupTimerBarWithInterval:(double) interval  {
+    self.timeBarTimer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(countdownTimeBar) userInfo:nil repeats:YES];
+}
+
+-(void) setupCellsTimerWithInterval:(double) interval {
+    self.addCellsTimer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(addNewCells) userInfo:nil repeats:YES];
+    
+}
+-(void) pauseButtonPressed:(UIButton*) button {
+    [self.timeBarTimer invalidate];
+    [self.addCellsTimer invalidate];
+    UIAlertView *pauseAlert = [[UIAlertView alloc] initWithTitle:@"Paused" message:@"..." delegate:self cancelButtonTitle:@"Continue" otherButtonTitles:@"I give up", nil];
+    pauseAlert.tag = 1;
+    [pauseAlert show];
+}
+
+
 -(UIColor *)randomColor
 {
     NSArray *arrayOfColors = [NSArray new];

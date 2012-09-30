@@ -90,11 +90,12 @@ typedef void (^animationCompletionBlock)(void);
         double startPosition = cell.cellLayer.position.y + (cell.size / 2);
 //        double startPosition = self.frame.size.height -  columnToAddTo.numRows * cell.size;
         double endPosition = self.frame.size.height - (cell.size * [columnToAddTo.cells count] - cell.size/2);
-        [self animateCellAsItDrops:cell withStartPosition:startPosition withEndPosition:endPosition withSpeed:.03];
+        
+        //[self insertSublayer:cell.cellLayer above:self];
+        [self animateCellAsItDrops:cell withStartPosition:startPosition withEndPosition:endPosition withSpeed:.003];
     }
-    else {
+    if ([columnToAddTo.cells count] >= columnToAddTo.numRows) {
         [self.gameViewController lossByBlocks];
-//        NSLog(@"YOU LOSE");
     }
 }
 -(void)animateCellAsItDrops:(Cell*)cell withStartPosition:(double)startPosition withEndPosition:(double)endPosition withSpeed:(double)speed
@@ -206,7 +207,7 @@ typedef void (^animationCompletionBlock)(void);
     for (Cell *cellToChange in cellsToChange) {
         if (!cellToChange.isFalling) {
             double endPosition =  self.bounds.size.height - cellToChange.size*(cellToChange.row+1) + (cellToChange.size/2.0);
-            [self animateCellAsItDrops:cellToChange withStartPosition:cellToChange.cellLayer.position.y withEndPosition:endPosition withSpeed:.02];
+            [self animateCellAsItDrops:cellToChange withStartPosition:cellToChange.cellLayer.position.y withEndPosition:endPosition withSpeed:.002];
         }
     }
     

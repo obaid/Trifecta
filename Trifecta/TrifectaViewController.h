@@ -10,5 +10,7 @@
 
 @interface TrifectaViewController : UIViewController
 - (IBAction)startButtonPressed:(UIButton *)sender;
+- (IBAction)gameTypeValueChanged:(UISegmentedControl *)sender;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *gameTypeSegmentedControl;
 
 @end
