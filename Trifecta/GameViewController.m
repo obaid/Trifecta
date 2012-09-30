@@ -132,7 +132,8 @@
     self.gameBoard.gameViewController = self;
     
     [self.view addSubview:self.gameBoard];
-        
+    int randomSeedNumber = arc4random();
+    srand(42);
     self.scoreTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.view.frame.size.width -20, 40)];
     self.scoreTextLabel.font = [UIFont fontWithName:@"Helvetica Neue Light" size:24];
     self.scoreTextLabel.textColor = UIColorFromRGB(0xFF0095);
@@ -207,15 +208,15 @@
     NSArray *arrayOfColors = [NSArray new];
     if (self.numColumns < 10) {
         arrayOfColors = @[UIColorFromRGB(0xAD00FF), UIColorFromRGB(0xFF0095), UIColorFromRGB(0x0040FF)];
-        return [arrayOfColors objectAtIndex:arc4random() % 3];
+        return [arrayOfColors objectAtIndex:rand() % 3];
         
     } else if (self.numColumns < 20){
         arrayOfColors = @[UIColorFromRGB(0x12C100), UIColorFromRGB(0xAD00FF), UIColorFromRGB(0xFF0095), UIColorFromRGB(0x0040FF)];
-        return [arrayOfColors objectAtIndex:arc4random() % 4];
+        return [arrayOfColors objectAtIndex:rand() % 4];
         
     } else {
         arrayOfColors = @[UIColorFromRGB(0xAD00FF), UIColorFromRGB(0xFF0095), UIColorFromRGB(0x0040FF), UIColorFromRGB(0x12C100), UIColorFromRGB(0xFF9000), UIColorFromRGB(0xFFEE00)];
-        return [arrayOfColors objectAtIndex:arc4random() % 6];
+        return [arrayOfColors objectAtIndex:rand() % 6];
         
     }
     
