@@ -218,6 +218,7 @@ typedef void (^animationCompletionBlock)(void);
     [CATransaction begin];
     dispatch_async(dispatch_get_main_queue(), ^{
         for (Cell *cell in cells) {
+//            [self animateCellUponDeletion:cell];
             [self deleteCell:(Cell *)cell];
         }
     });
@@ -227,25 +228,25 @@ typedef void (^animationCompletionBlock)(void);
 - (void)animateCellUponDeletion:(Cell *)cell
 {
     [CATransaction begin];
-//    CAKeyframeAnimation *bounce = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-//    CATransform3D forward = CATransform3DMakeScale(9.3, 9.3, 21);
-//    [bounce setValues:@[                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         [NSValue valueWithCATransform3D:forward]]
-//     ];
+    CAKeyframeAnimation *bounce = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+    CATransform3D forward = CATransform3DMakeScale(1.3, 1.3, 21);
+    [bounce setValues:@[                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         [NSValue valueWithCATransform3D:forward]]
+     ];
     // Set the duration
-//    [bounce setDuration:1110];
+    [bounce setDuration:1110];
     // Animate the layer
     dispatch_async(dispatch_get_main_queue(), ^{
-//        [[cell cellLayer] addAnimation:bounce forKey:@"bounceAnimation"];
+        [[cell cellLayer] addAnimation:bounce forKey:@"bounceAnimation"];
         [CATransaction setCompletionBlock:^{
             [self deleteCell:(Cell *)cell];
         }];
     });
-//    CAKeyframeAnimation *changeOpacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
-//    [changeOpacity setDuration:0.1];
-//    [changeOpacity setValues:@[@1.0, @0.5, @0.0]];
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//    [[cell cellLayer] addAnimation:changeOpacity forKey:@"changeOpacity"];
-//    });
+    CAKeyframeAnimation *changeOpacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
+    [changeOpacity setDuration:0.1];
+    [changeOpacity setValues:@[@1.0, @0.5, @0.0]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+    [[cell cellLayer] addAnimation:changeOpacity forKey:@"changeOpacity"];
+    });
 
     [CATransaction commit];
     
