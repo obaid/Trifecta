@@ -11,11 +11,10 @@
 
 @interface TrifectaViewController ()
 @property (nonatomic) int gameType;
+@property (nonatomic) int boardSize;
 @end
 
 @implementation TrifectaViewController
-
-
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -23,6 +22,7 @@
     if (self) {
         // Custom initialization
         self.gameType = 0;
+        self.boardSize = 8;
     }
     return self;
 }
@@ -35,28 +35,32 @@
 
 - (void)viewDidUnload
 {
-    [self setGameTypeSegmentedControl:nil];
     [super viewDidUnload];
+}
+
+- (IBAction)boardSizeChanged:(UISegmentedControl *)sender {
+    if ([sender selectedSegmentIndex] == 0) {
+        self.boardSize = 8;
+    } else if ([sender selectedSegmentIndex] == 1) {
+        self.boardSize = 14;
+    } else if ([sender selectedSegmentIndex] == 2) {
+        self.boardSize = 20;
+    } else if ([sender selectedSegmentIndex] == 3) {
+        self.boardSize = 40;
+    }
+
 }
 
 - (IBAction)startButtonPressed:(UIButton *)sender {
     
     GameViewController *gameViewController = [GameViewController new];
     gameViewController.gameType = self.gameType;
-    if (sender.tag == 0) {
-        gameViewController.numColumns = 8;
-    } else if (sender.tag == 1) {
-        gameViewController.numColumns = 14;
-    } else if (sender.tag == 2) {
-        gameViewController.numColumns = 20;
-    } else {
-        gameViewController.numColumns = 40;
-    }
+    gameViewController.numColumns = self.boardSize;
     [self presentModalViewController:gameViewController animated:YES];
 }
 
 - (IBAction)gameTypeValueChanged:(UISegmentedControl *)sender {
-    if ([self.gameTypeSegmentedControl selectedSegmentIndex] == 0) {
+    if ([sender selectedSegmentIndex] == 0) {
         self.gameType = 0;
     } else {
         self.gameType = 1;

@@ -11,7 +11,7 @@
 #import "GameBoardView.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface GameViewController () <UIAlertViewDelegate>
+@interface GameViewController () <UIAlertViewDelegate, UIActionSheetDelegate>
 @property (nonatomic, strong) GameBoardView* gameBoard;
 @property (nonatomic) UILabel *scoreTextLabel;
 @property (nonatomic) UIButton *pauseButton;
@@ -142,13 +142,14 @@
     [self.view addSubview:self.scoreTextLabel];
     
     // LATER ADD CUSTOM PAUSE IMAGE HERE
-    self.pauseButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-                
-    self.pauseButton.frame = CGRectMake(self.view.frame.size.width -40, 10, 30, 40);
-    self.pauseButton.titleLabel.font =  [UIFont fontWithName:@"Helvetica Neue Bold" size:24];
-    [self.pauseButton setTitleColor: UIColorFromRGB(0xff0000) forState:UIControlStateNormal];
-    self.pauseButton.layer.borderColor = [[UIColor clearColor] CGColor];
-    [self.pauseButton setTitle:@"||" forState:UIControlStateNormal];
+    self.pauseButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    self.pauseButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pause.png"]];
+    [self.pauseButton setBackgroundImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
+    self.pauseButton.frame = CGRectMake(self.view.frame.size.width -30, 20, 20 , 20);
+//    self.pauseButton.titleLabel.font =  [UIFont fontWithName:@"Helvetica Neue Bold" size:24];
+//    [self.pauseButton setTitleColor: UIColorFromRGB(0xff0000) forState:UIControlStateNormal];
+//    self.pauseButton.layer.borderColor = [[UIColor clearColor] CGColor];
+//    [self.pauseButton setTitle:@"||" forState:UIControlStateNormal];
     [self.pauseButton addTarget:self action:@selector(pauseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.pauseButton];
     
@@ -197,11 +198,24 @@
 -(void) pauseButtonPressed:(UIButton*) button {
     [self.timeBarTimer invalidate];
     [self.addCellsTimer invalidate];
-    UIAlertView *pauseAlert = [[UIAlertView alloc] initWithTitle:@"Paused" message:@"..." delegate:self cancelButtonTitle:@"Continue" otherButtonTitles:@"I give up", nil];
-    pauseAlert.tag = 1;
-    [pauseAlert show];
+    
+    //Use an action sheet instead of an alertview
+    UIActionSheet *pauseAction = [[UIActionSheet alloc] initWithTitle:@"TRIFECTA PAUSED" delegate:self cancelButtonTitle:@"I Give Up" destructiveButtonTitle:nil otherButtonTitles: @"Continue Playing",nil];
+    [pauseAction showInView:self.view];
+//    UIAlertView *pauseAlert = [[UIAlertView alloc] initWithTitle:@"Trifecta" message:@"Game is Paused" delegate:self cancelButtonTitle:@"Continue" otherButtonTitles:@"I give up", nil];
+//    pauseAlert.tag = 1;
+//    [pauseAlert show];
 }
 
+-(void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [self setupCellsTimerWithInterval:0.3];
+        [self setupTimerBarWithInterval:1.0];
+    } else if (buttonIndex == 1){
+        //end game
+        [self dismissModalViewControllerAnimated:YES];
+    }
+}
 
 -(UIColor *)randomColor
 {

@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface TrifectaViewController : UIViewController
+- (IBAction)boardSizeChanged:(UISegmentedControl *)sender;
 - (IBAction)startButtonPressed:(UIButton *)sender;
 - (IBAction)gameTypeValueChanged:(UISegmentedControl *)sender;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *gameTypeSegmentedControl;
 
 @end
