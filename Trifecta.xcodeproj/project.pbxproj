@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		250C826F16197A1100EE933B /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 250C826E16197A1100EE933B /* pause.png */; };
+		252F24C2161984D6001B3EDB /* pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 252F24C0161984D6001B3EDB /* pause@2x.png */; };
+		252F24CA1619998B001B3EDB /* start.png in Resources */ = {isa = PBXBuildFile; fileRef = 252F24C81619998B001B3EDB /* start.png */; };
+		252F24CB1619998B001B3EDB /* start@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 252F24C91619998B001B3EDB /* start@2x.png */; };
+		252F24CD16199BB1001B3EDB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 252F24CC16199BB1001B3EDB /* Default.png */; };
+		252F24CF16199BBD001B3EDB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 252F24CE16199BBD001B3EDB /* Default@2x.png */; };
 		2563580A15F80FDC00CA812E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2563580915F80FDC00CA812E /* UIKit.framework */; };
 		2563580C15F80FDC00CA812E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2563580B15F80FDC00CA812E /* Foundation.framework */; };
 		2563580E15F80FDC00CA812E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2563580D15F80FDC00CA812E /* CoreGraphics.framework */; };
@@ -21,13 +27,17 @@
 		2563583515F83A9600CA812E /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2563583415F83A9500CA812E /* GameViewController.m */; };
 		2563584115F98F2C00CA812E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2563584015F98F2C00CA812E /* Icon.png */; };
 		2563584315F98F3000CA812E /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2563584215F98F3000CA812E /* Icon@2x.png */; };
-		2563584415F9906100CA812E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2563583E15F98F1A00CA812E /* Default.png */; };
-		2563584615F9906600CA812E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2563584515F9906600CA812E /* Default@2x.png */; };
 		2563584B15F9936200CA812E /* TrifectaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2563584915F9936100CA812E /* TrifectaViewController.m */; };
 		2563584C15F9936200CA812E /* TrifectaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2563584A15F9936100CA812E /* TrifectaViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		250C826E16197A1100EE933B /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = Trifecta/pause.png; sourceTree = "<group>"; };
+		252F24C0161984D6001B3EDB /* pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pause@2x.png"; path = "Trifecta/pause@2x.png"; sourceTree = "<group>"; };
+		252F24C81619998B001B3EDB /* start.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = start.png; path = Trifecta/start.png; sourceTree = "<group>"; };
+		252F24C91619998B001B3EDB /* start@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "start@2x.png"; path = "Trifecta/start@2x.png"; sourceTree = "<group>"; };
+		252F24CC16199BB1001B3EDB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		252F24CE16199BBD001B3EDB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		2563580515F80FDC00CA812E /* Trifecta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trifecta.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2563580915F80FDC00CA812E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2563580B15F80FDC00CA812E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -48,10 +58,8 @@
 		2563583115F81FA000CA812E /* GameBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameBoardView.m; sourceTree = "<group>"; };
 		2563583315F83A9500CA812E /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		2563583415F83A9500CA812E /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
-		2563583E15F98F1A00CA812E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		2563584015F98F2C00CA812E /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		2563584215F98F3000CA812E /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		2563584515F9906600CA812E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		2563584815F9936100CA812E /* TrifectaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrifectaViewController.h; sourceTree = "<group>"; };
 		2563584915F9936100CA812E /* TrifectaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrifectaViewController.m; sourceTree = "<group>"; };
 		2563584A15F9936100CA812E /* TrifectaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrifectaViewController.xib; sourceTree = "<group>"; };
@@ -138,10 +146,14 @@
 		2563584715F9933200CA812E /* images */ = {
 			isa = PBXGroup;
 			children = (
-				2563584515F9906600CA812E /* Default@2x.png */,
+				252F24CE16199BBD001B3EDB /* Default@2x.png */,
+				252F24CC16199BB1001B3EDB /* Default.png */,
+				252F24C81619998B001B3EDB /* start.png */,
+				252F24C91619998B001B3EDB /* start@2x.png */,
+				252F24C0161984D6001B3EDB /* pause@2x.png */,
+				250C826E16197A1100EE933B /* pause.png */,
 				2563584215F98F3000CA812E /* Icon@2x.png */,
 				2563584015F98F2C00CA812E /* Icon.png */,
-				2563583E15F98F1A00CA812E /* Default.png */,
 			);
 			name = images;
 			path = ..;
@@ -201,9 +213,13 @@
 				2563581415F80FDC00CA812E /* InfoPlist.strings in Resources */,
 				2563584115F98F2C00CA812E /* Icon.png in Resources */,
 				2563584315F98F3000CA812E /* Icon@2x.png in Resources */,
-				2563584415F9906100CA812E /* Default.png in Resources */,
-				2563584615F9906600CA812E /* Default@2x.png in Resources */,
 				2563584C15F9936200CA812E /* TrifectaViewController.xib in Resources */,
+				250C826F16197A1100EE933B /* pause.png in Resources */,
+				252F24C2161984D6001B3EDB /* pause@2x.png in Resources */,
+				252F24CA1619998B001B3EDB /* start.png in Resources */,
+				252F24CB1619998B001B3EDB /* start@2x.png in Resources */,
+				252F24CD16199BB1001B3EDB /* Default.png in Resources */,
+				252F24CF16199BBD001B3EDB /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +344,7 @@
 				2563581F15F80FDC00CA812E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
