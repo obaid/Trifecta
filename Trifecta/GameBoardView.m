@@ -77,7 +77,7 @@ typedef void (^animationCompletionBlock)(void);
 -(void) addNewCellWithColor:(UIColor *)color withSize:(double)size
 {
     self.counter ++;
-    int columnNumberToAddTo = arc4random() % self.gameViewController.numColumns;
+    int columnNumberToAddTo = rand() % self.gameViewController.numColumns;
     //check if column is full
     Column *columnToAddTo = [self.columns objectAtIndex:columnNumberToAddTo];
     if ([columnToAddTo.cells count] < columnToAddTo.numRows) {
@@ -195,31 +195,36 @@ typedef void (^animationCompletionBlock)(void);
     NSMutableSet *cellsToChange = [NSMutableSet new];
     for (Cell* cell in cells) {
         Column *columnCellIsIn = [self.columns objectAtIndex:cell.column];
-        for (int i = cell.row+1; i < [columnCellIsIn.cells count]; i++) {
+        int numCellsInColumn = [columnCellIsIn.cells count];
+        for (int i = cell.row+1; i < numCellsInColumn; i++) {
             Cell* cellToChange = [columnCellIsIn.cells objectAtIndex:i];
             [cellsToChange addObject:cellToChange];
-            cellToChange.row -= 1;
+//            cellToChange.row -= 1;
         }
     }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [self animateCellsUponDeletion:cells];
+        [self animateCellsUponDeletion:cells withCellsToChange:cellsToChange];
     });
-    for (Cell *cellToChange in cellsToChange) {
-        if (!cellToChange.isFalling) {
-            double endPosition =  self.bounds.size.height - cellToChange.size*(cellToChange.row+1) + (cellToChange.size/2.0);
-            [self animateCellAsItDrops:cellToChange withStartPosition:cellToChange.cellLayer.position.y withEndPosition:endPosition withSpeed:.002];
-        }
-    }
+
     
 
 }
--(void)animateCellsUponDeletion:(NSArray *)cells
+-(void)animateCellsUponDeletion:(NSArray *)cells withCellsToChange:(NSMutableSet *)cellsToChange
 {
     [CATransaction begin];
     dispatch_async(dispatch_get_main_queue(), ^{
         for (Cell *cell in cells) {
 //            [self animateCellUponDeletion:cell];
             [self deleteCell:(Cell *)cell];
+        }
+        for (Cell *cellToChange in cellsToChange) {
+            cellToChange.row = [[[self.columns objectAtIndex:cellToChange.column] cells] indexOfObject:cellToChange];
+        }
+        for (Cell *cellToChange in cellsToChange) {
+            if (!cellToChange.isFalling) {
+                double endPosition =  self.bounds.size.height - cellToChange.size*(cellToChange.row+1) + (cellToChange.size/2.0);
+                [self animateCellAsItDrops:cellToChange withStartPosition:cellToChange.cellLayer.position.y withEndPosition:endPosition withSpeed:.002];
+            }
         }
     });
     [CATransaction commit];
