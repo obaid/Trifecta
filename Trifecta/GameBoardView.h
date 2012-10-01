@@ -20,4 +20,5 @@
 -(void) frameEachCellWithCell:(Cell*) cell;
 -(void) touchedAtPoint:(CGPoint) point andEndedMove:(BOOL)didEndMove;
 -(void) addNewCellWithColor:(UIColor *)color withSize:(double)size;
+-(void) drawGameBoard;
 @end

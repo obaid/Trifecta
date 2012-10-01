@@ -50,7 +50,8 @@ typedef void (^animationCompletionBlock)(void);
 -(void) frameEachCellWithCell:(Cell*) cell {
     [CATransaction begin];
     [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
-    cell.cellLayer.frame = CGRectMake(cell.size*cell.column, self.bounds.size.height - cell.size*(cell.row+1), cell.size, cell.size);
+    int cellRow = [[[self.columns objectAtIndex:cell.column] cells] indexOfObject:cell];
+    cell.cellLayer.frame = CGRectMake(cell.size*cell.column, self.bounds.size.height - cell.size*(cellRow+1), cell.size, cell.size);
     [CATransaction commit];
 }
 
@@ -105,17 +106,18 @@ typedef void (^animationCompletionBlock)(void);
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     animation.duration = (endPosition - startPosition)*speed /**(self.counter/10)))*/;
     [animation setFromValue:@(startPosition)];
-    int rowToGoTo = cell.row;
+    int rowToGoTo = [[[self.columns objectAtIndex:cell.column] cells] indexOfObject:cell];
     animationCompletionBlock theBlock = ^void(void)
     {
+        int cellRow = [[[self.columns objectAtIndex:cell.column] cells] indexOfObject:cell];
         //Code to execute after the animation completes 
-        if (cell.row == rowToGoTo) {
+        if (cellRow == rowToGoTo) {
             cell.isFalling = NO;
         } else {
             //repeat animation
             cell.isFalling = YES;    
             double newStartPosition = endPosition;
-            double newEndPosition = endPosition + (cell.size*(rowToGoTo-cell.row));
+            double newEndPosition = endPosition + (cell.size*(rowToGoTo-cellRow));
             [self animateCellAsItDrops:cell withStartPosition:newStartPosition withEndPosition:newEndPosition withSpeed:speed];
         }
     };
@@ -195,8 +197,9 @@ typedef void (^animationCompletionBlock)(void);
     NSMutableSet *cellsToChange = [NSMutableSet new];
     for (Cell* cell in cells) {
         Column *columnCellIsIn = [self.columns objectAtIndex:cell.column];
+        int cellRow = [[columnCellIsIn cells] indexOfObject:cell];
         int numCellsInColumn = [columnCellIsIn.cells count];
-        for (int i = cell.row+1; i < numCellsInColumn; i++) {
+        for (int i = cellRow+1; i < numCellsInColumn; i++) {
             Cell* cellToChange = [columnCellIsIn.cells objectAtIndex:i];
             [cellsToChange addObject:cellToChange];
 //            cellToChange.row -= 1;
@@ -221,8 +224,9 @@ typedef void (^animationCompletionBlock)(void);
             cellToChange.row = [[[self.columns objectAtIndex:cellToChange.column] cells] indexOfObject:cellToChange];
         }
         for (Cell *cellToChange in cellsToChange) {
+            int cellToChangeRow = [[[self.columns objectAtIndex:cellToChange.column] cells] indexOfObject:cellToChange];
             if (!cellToChange.isFalling) {
-                double endPosition =  self.bounds.size.height - cellToChange.size*(cellToChange.row+1) + (cellToChange.size/2.0);
+                double endPosition =  self.bounds.size.height - cellToChange.size*(cellToChangeRow+1) + (cellToChange.size/2.0);
                 [self animateCellAsItDrops:cellToChange withStartPosition:cellToChange.cellLayer.position.y withEndPosition:endPosition withSpeed:.002];
             }
         }

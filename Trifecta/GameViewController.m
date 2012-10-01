@@ -172,12 +172,13 @@
         for (int r=0; r < numRows/(self.gameType+1); r++) {
             Cell *cell = [[Cell alloc] initWithBoard:self.gameBoard withColor:[self randomColor] withRow:r withColumn:c withSize:self.gameBoard.frame.size.width / self.numColumns];
             cell.isFalling = NO;
-            [self.gameBoard frameEachCellWithCell:cell];
+//            [self.gameBoard frameEachCellWithCell:cell];
             [column.cells addObject:cell];
         }
         [tempColumns addObject:column];
     }
     self.gameBoard.columns = tempColumns;
+    [self.gameBoard drawGameBoard];
 }
 
 - (void)viewDidUnload
