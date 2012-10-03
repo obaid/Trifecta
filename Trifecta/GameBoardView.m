@@ -32,6 +32,7 @@ typedef void (^animationCompletionBlock)(void);
         self.score = 0;
         //self.backgroundColor = UIColorFromRGB(0xD7F6FD);
         self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"hex.png"]];
+        self.clipsToBounds = YES;
     }
     return self;
 }
