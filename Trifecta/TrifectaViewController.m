@@ -15,6 +15,8 @@
 @end
 
 @implementation TrifectaViewController
+@synthesize boardSizeSegmentedControl = _boardSizeSegmentedControl;
+@synthesize gameTypeSegmentedControl = _gameTypeSegmentedControl;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,10 +33,18 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    UIFont *font = [UIFont fontWithName:@"04b03" size:14];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
+                                                           forKey:UITextAttributeFont];
+    
+    [self.gameTypeSegmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    [self.boardSizeSegmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
 }
 
 - (void)viewDidUnload
 {
+    [self setBoardSizeSegmentedControl:nil];
+    [self setGameTypeSegmentedControl:nil];
     [super viewDidUnload];
 }
 

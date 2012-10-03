@@ -145,7 +145,7 @@
     int randomSeedNumber = arc4random();
     srand(42);
     self.scoreTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.view.frame.size.width -20, 40)];
-    self.scoreTextLabel.font = [UIFont fontWithName:@"Helvetica Neue Light" size:24];
+    self.scoreTextLabel.font = [UIFont fontWithName:@"04b03" size:24];
     self.scoreTextLabel.textColor = UIColorFromRGB(0xFF0095);
     self.scoreTextLabel.text=[NSString stringWithFormat:@"Score: %d",self.gameBoard.score];
     self.scoreTextLabel.textAlignment = UITextAlignmentCenter;

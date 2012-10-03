@@ -147,7 +147,7 @@ typedef void (^animationCompletionBlock)(void);
 -(void) addBonusTime:(int) bonus {
     // draw bonus
     CATextLayer *bonusLayer = [CATextLayer new];
-    [bonusLayer setFont:@"Helvetica Neue Bold"];
+    [bonusLayer setFont:@"04b03"];
     [bonusLayer setFontSize:14];
     bonusLayer.frame = CGRectMake(0,0, 150, 50);
     bonusLayer.contentsScale = [[UIScreen mainScreen] scale];

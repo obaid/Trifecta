@@ -13,6 +13,7 @@
 		252F24CB1619998B001B3EDB /* start@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 252F24C91619998B001B3EDB /* start@2x.png */; };
 		252F24CD16199BB1001B3EDB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 252F24CC16199BB1001B3EDB /* Default.png */; };
 		252F24CF16199BBD001B3EDB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 252F24CE16199BBD001B3EDB /* Default@2x.png */; };
+		254381DD161CD34C0071A415 /* bitfont.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 254381DB161CCE670071A415 /* bitfont.TTF */; };
 		2563580A15F80FDC00CA812E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2563580915F80FDC00CA812E /* UIKit.framework */; };
 		2563580C15F80FDC00CA812E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2563580B15F80FDC00CA812E /* Foundation.framework */; };
 		2563580E15F80FDC00CA812E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2563580D15F80FDC00CA812E /* CoreGraphics.framework */; };
@@ -39,6 +40,7 @@
 		252F24C91619998B001B3EDB /* start@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "start@2x.png"; path = "Trifecta/start@2x.png"; sourceTree = "<group>"; };
 		252F24CC16199BB1001B3EDB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		252F24CE16199BBD001B3EDB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		254381DB161CCE670071A415 /* bitfont.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = bitfont.TTF; sourceTree = "<group>"; };
 		2563580515F80FDC00CA812E /* Trifecta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trifecta.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2563580915F80FDC00CA812E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2563580B15F80FDC00CA812E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -137,6 +139,7 @@
 		2563581015F80FDC00CA812E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				254381DB161CCE670071A415 /* bitfont.TTF */,
 				2563581115F80FDC00CA812E /* Trifecta-Info.plist */,
 				2563581215F80FDC00CA812E /* InfoPlist.strings */,
 				2563581515F80FDC00CA812E /* main.m */,
@@ -213,6 +216,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				254381DD161CD34C0071A415 /* bitfont.TTF in Resources */,
 				2563581415F80FDC00CA812E /* InfoPlist.strings in Resources */,
 				2563584115F98F2C00CA812E /* Icon.png in Resources */,
 				2563584315F98F3000CA812E /* Icon@2x.png in Resources */,
