@@ -14,5 +14,6 @@
 - (IBAction)gameTypeValueChanged:(UISegmentedControl *)sender;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *boardSizeSegmentedControl;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameTypeSegmentedControl;
+- (IBAction)infoButtonPressed:(UIButton *)sender;
 
 @end

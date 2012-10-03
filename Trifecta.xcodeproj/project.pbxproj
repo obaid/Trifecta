@@ -14,6 +14,9 @@
 		252F24CD16199BB1001B3EDB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 252F24CC16199BB1001B3EDB /* Default.png */; };
 		252F24CF16199BBD001B3EDB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 252F24CE16199BBD001B3EDB /* Default@2x.png */; };
 		254381DD161CD34C0071A415 /* bitfont.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 254381DB161CCE670071A415 /* bitfont.TTF */; };
+		254381E0161CE02B0071A415 /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 254381DF161CE02B0071A415 /* InfoViewController.m */; };
+		254381E3161CE4B50071A415 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 254381E1161CE4B50071A415 /* back.png */; };
+		254381E4161CE4B50071A415 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 254381E2161CE4B50071A415 /* back@2x.png */; };
 		2563580A15F80FDC00CA812E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2563580915F80FDC00CA812E /* UIKit.framework */; };
 		2563580C15F80FDC00CA812E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2563580B15F80FDC00CA812E /* Foundation.framework */; };
 		2563580E15F80FDC00CA812E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2563580D15F80FDC00CA812E /* CoreGraphics.framework */; };
@@ -41,6 +44,10 @@
 		252F24CC16199BB1001B3EDB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		252F24CE16199BBD001B3EDB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		254381DB161CCE670071A415 /* bitfont.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = bitfont.TTF; sourceTree = "<group>"; };
+		254381DE161CE02B0071A415 /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
+		254381DF161CE02B0071A415 /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
+		254381E1161CE4B50071A415 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back.png; path = Trifecta/back.png; sourceTree = "<group>"; };
+		254381E2161CE4B50071A415 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back@2x.png"; path = "Trifecta/back@2x.png"; sourceTree = "<group>"; };
 		2563580515F80FDC00CA812E /* Trifecta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trifecta.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2563580915F80FDC00CA812E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2563580B15F80FDC00CA812E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -128,6 +135,8 @@
 				2563584815F9936100CA812E /* TrifectaViewController.h */,
 				2563584915F9936100CA812E /* TrifectaViewController.m */,
 				2563584A15F9936100CA812E /* TrifectaViewController.xib */,
+				254381DE161CE02B0071A415 /* InfoViewController.h */,
+				254381DF161CE02B0071A415 /* InfoViewController.m */,
 				2563581815F80FDC00CA812E /* AppDelegate.h */,
 				2563581915F80FDC00CA812E /* AppDelegate.m */,
 				2563584715F9933200CA812E /* images */,
@@ -151,6 +160,8 @@
 		2563584715F9933200CA812E /* images */ = {
 			isa = PBXGroup;
 			children = (
+				254381E1161CE4B50071A415 /* back.png */,
+				254381E2161CE4B50071A415 /* back@2x.png */,
 				25D5A4C6161C3C6600D0B13B /* hex.png */,
 				252F24CE16199BBD001B3EDB /* Default@2x.png */,
 				252F24CC16199BB1001B3EDB /* Default.png */,
@@ -228,6 +239,8 @@
 				252F24CD16199BB1001B3EDB /* Default.png in Resources */,
 				252F24CF16199BBD001B3EDB /* Default@2x.png in Resources */,
 				25D5A4C7161C3C6600D0B13B /* hex.png in Resources */,
+				254381E3161CE4B50071A415 /* back.png in Resources */,
+				254381E4161CE4B50071A415 /* back@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,6 +258,7 @@
 				2563583215F81FA000CA812E /* GameBoardView.m in Sources */,
 				2563583515F83A9600CA812E /* GameViewController.m in Sources */,
 				2563584B15F9936200CA812E /* TrifectaViewController.m in Sources */,
+				254381E0161CE02B0071A415 /* InfoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

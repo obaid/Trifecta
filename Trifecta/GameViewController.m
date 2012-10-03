@@ -110,13 +110,7 @@
             }
        }
 }
-//-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-//{
-//    [self tearDownGame];
-//    [self setUpGame];
-////    [self dismissModalViewControllerAnimated:YES];
-//    
-//}
+
 -(void)tearDownGame
 {
 //    self.view.layer.sublayers = nil;
@@ -143,7 +137,7 @@
     
     [self.view addSubview:self.gameBoard];
     int randomSeedNumber = arc4random();
-    srand(42);
+    srand(randomSeedNumber);
     self.scoreTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.view.frame.size.width -20, 40)];
     self.scoreTextLabel.font = [UIFont fontWithName:@"04b03" size:24];
     self.scoreTextLabel.textColor = UIColorFromRGB(0xFF0095);
@@ -207,9 +201,7 @@
     //Use an action sheet instead of an alertview
     UIActionSheet *pauseAction = [[UIActionSheet alloc] initWithTitle:@"TRIFECTA PAUSED" delegate:self cancelButtonTitle:@"I Give Up" destructiveButtonTitle:nil otherButtonTitles: @"Continue Playing",nil];
     [pauseAction showInView:self.view];
-//    UIAlertView *pauseAlert = [[UIAlertView alloc] initWithTitle:@"Trifecta" message:@"Game is Paused" delegate:self cancelButtonTitle:@"Continue" otherButtonTitles:@"I give up", nil];
-//    pauseAlert.tag = 1;
-//    [pauseAlert show];
+
 }
 
 -(void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {

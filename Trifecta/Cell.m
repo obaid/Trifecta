@@ -29,15 +29,10 @@
         self.cellLayer.backgroundColor = [self.color CGColor];
         self.cellLayer.borderWidth = 1;
         self.cellLayer.borderColor = [[UIColor whiteColor] CGColor];
-        //[self.cellLayer setNeedsDisplay];
     }
     return self;
 
 }
 
-//-(void) drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx {
-//    
-//    CGContextSetFillColorWithColor(ctx, [self.color CGColor]);
-//    CGContextFillRect(ctx, CGRectMake(self.cellLayer.bounds.origin.x, self.cellLayer.bounds.origin.y, self.size, self.size));
-//}
+
 @end

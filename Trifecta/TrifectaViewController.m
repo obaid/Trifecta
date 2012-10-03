@@ -8,6 +8,7 @@
 
 #import "TrifectaViewController.h"
 #import "GameViewController.h"
+#import "InfoViewController.h"
 
 @interface TrifectaViewController ()
 @property (nonatomic) int gameType;
@@ -76,5 +77,10 @@
         self.gameType = 1;
     }
     
+}
+- (IBAction)infoButtonPressed:(UIButton *)sender {
+    InfoViewController *infoViewController = [InfoViewController new];
+    infoViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentModalViewController:infoViewController animated:YES];
 }
 @end
