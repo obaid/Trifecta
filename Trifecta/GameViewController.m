@@ -15,8 +15,7 @@
 @property (nonatomic, strong) GameBoardView* gameBoard;
 @property (nonatomic) UILabel *scoreTextLabel;
 @property (nonatomic) UIButton *pauseButton;
-@property (nonatomic) CALayer *timeBar;
-@property (nonatomic) int timePast;
+@property (nonatomic) CALayer *timeBar; 
 @property (nonatomic) NSInteger highScore;
 @property (nonatomic, strong) NSTimer *timeBarTimer;
 @property (nonatomic, strong) NSTimer *addCellsTimer;
@@ -141,15 +140,9 @@
     self.scoreTextLabel.textAlignment = UITextAlignmentCenter;
     [self.view addSubview:self.scoreTextLabel];
     
-    // LATER ADD CUSTOM PAUSE IMAGE HERE
     self.pauseButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    self.pauseButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"pause.png"]];
     [self.pauseButton setBackgroundImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
     self.pauseButton.frame = CGRectMake(self.view.frame.size.width -30, 20, 20 , 20);
-//    self.pauseButton.titleLabel.font =  [UIFont fontWithName:@"Helvetica Neue Bold" size:24];
-//    [self.pauseButton setTitleColor: UIColorFromRGB(0xff0000) forState:UIControlStateNormal];
-//    self.pauseButton.layer.borderColor = [[UIColor clearColor] CGColor];
-//    [self.pauseButton setTitle:@"||" forState:UIControlStateNormal];
     [self.pauseButton addTarget:self action:@selector(pauseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.pauseButton];
     

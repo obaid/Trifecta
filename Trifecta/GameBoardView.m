@@ -19,7 +19,7 @@ typedef void (^animationCompletionBlock)(void);
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @interface GameBoardView ()
-
+@property (nonatomic) CGPoint touchPoint;
 @end
 @implementation GameBoardView
 
@@ -56,6 +56,7 @@ typedef void (^animationCompletionBlock)(void);
 }
 
 -(void) touchedAtPoint:(CGPoint) point andEndedMove:(BOOL)didEndMove {
+    self.touchPoint = point;
     int cellAtColumnNumber = floor((point.x / self.frame.size.width) * self.gameViewController.numColumns);
     int cellAtRowNumber = floor(((self.bounds.size.height - point.y) / self.frame.size.height * self.numRows));
     if (!(cellAtRowNumber >= [[[self.columns objectAtIndex:cellAtColumnNumber] cells] count])) {
@@ -136,6 +137,41 @@ typedef void (^animationCompletionBlock)(void);
 -(void) calculateScore:(int) totalToDelete {
     int scoredPoints = totalToDelete*totalToDelete*100;
     self.score += scoredPoints;
+    if (totalToDelete > 6) {
+        [self addBonusTime:totalToDelete-6];
+    }
+    
+}
+
+-(void) addBonusTime:(int) bonus {
+    // draw bonus
+    [CATransaction begin];
+    CAKeyframeAnimation *changeOpacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
+    [changeOpacity setDuration:3];
+    [changeOpacity setValues:@[@0.0, @1.0, @0.3]];
+       CATextLayer *bonusLayer = [CATextLayer new];
+
+       [bonusLayer setFont:@"Helvetica Neue Bold"];
+       [bonusLayer setFontSize:24];
+       //        bonusLayer.frame = CGRectMake(self.touchPoint.x, i, 200, 200);
+       //        bonusLayer.position = CGPointMake(self.touchPoint.x, i);
+       bonusLayer.frame = CGRectMake(self.touchPoint.x, self.touchPoint.y, 100, 300);
+       bonusLayer.position = self.touchPoint;
+       
+       [bonusLayer setString:[NSString stringWithFormat:@"x%d time bonus", bonus]];
+       [bonusLayer setForegroundColor:[[UIColor redColor] CGColor]];
+       [bonusLayer setBackgroundColor:[[UIColor clearColor] CGColor]];
+       //if (!bonusAdded) {
+       [self.layer addSublayer:bonusLayer];
+       //}
+       // bonusAdded = YES;
+       
+       //}
+       //[bonusLayer removeFromSuperlayer];
+       // increase timer
+            
+    self.gameViewController.timePast -= 5 * bonus;
+    
 }
 
 -(NSArray *) findNeighbors:(Cell *)cell withCellsToDelete:(NSMutableSet *)cellsToDelete {

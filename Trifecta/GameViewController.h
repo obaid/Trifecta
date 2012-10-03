@@ -11,5 +11,6 @@
 @interface GameViewController : UIViewController
 @property (nonatomic) int numColumns;
 @property (nonatomic) int gameType;
+@property (nonatomic) int timePast;
 -(void) lossByBlocks;
 @end
