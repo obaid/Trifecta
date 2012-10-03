@@ -30,7 +30,8 @@ typedef void (^animationCompletionBlock)(void);
         // Initialization code
         self.columns = [NSArray new];
         self.score = 0;
-        self.backgroundColor = UIColorFromRGB(0xD7F6FD);
+        //self.backgroundColor = UIColorFromRGB(0xD7F6FD);
+        self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"gplaypattern.png"]];
     }
     return self;
 }

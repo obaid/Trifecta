@@ -19,6 +19,7 @@
 @property (nonatomic) NSInteger highScore;
 @property (nonatomic, strong) NSTimer *timeBarTimer;
 @property (nonatomic, strong) NSTimer *addCellsTimer;
+@property (nonatomic) BOOL hasHighScore;
 @end
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
@@ -47,14 +48,22 @@
         self.timePast +=5;
     } else {
         [self gameOver];
+        if (self.hasHighScore) {
+            [[[UIAlertView alloc] initWithTitle:@"Time's up! Play again?\nNew high score!" message:[NSString stringWithFormat:@"Your final score was: %d", self.gameBoard.score] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
+        } else {
         [[[UIAlertView alloc] initWithTitle:@"Time's up! Play again?" message:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
+        }
         
     }
 }
 -(void) lossByBlocks {
     if (self.gameType == 1) {
         [self gameOver];
-        [[[UIAlertView alloc] initWithTitle:@"Too many blocks! Play again?" message:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
+        if (self.hasHighScore) {
+            [[[UIAlertView alloc] initWithTitle:@"Too many blocks! Play again?\nNew high score!" message:[NSString stringWithFormat:@"Your final score was: %d", self.gameBoard.score] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
+        } else {
+            [[[UIAlertView alloc] initWithTitle:@"Too many blocks! Play again?" message:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
+        }
     }
 }
 -(void) gameOver {
@@ -62,6 +71,7 @@
     [self.addCellsTimer invalidate];
     self.highScore = [self getHighScoreFromUserDefaultsForSize:self.numColumns withGameType:self.gameType];
     if (self.gameBoard.score > self.highScore) {
+        self.hasHighScore = YES;
         self.highScore = self.gameBoard.score;
         [self saveLocationsToUserDefaultsForSize:self.numColumns withGameType:self.gameType withScore:self.gameBoard.score];
     }
@@ -110,6 +120,7 @@
 -(void)tearDownGame
 {
 //    self.view.layer.sublayers = nil;
+    self.hasHighScore = NO;
     [self.gameBoard removeFromSuperview];
 }
 
