@@ -145,33 +145,70 @@ typedef void (^animationCompletionBlock)(void);
 
 -(void) addBonusTime:(int) bonus {
     // draw bonus
-    [CATransaction begin];
-    CAKeyframeAnimation *changeOpacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
-    [changeOpacity setDuration:3];
-    [changeOpacity setValues:@[@0.0, @1.0, @0.3]];
-       CATextLayer *bonusLayer = [CATextLayer new];
-
-       [bonusLayer setFont:@"Helvetica Neue Bold"];
-       [bonusLayer setFontSize:24];
-       //        bonusLayer.frame = CGRectMake(self.touchPoint.x, i, 200, 200);
-       //        bonusLayer.position = CGPointMake(self.touchPoint.x, i);
-       bonusLayer.frame = CGRectMake(self.touchPoint.x, self.touchPoint.y, 100, 300);
-       bonusLayer.position = self.touchPoint;
-       
-       [bonusLayer setString:[NSString stringWithFormat:@"x%d time bonus", bonus]];
-       [bonusLayer setForegroundColor:[[UIColor redColor] CGColor]];
-       [bonusLayer setBackgroundColor:[[UIColor clearColor] CGColor]];
-       //if (!bonusAdded) {
-       [self.layer addSublayer:bonusLayer];
-       //}
-       // bonusAdded = YES;
-       
-       //}
-       //[bonusLayer removeFromSuperlayer];
-       // increase timer
-            
+    CATextLayer *bonusLayer = [CATextLayer new];
+    
+    [bonusLayer setFont:@"Helvetica Neue Bold"];
+    [bonusLayer setFontSize:18];
+    //        bonusLayer.frame = CGRectMake(self.touchPoint.x, i, 200, 200);
+    //        bonusLayer.position = CGPointMake(self.touchPoint.x, i);
+    bonusLayer.frame = CGRectMake(self.touchPoint.x, self.touchPoint.y, 150, 30);
+    //bonusLayer.position = self.touchPoint;
+    [bonusLayer setAlignmentMode:kCAAlignmentCenter];
+    [bonusLayer setString:[NSString stringWithFormat:@"x%d time bonus", bonus]];
+    [bonusLayer setForegroundColor:[[UIColor whiteColor] CGColor]];
+    [bonusLayer setBackgroundColor:[[UIColor clearColor] CGColor]];
+    [bonusLayer setShadowColor:[[UIColor redColor] CGColor]];
+    [bonusLayer setShadowRadius:5.0];
+    //if (!bonusAdded) {
+    [self.layer addSublayer:bonusLayer];
+    [self transformLayer:bonusLayer withBonus:bonus];
+    [self translatePositionWithLayer:bonusLayer];
+    [self changeOpacityOfLayer:bonusLayer];
+    //}
+    // bonusAdded = YES;
+    
+    //}
+//    [bonusLayer removeFromSuperlayer];
+    // increase timer
+    
     self.gameViewController.timePast -= 5 * bonus;
     
+}
+-(void)changeOpacityOfLayer:(CALayer *)bonusLayer
+{
+    [CATransaction begin];
+    CAKeyframeAnimation *changeOpacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
+    [changeOpacity setDuration:2];
+    [changeOpacity setValues:@[@0.0, @1.0, @0.0]];
+    animationCompletionBlock theBlock = ^void(void)
+    {
+        [bonusLayer removeFromSuperlayer];
+    };
+    changeOpacity.delegate = self;
+    [changeOpacity setValue: theBlock forKey: kAnimationCompletionBlock];
+    [bonusLayer addAnimation:changeOpacity forKey:@"opacity"];
+    [CATransaction commit];
+}
+
+-(void)translatePositionWithLayer: (CALayer *) bonusLayer {
+    [CATransaction begin];
+    CAKeyframeAnimation *translateLayer = [CAKeyframeAnimation animationWithKeyPath:@"position.y"];
+    [translateLayer setDuration:2];
+    [translateLayer setValues:@[[NSNumber numberWithFloat: bonusLayer.position.y], [NSNumber numberWithFloat:self.frame.origin.y]]];
+    [bonusLayer addAnimation:translateLayer forKey:@"position.y"];
+    [CATransaction commit];
+}
+-(void) transformLayer: (CALayer *) bonusLayer withBonus:(int)bonus {
+    [CATransaction begin];
+    CAKeyframeAnimation *transformLayer = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+    CATransform3D forward = CATransform3DMakeScale(1+(log10f(bonus))*1.3, 1+(log10f(bonus))*1.3, 1);
+    CATransform3D back = CATransform3DMakeScale(1.0, 1.0, 1);
+    [transformLayer setValues:@[                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    [NSValue valueWithCATransform3D:back],                                                                                                                                                                                                                                                                       [NSValue valueWithCATransform3D:forward],                                                                                                                                                                                                                                                                       [NSValue valueWithCATransform3D:back]]
+     ];
+    [transformLayer setDuration:2];
+    transformLayer.delegate = self;
+    [bonusLayer addAnimation:transformLayer forKey:@"transform"];
+    [CATransaction commit];
 }
 
 -(NSArray *) findNeighbors:(Cell *)cell withCellsToDelete:(NSMutableSet *)cellsToDelete {
