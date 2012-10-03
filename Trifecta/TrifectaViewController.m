@@ -42,11 +42,11 @@
     if ([sender selectedSegmentIndex] == 0) {
         self.boardSize = 8;
     } else if ([sender selectedSegmentIndex] == 1) {
-        self.boardSize = 14;
+        self.boardSize = 12;
     } else if ([sender selectedSegmentIndex] == 2) {
-        self.boardSize = 20;
+        self.boardSize = 16;
     } else if ([sender selectedSegmentIndex] == 3) {
-        self.boardSize = 40;
+        self.boardSize = 20;
     }
 
 }

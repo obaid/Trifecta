@@ -60,21 +60,21 @@
 -(void) gameOver {
     [self.timeBarTimer invalidate];
     [self.addCellsTimer invalidate];
-    self.highScore = [self getHighScoreFromUserDefaults];
+    self.highScore = [self getHighScoreFromUserDefaultsForSize:self.numColumns withGameType:self.gameType];
     if (self.gameBoard.score > self.highScore) {
         self.highScore = self.gameBoard.score;
-        [self saveLocationsToUserDefaults:self.gameBoard.score];
+        [self saveLocationsToUserDefaultsForSize:self.numColumns withGameType:self.gameType withScore:self.gameBoard.score];
     }
 }
--(NSInteger) getHighScoreFromUserDefaults {
+-(NSInteger) getHighScoreFromUserDefaultsForSize:(int) size withGameType:(int) type {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSInteger score = [userDefaults integerForKey:@"score"];
+    NSInteger score = [userDefaults integerForKey:[NSString stringWithFormat:@"%dscore%d",size, type]];
     return score;
 }
 
--(void) saveLocationsToUserDefaults:(NSInteger) score {
+-(void) saveLocationsToUserDefaultsForSize:(int) size withGameType:(int) type withScore:(NSInteger) score {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setInteger:score forKey:@"score"];
+    [userDefaults setInteger:score forKey:[NSString stringWithFormat:@"%dscore%d",size,type]];
 }
 -(void) addNewCells {
     [self.gameBoard addNewCellWithColor:[self randomColor]withSize:self.gameBoard.frame.size.width / self.numColumns];
@@ -218,11 +218,15 @@
         arrayOfColors = @[UIColorFromRGB(0xAD00FF), UIColorFromRGB(0xFF0095), UIColorFromRGB(0x0040FF)];
         return [arrayOfColors objectAtIndex:rand() % 3];
         
-    } else if (self.numColumns < 20){
+    } else if (self.numColumns < 14){
         arrayOfColors = @[UIColorFromRGB(0x12C100), UIColorFromRGB(0xAD00FF), UIColorFromRGB(0xFF0095), UIColorFromRGB(0x0040FF)];
         return [arrayOfColors objectAtIndex:rand() % 4];
         
-    } else {
+    } else if (self.numColumns < 20){
+        arrayOfColors = @[UIColorFromRGB(0x12C100), UIColorFromRGB(0xAD00FF), UIColorFromRGB(0xFF0095), UIColorFromRGB(0x0040FF),UIColorFromRGB(0xFFEE00)];
+        return [arrayOfColors objectAtIndex:rand() % 5];
+        
+    }else {
         arrayOfColors = @[UIColorFromRGB(0xAD00FF), UIColorFromRGB(0xFF0095), UIColorFromRGB(0x0040FF), UIColorFromRGB(0x12C100), UIColorFromRGB(0xFF9000), UIColorFromRGB(0xFFEE00)];
         return [arrayOfColors objectAtIndex:rand() % 6];
         

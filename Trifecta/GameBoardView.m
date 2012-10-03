@@ -146,40 +146,44 @@ typedef void (^animationCompletionBlock)(void);
 -(void) addBonusTime:(int) bonus {
     // draw bonus
     CATextLayer *bonusLayer = [CATextLayer new];
-    
     [bonusLayer setFont:@"Helvetica Neue Bold"];
-    [bonusLayer setFontSize:18];
-    //        bonusLayer.frame = CGRectMake(self.touchPoint.x, i, 200, 200);
-    //        bonusLayer.position = CGPointMake(self.touchPoint.x, i);
-    bonusLayer.frame = CGRectMake(self.touchPoint.x, self.touchPoint.y, 150, 30);
-    //bonusLayer.position = self.touchPoint;
+    [bonusLayer setFontSize:14];
+    bonusLayer.frame = CGRectMake(0,0, 150, 50);
+    bonusLayer.contentsScale = [[UIScreen mainScreen] scale];
     [bonusLayer setAlignmentMode:kCAAlignmentCenter];
-    [bonusLayer setString:[NSString stringWithFormat:@"x%d time bonus", bonus]];
-    [bonusLayer setForegroundColor:[[UIColor whiteColor] CGColor]];
+    [bonusLayer setString:[NSString stringWithFormat:@"x%d\ntime bonus", bonus]];
+    [bonusLayer setForegroundColor:[UIColorFromRGB(0xFFffff) CGColor]];
     [bonusLayer setBackgroundColor:[[UIColor clearColor] CGColor]];
-    [bonusLayer setShadowColor:[[UIColor redColor] CGColor]];
+    [bonusLayer setMasksToBounds:YES];
     [bonusLayer setShadowRadius:5.0];
-    //if (!bonusAdded) {
-    [self.layer addSublayer:bonusLayer];
-    [self transformLayer:bonusLayer withBonus:bonus];
-    [self translatePositionWithLayer:bonusLayer];
-    [self changeOpacityOfLayer:bonusLayer];
-    //}
-    // bonusAdded = YES;
     
-    //}
-//    [bonusLayer removeFromSuperlayer];
-    // increase timer
+    CALayer *shadowLayer = [CALayer new];
+    shadowLayer.frame = CGRectMake(self.touchPoint.x, self.touchPoint.y, 150, 50);
+    shadowLayer.position = self.touchPoint;
+    shadowLayer.backgroundColor = [[UIColor clearColor] CGColor];
+    shadowLayer.shadowColor = [[UIColor blackColor] CGColor];
+    shadowLayer.shadowOpacity = 0.8;
+    shadowLayer.shadowOffset = CGSizeMake(0,0);
+    shadowLayer.shadowRadius = 3;
+    shadowLayer.zPosition = 1000;
     
+    [shadowLayer addSublayer:bonusLayer];
+    [self.layer addSublayer:shadowLayer];
+    [self transformLayer:shadowLayer withBonus:bonus];
+    [self translatePositionWithLayer:shadowLayer];
+    [self changeOpacityOfLayer:shadowLayer];
+   
     self.gameViewController.timePast -= 5 * bonus;
     
 }
+
+
 -(void)changeOpacityOfLayer:(CALayer *)bonusLayer
 {
     [CATransaction begin];
     CAKeyframeAnimation *changeOpacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
     [changeOpacity setDuration:2];
-    [changeOpacity setValues:@[@0.0, @1.0, @0.0]];
+    [changeOpacity setValues:@[@0.5, @1.0, @0.0]];
     animationCompletionBlock theBlock = ^void(void)
     {
         [bonusLayer removeFromSuperlayer];
