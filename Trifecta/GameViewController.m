@@ -86,6 +86,7 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setInteger:score forKey:[NSString stringWithFormat:@"%dscore%d",size,type]];
 }
+
 -(void) addNewCells {
     [self.gameBoard addNewCellWithColor:[self randomColor]withSize:self.gameBoard.frame.size.width / self.numColumns];
 }
@@ -134,6 +135,7 @@
     self.gameBoard.counter = 0;
     self.gameBoard.numRows = numRows;
     self.gameBoard.gameViewController = self;
+    self.gameBoard.numColumns = self.numColumns;
     
     [self.view addSubview:self.gameBoard];
     int randomSeedNumber = arc4random();

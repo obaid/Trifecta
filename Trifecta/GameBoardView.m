@@ -59,7 +59,7 @@ typedef void (^animationCompletionBlock)(void);
 
 -(void) touchedAtPoint:(CGPoint) point andEndedMove:(BOOL)didEndMove {
     self.touchPoint = point;
-    int cellAtColumnNumber = floor((point.x / self.frame.size.width) * self.gameViewController.numColumns);
+    int cellAtColumnNumber = floor((point.x / self.frame.size.width) * self.numColumns);
     int cellAtRowNumber = floor(((self.bounds.size.height - point.y) / self.frame.size.height * self.numRows));
     if (!(cellAtRowNumber >= [[[self.columns objectAtIndex:cellAtColumnNumber] cells] count])) {
         Cell *cell = [[[self.columns objectAtIndex:cellAtColumnNumber] cells] objectAtIndex:cellAtRowNumber];
@@ -81,7 +81,7 @@ typedef void (^animationCompletionBlock)(void);
 -(void) addNewCellWithColor:(UIColor *)color withSize:(double)size
 {
     self.counter ++;
-    int columnNumberToAddTo = rand() % self.gameViewController.numColumns;
+    int columnNumberToAddTo = rand() % self.numColumns;
     //check if column is full
     Column *columnToAddTo = [self.columns objectAtIndex:columnNumberToAddTo];
     if ([columnToAddTo.cells count] < columnToAddTo.numRows) {
@@ -140,9 +140,49 @@ typedef void (^animationCompletionBlock)(void);
     int scoredPoints = totalToDelete*totalToDelete*100;
     self.score += scoredPoints;
     if (totalToDelete > 6) {
-        [self addBonusTime:totalToDelete-6];
+        if (self.gameViewController.gameType == 0) {
+            [self addBonusTime:totalToDelete-6];
+
+        } else {
+            [self addScoreBonus:totalToDelete-6];
+        }
     }
+}
+
+-(void) addScoreBonus: (int) bonus {
+    // draw bonus
+    CATextLayer *bonusLayer = [CATextLayer new];
+    [bonusLayer setFont:@"04b03"];
+    [bonusLayer setFontSize:14];
+    bonusLayer.frame = CGRectMake(0,0, 150, 50);
+    bonusLayer.contentsScale = [[UIScreen mainScreen] scale];
+    [bonusLayer setAlignmentMode:kCAAlignmentCenter];
+    [bonusLayer setString:[NSString stringWithFormat:@"x%d\nscore bonus", bonus]];
+    [bonusLayer setForegroundColor:[UIColorFromRGB(0xFFffff) CGColor]];
+    [bonusLayer setBackgroundColor:[[UIColor clearColor] CGColor]];
+    [bonusLayer setMasksToBounds:YES];
+    [bonusLayer setShadowRadius:5.0];
+    //bonusLayer.opacity = 0.0;
     
+    CALayer *shadowLayer = [CALayer new];
+    shadowLayer.frame = CGRectMake(self.touchPoint.x, self.touchPoint.y, 150, 50);
+    shadowLayer.position = self.touchPoint;
+    shadowLayer.backgroundColor = [[UIColor clearColor] CGColor];
+    shadowLayer.shadowColor = [[UIColor blackColor] CGColor];
+    shadowLayer.shadowOpacity = 0.8;
+    shadowLayer.shadowOffset = CGSizeMake(0,0);
+    shadowLayer.shadowRadius = 3;
+    shadowLayer.zPosition = 1000;
+    
+    [shadowLayer addSublayer:bonusLayer];
+    [self.layer addSublayer:shadowLayer];
+    [self transformLayer:shadowLayer withBonus:bonus];
+    [self translatePositionWithLayer:shadowLayer];
+    [self changeOpacityOfLayer:shadowLayer];
+    
+    self.gameViewController.timePast -= 5 * bonus;
+    
+
 }
 
 -(void) addBonusTime:(int) bonus {
@@ -158,6 +198,7 @@ typedef void (^animationCompletionBlock)(void);
     [bonusLayer setBackgroundColor:[[UIColor clearColor] CGColor]];
     [bonusLayer setMasksToBounds:YES];
     [bonusLayer setShadowRadius:5.0];
+    //bonusLayer.opacity = 0.0;
     
     CALayer *shadowLayer = [CALayer new];
     shadowLayer.frame = CGRectMake(self.touchPoint.x, self.touchPoint.y, 150, 50);
@@ -184,14 +225,14 @@ typedef void (^animationCompletionBlock)(void);
 {
     [CATransaction begin];
     CAKeyframeAnimation *changeOpacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
-    [changeOpacity setDuration:2];
-    [changeOpacity setValues:@[@0.5, @1.0, @0.0]];
-    animationCompletionBlock theBlock = ^void(void)
-    {
-        [bonusLayer removeFromSuperlayer];
-    };
-    changeOpacity.delegate = self;
-    [changeOpacity setValue: theBlock forKey: kAnimationCompletionBlock];
+    [changeOpacity setDuration:2.1];
+    [changeOpacity setValues:@[@0.0, @1.0, @0.0]];
+//    animationCompletionBlock theBlock = ^void(void)
+//    {
+//        [bonusLayer removeFromSuperlayer];
+//    };
+//    changeOpacity.delegate = self;
+//    [changeOpacity setValue: theBlock forKey: kAnimationCompletionBlock];
     [bonusLayer addAnimation:changeOpacity forKey:@"opacity"];
     [CATransaction commit];
 }
@@ -201,6 +242,12 @@ typedef void (^animationCompletionBlock)(void);
     CAKeyframeAnimation *translateLayer = [CAKeyframeAnimation animationWithKeyPath:@"position.y"];
     [translateLayer setDuration:2];
     [translateLayer setValues:@[[NSNumber numberWithFloat: bonusLayer.position.y], [NSNumber numberWithFloat:self.frame.origin.y]]];
+    animationCompletionBlock theBlock = ^void(void)
+    {
+        [bonusLayer removeFromSuperlayer];
+    };
+    translateLayer.delegate = self;
+    [translateLayer setValue: theBlock forKey: kAnimationCompletionBlock];
     [bonusLayer addAnimation:translateLayer forKey:@"position.y"];
     [CATransaction commit];
 }
