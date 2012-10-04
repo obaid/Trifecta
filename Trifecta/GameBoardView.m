@@ -137,19 +137,20 @@ typedef void (^animationCompletionBlock)(void);
 }
 
 -(void) calculateScore:(int) totalToDelete {
-    int scoredPoints = totalToDelete*totalToDelete*100;
+    double levelMultiplier = (self.numColumns/8.0)*(self.numColumns/8.0);
+    int scoredPoints = totalToDelete*totalToDelete*10*levelMultiplier;
     self.score += scoredPoints;
     if (totalToDelete > 6) {
         if (self.gameViewController.gameType == 0) {
-            [self addBonusTime:totalToDelete-6];
+            [self addBonus:(totalToDelete-6)*levelMultiplier toScoreOrTime:@"time"];
 
         } else {
-            [self addScoreBonus:totalToDelete-6];
+            [self addBonus:(totalToDelete-6) toScoreOrTime:@"score"];
         }
     }
 }
 
--(void) addScoreBonus: (int) bonus {
+-(void) addBonus: (int) bonus toScoreOrTime:(NSString *)scoreOrTime {
     // draw bonus
     CATextLayer *bonusLayer = [CATextLayer new];
     [bonusLayer setFont:@"04b03"];
@@ -157,7 +158,7 @@ typedef void (^animationCompletionBlock)(void);
     bonusLayer.frame = CGRectMake(0,0, 150, 50);
     bonusLayer.contentsScale = [[UIScreen mainScreen] scale];
     [bonusLayer setAlignmentMode:kCAAlignmentCenter];
-    [bonusLayer setString:[NSString stringWithFormat:@"x%d\nscore bonus", bonus]];
+    [bonusLayer setString:[NSString stringWithFormat:@"x%d\n%@ bonus", bonus, scoreOrTime]];
     [bonusLayer setForegroundColor:[UIColorFromRGB(0xFFffff) CGColor]];
     [bonusLayer setBackgroundColor:[[UIColor clearColor] CGColor]];
     [bonusLayer setMasksToBounds:YES];
@@ -185,40 +186,40 @@ typedef void (^animationCompletionBlock)(void);
 
 }
 
--(void) addBonusTime:(int) bonus {
-    // draw bonus
-    CATextLayer *bonusLayer = [CATextLayer new];
-    [bonusLayer setFont:@"04b03"];
-    [bonusLayer setFontSize:14];
-    bonusLayer.frame = CGRectMake(0,0, 150, 50);
-    bonusLayer.contentsScale = [[UIScreen mainScreen] scale];
-    [bonusLayer setAlignmentMode:kCAAlignmentCenter];
-    [bonusLayer setString:[NSString stringWithFormat:@"x%d\ntime bonus", bonus]];
-    [bonusLayer setForegroundColor:[UIColorFromRGB(0xFFffff) CGColor]];
-    [bonusLayer setBackgroundColor:[[UIColor clearColor] CGColor]];
-    [bonusLayer setMasksToBounds:YES];
-    [bonusLayer setShadowRadius:5.0];
-    //bonusLayer.opacity = 0.0;
-    
-    CALayer *shadowLayer = [CALayer new];
-    shadowLayer.frame = CGRectMake(self.touchPoint.x, self.touchPoint.y, 150, 50);
-    shadowLayer.position = self.touchPoint;
-    shadowLayer.backgroundColor = [[UIColor clearColor] CGColor];
-    shadowLayer.shadowColor = [[UIColor blackColor] CGColor];
-    shadowLayer.shadowOpacity = 0.8;
-    shadowLayer.shadowOffset = CGSizeMake(0,0);
-    shadowLayer.shadowRadius = 3;
-    shadowLayer.zPosition = 1000;
-    
-    [shadowLayer addSublayer:bonusLayer];
-    [self.layer addSublayer:shadowLayer];
-    [self transformLayer:shadowLayer withBonus:bonus];
-    [self translatePositionWithLayer:shadowLayer];
-    [self changeOpacityOfLayer:shadowLayer];
-   
-    self.gameViewController.timePast -= 5 * bonus;
-    
-}
+//-(void) addBonusTime:(int) bonus {
+//    // draw bonus
+//    CATextLayer *bonusLayer = [CATextLayer new];
+//    [bonusLayer setFont:@"04b03"];
+//    [bonusLayer setFontSize:14];
+//    bonusLayer.frame = CGRectMake(0,0, 150, 50);
+//    bonusLayer.contentsScale = [[UIScreen mainScreen] scale];
+//    [bonusLayer setAlignmentMode:kCAAlignmentCenter];
+//    [bonusLayer setString:[NSString stringWithFormat:@"x%d\ntime bonus", bonus]];
+//    [bonusLayer setForegroundColor:[UIColorFromRGB(0xFFffff) CGColor]];
+//    [bonusLayer setBackgroundColor:[[UIColor clearColor] CGColor]];
+//    [bonusLayer setMasksToBounds:YES];
+//    [bonusLayer setShadowRadius:5.0];
+//    //bonusLayer.opacity = 0.0;
+//    
+//    CALayer *shadowLayer = [CALayer new];
+//    shadowLayer.frame = CGRectMake(self.touchPoint.x, self.touchPoint.y, 150, 50);
+//    shadowLayer.position = self.touchPoint;
+//    shadowLayer.backgroundColor = [[UIColor clearColor] CGColor];
+//    shadowLayer.shadowColor = [[UIColor blackColor] CGColor];
+//    shadowLayer.shadowOpacity = 0.8;
+//    shadowLayer.shadowOffset = CGSizeMake(0,0);
+//    shadowLayer.shadowRadius = 3;
+//    shadowLayer.zPosition = 1000;
+//    
+//    [shadowLayer addSublayer:bonusLayer];
+//    [self.layer addSublayer:shadowLayer];
+//    [self transformLayer:shadowLayer withBonus:bonus];
+//    [self translatePositionWithLayer:shadowLayer];
+//    [self changeOpacityOfLayer:shadowLayer];
+//   
+//    self.gameViewController.timePast -= 5 * bonus;
+//    
+//}
 
 
 -(void)changeOpacityOfLayer:(CALayer *)bonusLayer
