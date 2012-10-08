@@ -8,6 +8,7 @@
 
 #import "TrifectaViewController.h"
 #import "GameViewController.h"
+#import "HighScoresViewController.h"
 #import "InfoViewController.h"
 
 @interface TrifectaViewController ()
@@ -15,8 +16,10 @@
 @property (nonatomic) int boardSize;
 @end
 
+
 @implementation TrifectaViewController
 @synthesize boardSizeSegmentedControl = _boardSizeSegmentedControl;
+@synthesize highScoresButton = _highScoresButton;
 @synthesize gameTypeSegmentedControl = _gameTypeSegmentedControl;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -40,12 +43,14 @@
     
     [self.gameTypeSegmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
     [self.boardSizeSegmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    self.highScoresButton.titleLabel.font = font;
 }
 
 - (void)viewDidUnload
 {
     [self setBoardSizeSegmentedControl:nil];
     [self setGameTypeSegmentedControl:nil];
+    [self setHighScoresButton:nil];
     [super viewDidUnload];
 }
 
@@ -82,5 +87,12 @@
     InfoViewController *infoViewController = [InfoViewController new];
     infoViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentModalViewController:infoViewController animated:YES];
+}
+
+- (IBAction)highScoresButtonPressed:(UIButton *)sender {
+    HighScoresViewController *highScoresViewController = [HighScoresViewController new];
+    highScoresViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentModalViewController:highScoresViewController animated:YES];
+    
 }
 @end

@@ -33,6 +33,7 @@
 		2563584315F98F3000CA812E /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2563584215F98F3000CA812E /* Icon@2x.png */; };
 		2563584B15F9936200CA812E /* TrifectaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2563584915F9936100CA812E /* TrifectaViewController.m */; };
 		2563584C15F9936200CA812E /* TrifectaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2563584A15F9936100CA812E /* TrifectaViewController.xib */; };
+		2590C2D316234BF40078A1A8 /* HighScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2590C2D216234BF40078A1A8 /* HighScoresViewController.m */; };
 		25D5A4C7161C3C6600D0B13B /* hex.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D5A4C6161C3C6600D0B13B /* hex.png */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +74,8 @@
 		2563584815F9936100CA812E /* TrifectaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrifectaViewController.h; sourceTree = "<group>"; };
 		2563584915F9936100CA812E /* TrifectaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrifectaViewController.m; sourceTree = "<group>"; };
 		2563584A15F9936100CA812E /* TrifectaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrifectaViewController.xib; sourceTree = "<group>"; };
+		2590C2D116234BF40078A1A8 /* HighScoresViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighScoresViewController.h; sourceTree = "<group>"; };
+		2590C2D216234BF40078A1A8 /* HighScoresViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighScoresViewController.m; sourceTree = "<group>"; };
 		25D5A4C6161C3C6600D0B13B /* hex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hex.png; path = Trifecta/hex.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,6 +138,8 @@
 				2563584815F9936100CA812E /* TrifectaViewController.h */,
 				2563584915F9936100CA812E /* TrifectaViewController.m */,
 				2563584A15F9936100CA812E /* TrifectaViewController.xib */,
+				2590C2D116234BF40078A1A8 /* HighScoresViewController.h */,
+				2590C2D216234BF40078A1A8 /* HighScoresViewController.m */,
 				254381DE161CE02B0071A415 /* InfoViewController.h */,
 				254381DF161CE02B0071A415 /* InfoViewController.m */,
 				2563581815F80FDC00CA812E /* AppDelegate.h */,
@@ -259,6 +264,7 @@
 				2563583515F83A9600CA812E /* GameViewController.m in Sources */,
 				2563584B15F9936200CA812E /* TrifectaViewController.m in Sources */,
 				254381E0161CE02B0071A415 /* InfoViewController.m in Sources */,
+				2590C2D316234BF40078A1A8 /* HighScoresViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

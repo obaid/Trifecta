@@ -42,7 +42,6 @@
     copywrite.font = [UIFont fontWithName:@"04b03" size:18];
     copywrite.backgroundColor = [UIColor clearColor];
     copywrite.textColor = UIColorFromRGB(0x000000);
-//    copywrite.textColor = UIColorFromRGB(0xFF0095);
     copywrite.numberOfLines = 7;
     copywrite.text = @"Copyright (c) 2012\n\nKris Fields\n&\nRan Tao\n\nin San Francisco";
     copywrite.textAlignment = UITextAlignmentCenter;

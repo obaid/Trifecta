@@ -13,7 +13,9 @@
 - (IBAction)startButtonPressed:(UIButton *)sender;
 - (IBAction)gameTypeValueChanged:(UISegmentedControl *)sender;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *boardSizeSegmentedControl;
+@property (weak, nonatomic) IBOutlet UIButton *highScoresButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameTypeSegmentedControl;
 - (IBAction)infoButtonPressed:(UIButton *)sender;
+- (IBAction)highScoresButtonPressed:(UIButton *)sender;
 
 @end
