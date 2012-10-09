@@ -34,6 +34,10 @@
 		2563584B15F9936200CA812E /* TrifectaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2563584915F9936100CA812E /* TrifectaViewController.m */; };
 		2563584C15F9936200CA812E /* TrifectaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2563584A15F9936100CA812E /* TrifectaViewController.xib */; };
 		2590C2D316234BF40078A1A8 /* HighScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2590C2D216234BF40078A1A8 /* HighScoresViewController.m */; };
+		2590C2DD16239ABD0078A1A8 /* success.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2590C2DC16239ABD0078A1A8 /* success.wav */; };
+		2590C2DF16239B640078A1A8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2590C2DE16239B640078A1A8 /* AVFoundation.framework */; };
+		2590C2E316239E990078A1A8 /* failed.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2590C2E216239E990078A1A8 /* failed.wav */; };
+		2590C2E91623A80F0078A1A8 /* bonus.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2590C2E81623A80F0078A1A8 /* bonus.wav */; };
 		25D5A4C7161C3C6600D0B13B /* hex.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D5A4C6161C3C6600D0B13B /* hex.png */; };
 /* End PBXBuildFile section */
 
@@ -76,6 +80,10 @@
 		2563584A15F9936100CA812E /* TrifectaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrifectaViewController.xib; sourceTree = "<group>"; };
 		2590C2D116234BF40078A1A8 /* HighScoresViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighScoresViewController.h; sourceTree = "<group>"; };
 		2590C2D216234BF40078A1A8 /* HighScoresViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighScoresViewController.m; sourceTree = "<group>"; };
+		2590C2DC16239ABD0078A1A8 /* success.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = success.wav; sourceTree = "<group>"; };
+		2590C2DE16239B640078A1A8 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		2590C2E216239E990078A1A8 /* failed.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = failed.wav; sourceTree = "<group>"; };
+		2590C2E81623A80F0078A1A8 /* bonus.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bonus.wav; sourceTree = "<group>"; };
 		25D5A4C6161C3C6600D0B13B /* hex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hex.png; path = Trifecta/hex.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2590C2DF16239B640078A1A8 /* AVFoundation.framework in Frameworks */,
 				2563582E15F8167200CA812E /* CoreMotion.framework in Frameworks */,
 				2563582F15F8167200CA812E /* QuartzCore.framework in Frameworks */,
 				2563580A15F80FDC00CA812E /* UIKit.framework in Frameworks */,
@@ -115,6 +124,7 @@
 		2563580815F80FDC00CA812E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2590C2DE16239B640078A1A8 /* AVFoundation.framework */,
 				2563582C15F8167200CA812E /* CoreMotion.framework */,
 				2563582D15F8167200CA812E /* QuartzCore.framework */,
 				2563580915F80FDC00CA812E /* UIKit.framework */,
@@ -153,6 +163,9 @@
 		2563581015F80FDC00CA812E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2590C2E81623A80F0078A1A8 /* bonus.wav */,
+				2590C2E216239E990078A1A8 /* failed.wav */,
+				2590C2DC16239ABD0078A1A8 /* success.wav */,
 				254381DB161CCE670071A415 /* bitfont.TTF */,
 				2563581115F80FDC00CA812E /* Trifecta-Info.plist */,
 				2563581215F80FDC00CA812E /* InfoPlist.strings */,
@@ -246,6 +259,9 @@
 				25D5A4C7161C3C6600D0B13B /* hex.png in Resources */,
 				254381E3161CE4B50071A415 /* back.png in Resources */,
 				254381E4161CE4B50071A415 /* back@2x.png in Resources */,
+				2590C2DD16239ABD0078A1A8 /* success.wav in Resources */,
+				2590C2E316239E990078A1A8 /* failed.wav in Resources */,
+				2590C2E91623A80F0078A1A8 /* bonus.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

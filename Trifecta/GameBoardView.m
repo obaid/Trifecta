@@ -10,6 +10,7 @@
 #import "Column.h"
 #import "Cell.h"
 #import <CoreMotion/CoreMotion.h>
+#import <AVFoundation/AVFoundation.h>
 #import <QuartzCore/QuartzCore.h>
 #import "GameViewController.h"
 
@@ -20,6 +21,7 @@ typedef void (^animationCompletionBlock)(void);
 
 @interface GameBoardView ()
 @property (nonatomic) CGPoint touchPoint;
+@property (nonatomic, strong) AVAudioPlayer *player;
 @end
 @implementation GameBoardView
 
@@ -33,6 +35,7 @@ typedef void (^animationCompletionBlock)(void);
         //self.backgroundColor = UIColorFromRGB(0xD7F6FD);
         self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"hex.png"]];
         self.clipsToBounds = YES;
+
     }
     return self;
 }
@@ -70,12 +73,33 @@ typedef void (^animationCompletionBlock)(void);
                 //calculate score
                 [self calculateScore:[neighborsToDelete count]];
                 [self deleteCells:neighborsToDelete];
-           }
+            } else {
+                [self playFailSound];
+            }
         } else {
+            
 //            [self animateCell:cell.cellLayer];
 //            [self changeOpacityLevel:cell];
         }
     }
+}
+
+-(void) playSuccessfulSound {
+    NSString *music = [[NSBundle mainBundle] pathForResource:@"success" ofType:@"wav"];
+    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:music] error:NULL];
+    [self.player play];
+}
+
+-(void) playFailSound {
+    NSString *music = [[NSBundle mainBundle] pathForResource:@"failed" ofType:@"wav"];
+    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:music] error:NULL];
+    [self.player play];
+}
+
+-(void) playBonusSound {
+    NSString *music = [[NSBundle mainBundle] pathForResource:@"bonus" ofType:@"wav"];
+    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:music] error:NULL];
+    [self.player play];
 }
 
 -(void) addNewCellWithColor:(UIColor *)color withSize:(double)size
@@ -147,6 +171,9 @@ typedef void (^animationCompletionBlock)(void);
         } else {
             [self addBonus:(totalToDelete-6) toScoreOrTime:@"score"];
         }
+        [self playBonusSound];
+    } else {
+        [self playSuccessfulSound];
     }
 }
 
@@ -180,6 +207,7 @@ typedef void (^animationCompletionBlock)(void);
     [self transformLayer:shadowLayer withBonus:bonus];
     [self translatePositionWithLayer:shadowLayer];
     [self changeOpacityOfLayer:shadowLayer];
+    [self playBonusSound];
     
     self.gameViewController.timePast -= 5 * bonus;
     
