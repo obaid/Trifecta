@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *boardSizeSegmentedControl;
 @property (weak, nonatomic) IBOutlet UIButton *highScoresButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameTypeSegmentedControl;
+@property (weak, nonatomic) IBOutlet UIView *buttonsView;
 - (IBAction)infoButtonPressed:(UIButton *)sender;
 - (IBAction)highScoresButtonPressed:(UIButton *)sender;
 

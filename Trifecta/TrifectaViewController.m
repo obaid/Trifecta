@@ -21,6 +21,7 @@
 @synthesize boardSizeSegmentedControl = _boardSizeSegmentedControl;
 @synthesize highScoresButton = _highScoresButton;
 @synthesize gameTypeSegmentedControl = _gameTypeSegmentedControl;
+@synthesize buttonsView = _buttonsView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,6 +45,13 @@
     [self.gameTypeSegmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
     [self.boardSizeSegmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
     self.highScoresButton.titleLabel.font = font;
+   
+}
+
+-(void) viewDidAppear:(BOOL)animated {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+         self.buttonsView.center = CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/3.0*2.0);
+    }
 }
 
 - (void)viewDidUnload
@@ -51,6 +59,7 @@
     [self setBoardSizeSegmentedControl:nil];
     [self setGameTypeSegmentedControl:nil];
     [self setHighScoresButton:nil];
+    [self setButtonsView:nil];
     [super viewDidUnload];
 }
 
