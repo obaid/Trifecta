@@ -16,11 +16,6 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
-//    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-//        self.window.rootViewController = [[TrifectaViewController alloc] initWithNibName:@"IPadViewController" bundle:nil];
-//    } else {
-//        self.window.rootViewController = [TrifectaViewController new];
-//    }
 
     self.window.rootViewController = [TrifectaViewController new];
     self.window.backgroundColor = [UIColor whiteColor];

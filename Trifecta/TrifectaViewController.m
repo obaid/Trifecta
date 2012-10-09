@@ -39,6 +39,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
     UIFont *font = [UIFont fontWithName:@"04b03" size:14];
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
                                                            forKey:UITextAttributeFont];
@@ -49,11 +50,21 @@
    
 }
 
--(void) viewDidAppear:(BOOL)animated {
+-(void) viewWillAppear:(BOOL)animated {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         self.backgroundView.image = [UIImage imageNamed:@"Default-Portrait~ipad.png"];
         self.buttonsView.center = CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/3.0*2.0);
     }
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        CGSize result = [[UIScreen mainScreen] bounds].size;
+        if(result.height == 568)
+        {
+            // iPhone 5
+            self.backgroundView.image = [UIImage imageNamed:@"Default-568h@2x.png"];
+        }
+
+    }
+
 }
 
 - (void)viewDidUnload
