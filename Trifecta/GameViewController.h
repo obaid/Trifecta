@@ -12,5 +12,6 @@
 @property (nonatomic) int numColumns;
 @property (nonatomic) int gameType;
 @property (nonatomic) int timePast;
+@property (nonatomic) BOOL sound;
 -(void) lossByBlocks;
 @end

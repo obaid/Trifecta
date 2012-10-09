@@ -21,7 +21,9 @@ typedef void (^animationCompletionBlock)(void);
 
 @interface GameBoardView ()
 @property (nonatomic) CGPoint touchPoint;
-@property (nonatomic, strong) AVAudioPlayer *player;
+@property (nonatomic, strong) AVAudioPlayer *playerFail;
+@property (nonatomic, strong) AVAudioPlayer *playerSucess;
+@property (nonatomic, strong) AVAudioPlayer *playerBonus;
 @end
 @implementation GameBoardView
 
@@ -35,7 +37,20 @@ typedef void (^animationCompletionBlock)(void);
         //self.backgroundColor = UIColorFromRGB(0xD7F6FD);
         self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"hex.png"]];
         self.clipsToBounds = YES;
+        
+        NSString *music = [[NSBundle mainBundle] pathForResource:@"success" ofType:@"wav"];
+        self.playerSucess = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:music] error:NULL];
+        [self.playerSucess prepareToPlay];
 
+        NSString *musicFail = [[NSBundle mainBundle] pathForResource:@"failed" ofType:@"wav"];
+        self.playerFail = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:musicFail] error:NULL];
+        [self.playerFail prepareToPlay];
+        
+        NSString *musicBonus = [[NSBundle mainBundle] pathForResource:@"bonus" ofType:@"wav"];
+        self.playerBonus = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:musicBonus] error:NULL];
+        [self.playerBonus prepareToPlay];
+        
+        
     }
     return self;
 }
@@ -43,6 +58,7 @@ typedef void (^animationCompletionBlock)(void);
 -(void) drawGameBoard {
     [self positionEachColumn];
 }
+
 -(void) positionEachColumn {
     for (Column* column in self.columns) {
         for (Cell* cell in column.cells) {
@@ -74,7 +90,9 @@ typedef void (^animationCompletionBlock)(void);
                 [self calculateScore:[neighborsToDelete count]];
                 [self deleteCells:neighborsToDelete];
             } else {
-                [self playFailSound];
+                if (self.gameViewController.sound) {
+                    [self playFailSound];
+                }
             }
         } else {
             
@@ -85,21 +103,16 @@ typedef void (^animationCompletionBlock)(void);
 }
 
 -(void) playSuccessfulSound {
-    NSString *music = [[NSBundle mainBundle] pathForResource:@"success" ofType:@"wav"];
-    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:music] error:NULL];
-    [self.player play];
+
+    [self.playerSucess play];
 }
 
 -(void) playFailSound {
-    NSString *music = [[NSBundle mainBundle] pathForResource:@"failed" ofType:@"wav"];
-    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:music] error:NULL];
-    [self.player play];
+    [self.playerFail play];
 }
 
 -(void) playBonusSound {
-    NSString *music = [[NSBundle mainBundle] pathForResource:@"bonus" ofType:@"wav"];
-    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:music] error:NULL];
-    [self.player play];
+   [self.playerBonus play];
 }
 
 -(void) addNewCellWithColor:(UIColor *)color withSize:(double)size
@@ -171,9 +184,14 @@ typedef void (^animationCompletionBlock)(void);
         } else {
             [self addBonus:(totalToDelete-6) toScoreOrTime:@"score"];
         }
-        [self playBonusSound];
+        if (self.gameViewController.sound) {
+            [self playBonusSound];
+
+        }
     } else {
-        [self playSuccessfulSound];
+        if (self.gameViewController.sound) {
+            [self playSuccessfulSound];
+        }
     }
 }
 
@@ -207,48 +225,14 @@ typedef void (^animationCompletionBlock)(void);
     [self transformLayer:shadowLayer withBonus:bonus];
     [self translatePositionWithLayer:shadowLayer];
     [self changeOpacityOfLayer:shadowLayer];
-    [self playBonusSound];
+    if (self.gameViewController.sound) {
+        [self playBonusSound];
+    }
     
     self.gameViewController.timePast -= 5 * bonus;
     
 
 }
-
-//-(void) addBonusTime:(int) bonus {
-//    // draw bonus
-//    CATextLayer *bonusLayer = [CATextLayer new];
-//    [bonusLayer setFont:@"04b03"];
-//    [bonusLayer setFontSize:14];
-//    bonusLayer.frame = CGRectMake(0,0, 150, 50);
-//    bonusLayer.contentsScale = [[UIScreen mainScreen] scale];
-//    [bonusLayer setAlignmentMode:kCAAlignmentCenter];
-//    [bonusLayer setString:[NSString stringWithFormat:@"x%d\ntime bonus", bonus]];
-//    [bonusLayer setForegroundColor:[UIColorFromRGB(0xFFffff) CGColor]];
-//    [bonusLayer setBackgroundColor:[[UIColor clearColor] CGColor]];
-//    [bonusLayer setMasksToBounds:YES];
-//    [bonusLayer setShadowRadius:5.0];
-//    //bonusLayer.opacity = 0.0;
-//    
-//    CALayer *shadowLayer = [CALayer new];
-//    shadowLayer.frame = CGRectMake(self.touchPoint.x, self.touchPoint.y, 150, 50);
-//    shadowLayer.position = self.touchPoint;
-//    shadowLayer.backgroundColor = [[UIColor clearColor] CGColor];
-//    shadowLayer.shadowColor = [[UIColor blackColor] CGColor];
-//    shadowLayer.shadowOpacity = 0.8;
-//    shadowLayer.shadowOffset = CGSizeMake(0,0);
-//    shadowLayer.shadowRadius = 3;
-//    shadowLayer.zPosition = 1000;
-//    
-//    [shadowLayer addSublayer:bonusLayer];
-//    [self.layer addSublayer:shadowLayer];
-//    [self transformLayer:shadowLayer withBonus:bonus];
-//    [self translatePositionWithLayer:shadowLayer];
-//    [self changeOpacityOfLayer:shadowLayer];
-//   
-//    self.gameViewController.timePast -= 5 * bonus;
-//    
-//}
-
 
 -(void)changeOpacityOfLayer:(CALayer *)bonusLayer
 {
@@ -298,28 +282,29 @@ typedef void (^animationCompletionBlock)(void);
     Column *columnOfCell = [self.columns objectAtIndex:cell.column];
     NSMutableArray *matchingNeighbors = [NSMutableArray new];
     // check cell below
-    if (cell.row > 0) {
-        Cell *cellToCompare = [columnOfCell.cells objectAtIndex:cell.row-1];
+    int cellRow = [[columnOfCell cells] indexOfObject:cell];
+    if (cellRow > 0) {
+        Cell *cellToCompare = [columnOfCell.cells objectAtIndex:cellRow-1];
         [matchingNeighbors addObject:cellToCompare];
     }
     //check cell above
-    if (cell.row + 1 < [columnOfCell.cells count]) {
-        Cell *cellToCompare = [columnOfCell.cells objectAtIndex:cell.row+1];
+    if (cellRow + 1 < [columnOfCell.cells count]) {
+        Cell *cellToCompare = [columnOfCell.cells objectAtIndex:cellRow+1];
         [matchingNeighbors addObject:cellToCompare];
     }
     //check cell to the left
     if (cell.column > 0){
         Column *columnLeftOfCell = [self.columns objectAtIndex:cell.column - 1];
-        if (cell.row < [columnLeftOfCell.cells count]) {
-            Cell *cellToCompare = [columnLeftOfCell.cells objectAtIndex:cell.row];
+        if (cellRow < [columnLeftOfCell.cells count]) {
+            Cell *cellToCompare = [columnLeftOfCell.cells objectAtIndex:cellRow];
             [matchingNeighbors addObject:cellToCompare];
         }
     }
     //check cell to the right
     if (cell.column + 1 < [self.columns count]){
         Column *columnRightOfCell = [self.columns objectAtIndex:cell.column + 1];
-        if (cell.row < [columnRightOfCell.cells count]) {
-            Cell *cellToCompare = [columnRightOfCell.cells objectAtIndex:cell.row];
+        if (cellRow < [columnRightOfCell.cells count]) {
+            Cell *cellToCompare = [columnRightOfCell.cells objectAtIndex:cellRow];
             [matchingNeighbors addObject:cellToCompare];
         }
     }

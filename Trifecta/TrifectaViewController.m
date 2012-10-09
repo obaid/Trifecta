@@ -22,6 +22,7 @@
 @synthesize highScoresButton = _highScoresButton;
 @synthesize gameTypeSegmentedControl = _gameTypeSegmentedControl;
 @synthesize buttonsView = _buttonsView;
+@synthesize backgroundView = _backgroundView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,7 +51,8 @@
 
 -(void) viewDidAppear:(BOOL)animated {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-         self.buttonsView.center = CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/3.0*2.0);
+        self.backgroundView.image = [UIImage imageNamed:@"Default-Portrait~ipad.png"];
+        self.buttonsView.center = CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/3.0*2.0);
     }
 }
 
@@ -60,6 +62,7 @@
     [self setGameTypeSegmentedControl:nil];
     [self setHighScoresButton:nil];
     [self setButtonsView:nil];
+    [self setBackgroundView:nil];
     [super viewDidUnload];
 }
 
@@ -92,6 +95,7 @@
     }
     
 }
+
 - (IBAction)infoButtonPressed:(UIButton *)sender {
     InfoViewController *infoViewController = [InfoViewController new];
     infoViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;

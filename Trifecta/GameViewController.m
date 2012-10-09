@@ -10,16 +10,20 @@
 #import "Cell.h"
 #import "GameBoardView.h"
 #import <QuartzCore/QuartzCore.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface GameViewController () <UIAlertViewDelegate, UIActionSheetDelegate>
 @property (nonatomic, strong) GameBoardView* gameBoard;
 @property (nonatomic) UILabel *scoreTextLabel;
 @property (nonatomic) UIButton *pauseButton;
-@property (nonatomic) CALayer *timeBar; 
+@property (nonatomic) UIButton *soundButton;
+@property (nonatomic) CALayer *timeBar;
 @property (nonatomic) NSInteger highScore;
 @property (nonatomic, strong) NSTimer *timeBarTimer;
 @property (nonatomic, strong) NSTimer *addCellsTimer;
 @property (nonatomic) BOOL hasHighScore;
+@property (nonatomic, strong) AVAudioPlayer *playerFail;
+
 @end
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
@@ -39,6 +43,12 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+
+    if ([self getSoundSettingFromUserDefaults]) {
+        self.sound = [[self getSoundSettingFromUserDefaults] boolValue];
+    } else {
+        self.sound = YES;
+    }
     [self setUpGame];
 }
 
@@ -51,7 +61,7 @@
         if (self.hasHighScore) {
             [[[UIAlertView alloc] initWithTitle:@"Time's up! Play again?\nNew high score!" message:[NSString stringWithFormat:@"Your final score was: %d", self.gameBoard.score] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
         } else {
-        [[[UIAlertView alloc] initWithTitle:@"Time's up! Play again?" message:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"Time's up! Play again?" message:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
         }
         
     }
@@ -76,6 +86,20 @@
         [self saveLocationsToUserDefaultsForSize:self.numColumns withGameType:self.gameType withScore:self.gameBoard.score];
     }
 }
+
+-(NSNumber*) getSoundSettingFromUserDefaults {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults objectForKey:@"sound"];
+    NSNumber *sound = [userDefaults objectForKey:@"sound"];
+    return sound;
+}
+
+-(void) saveSoundSettingToUserDefaults {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:self.sound forKey:@"sound"];
+}
+
+
 -(NSInteger) getHighScoreFromUserDefaultsForSize:(int) size withGameType:(int) type {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSInteger score = [userDefaults integerForKey:[NSString stringWithFormat:@"%dscore%d",size, type]];
@@ -102,19 +126,19 @@
             [self dismissModalViewControllerAnimated:YES];
         }
     } else {
-            if (buttonIndex == 0) {
-                [self dismissModalViewControllerAnimated:YES];
-            }
-            else {
-                [self tearDownGame];
-                [self setUpGame];
-            }
-       }
+        if (buttonIndex == 0) {
+            [self dismissModalViewControllerAnimated:YES];
+        }
+        else {
+            [self tearDownGame];
+            [self setUpGame];
+        }
+    }
 }
 
 -(void)tearDownGame
 {
-//    self.view.layer.sublayers = nil;
+    //    self.view.layer.sublayers = nil;
     self.hasHighScore = NO;
     [self.gameBoard removeFromSuperview];
 }
@@ -122,10 +146,10 @@
 
 -(void)setUpGame
 {
-//    self.numColumns = 20;
+    //    self.numColumns = 20;
     self.timePast = 0;
-    double sizeOfCell = 296.0/self.numColumns;
-    int numRows = 416/sizeOfCell;
+    double sizeOfCell = (self.view.frame.size.width-(self.view.frame.size.width*.075))/self.numColumns;
+    int numRows = (self.view.frame.size.height-(self.view.frame.size.height*.13333))/sizeOfCell;
     int boardGameWidth = self.numColumns * sizeOfCell;
     int boardGameHeight = numRows * sizeOfCell;
     double boardGameYStart = (self.view.frame.size.height - boardGameHeight)/2.0 + 20.0;
@@ -149,11 +173,25 @@
     
     self.pauseButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.pauseButton setBackgroundImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
-    self.pauseButton.frame = CGRectMake(self.view.frame.size.width -30, 20, 20 , 20);
+    self.pauseButton.frame = CGRectMake(self.view.frame.size.width/16.0*15.0-20, 20, 20 , 20);
     [self.pauseButton addTarget:self action:@selector(pauseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.pauseButton];
     
-
+    self.soundButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    if (self.sound) {
+        [self.soundButton setBackgroundImage:[UIImage imageNamed:@"sound.png"] forState:UIControlStateNormal];
+    } else {
+        [self.soundButton setBackgroundImage:[UIImage imageNamed:@"mute.png"] forState:UIControlStateNormal];
+    }
+    self.soundButton.frame = CGRectMake(self.view.frame.size.width/16.0, 20, 20 , 20);
+    [self.soundButton addTarget:self action:@selector(soundButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.soundButton];
+    
+    NSString *music = [[NSBundle mainBundle] pathForResource:@"failed" ofType:@"wav"];
+    self.playerFail = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:music] error:NULL];
+    [self.playerFail prepareToPlay];
+    
+    
     if (self.gameType == 0) {
         self.timeBar = [CALayer new];
         self.timeBar.backgroundColor = [[UIColor redColor] CGColor];
@@ -164,7 +202,7 @@
     }
     [self setupCellsTimerWithInterval:0.3];
     
-
+    
     
     for (int c=0; c < self.numColumns; c++) {
         Column *column = [Column new];
@@ -173,7 +211,7 @@
         for (int r=0; r < numRows/(self.gameType+1); r++) {
             Cell *cell = [[Cell alloc] initWithBoard:self.gameBoard withColor:[self randomColor] withRow:r withColumn:c withSize:self.gameBoard.frame.size.width / self.numColumns];
             cell.isFalling = NO;
-//            [self.gameBoard frameEachCellWithCell:cell];
+            //            [self.gameBoard frameEachCellWithCell:cell];
             [column.cells addObject:cell];
         }
         [tempColumns addObject:column];
@@ -196,14 +234,38 @@
     self.addCellsTimer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(addNewCells) userInfo:nil repeats:YES];
     
 }
+
+-(void) soundButtonPressed:(UIButton *) button {
+    if (self.sound) {
+        [self.soundButton setBackgroundImage:[UIImage imageNamed:@"mute.png"] forState:UIControlStateNormal];
+
+    } else {
+        [self.soundButton setBackgroundImage:[UIImage imageNamed:@"sound.png"] forState:UIControlStateNormal];
+    }
+    self.sound =!self.sound;
+    [self saveSoundSettingToUserDefaults];
+}
+
 -(void) pauseButtonPressed:(UIButton*) button {
     [self.timeBarTimer invalidate];
     [self.addCellsTimer invalidate];
     
     //Use an action sheet instead of an alertview
-    UIActionSheet *pauseAction = [[UIActionSheet alloc] initWithTitle:@"TRIFECTA PAUSED" delegate:self cancelButtonTitle:@"I Give Up" destructiveButtonTitle:nil otherButtonTitles: @"Continue Playing",nil];
-    [pauseAction showInView:self.view];
-
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        // The device is an iPad running iPhone 3.2 or later.
+        UIActionSheet *pauseAction = [[UIActionSheet alloc] initWithTitle:@"TRIFECTA PAUSED" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles: @"Continue Playing", @"I Give Up", nil];
+        [pauseAction showInView:self.view];
+    }
+    else
+    {
+        // The device is an iPhone or iPod touch.
+        UIActionSheet *pauseAction = [[UIActionSheet alloc] initWithTitle:@"TRIFECTA PAUSED" delegate:self cancelButtonTitle:@"I Give Up" destructiveButtonTitle:nil otherButtonTitles: @"Continue Playing",nil];
+        [pauseAction showInView:self.view];
+    }
+    
+    
+    
 }
 
 -(void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -213,6 +275,15 @@
     } else if (buttonIndex == 1){
         //end game
         [self dismissModalViewControllerAnimated:YES];
+    } else {
+        if (self.sound) {
+            NSString *music = [[NSBundle mainBundle] pathForResource:@"failed" ofType:@"wav"];
+            self.playerFail = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:music] error:NULL];
+            [self.playerFail play];
+        }
+        UIButton *randomButton = [UIButton new];
+        [self pauseButtonPressed:randomButton];
+        //        [self actionSheet:actionSheet clickedButtonAtIndex:0];
     }
 }
 

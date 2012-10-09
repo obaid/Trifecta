@@ -95,7 +95,7 @@
     xsLabel.text = @"XS";
     xsLabel.textAlignment = UITextAlignmentCenter;
     
-    UILabel *lScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.highScoreScrollView.frame.size.width/4.0, self.view.frame.size.height/8.0, self.highScoreScrollView.frame.size.width/4.0*3.0-20, 50.0)];
+    UILabel *lScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.highScoreScrollView.frame.size.width/4.0, self.view.frame.size.height/8.0, self.highScoreScrollView.frame.size.width/8.0*5.0, 50.0)];
     lScoreLabel.font = [UIFont fontWithName:@"04b03" size:18];
     lScoreLabel.backgroundColor = [UIColor clearColor];
     lScoreLabel.textColor = UIColorFromRGB(0xFF0095);
@@ -107,7 +107,7 @@
     }
     lScoreLabel.textAlignment = UITextAlignmentRight;
     
-    UILabel *mScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.highScoreScrollView.frame.size.width/4.0, self.view.frame.size.height/8.0*2.0, self.highScoreScrollView.frame.size.width/4.0*3.0-20, 50.0)];
+    UILabel *mScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.highScoreScrollView.frame.size.width/4.0, self.view.frame.size.height/8.0*2.0, self.highScoreScrollView.frame.size.width/8.0*5.0, 50.0)];
     mScoreLabel.font = [UIFont fontWithName:@"04b03" size:18];
     mScoreLabel.backgroundColor = [UIColor clearColor];
     mScoreLabel.textColor = UIColorFromRGB(0xFF0095);
@@ -119,7 +119,7 @@
     }
     mScoreLabel.textAlignment = UITextAlignmentRight;
     
-    UILabel *sScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.highScoreScrollView.frame.size.width/4.0, self.view.frame.size.height/8.0*3.0, self.highScoreScrollView.frame.size.width/4.0*3.0-20, 50.0)];
+    UILabel *sScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.highScoreScrollView.frame.size.width/4.0, self.view.frame.size.height/8.0*3.0, self.highScoreScrollView.frame.size.width/8.0*5.0, 50.0)];
     sScoreLabel.font = [UIFont fontWithName:@"04b03" size:18];
     sScoreLabel.backgroundColor = [UIColor clearColor];
     sScoreLabel.textColor = UIColorFromRGB(0xFF0095);
@@ -131,7 +131,7 @@
     }
     sScoreLabel.textAlignment = UITextAlignmentRight;
     
-    UILabel *xsScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.highScoreScrollView.frame.size.width/4.0, self.view.frame.size.height/8.0*4.0, self.highScoreScrollView.frame.size.width/4.0*3.0-20, 50.0)];
+    UILabel *xsScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.highScoreScrollView.frame.size.width/4.0, self.view.frame.size.height/8.0*4.0, self.highScoreScrollView.frame.size.width/8.0*5.0, 50.0)];
     xsScoreLabel.font = [UIFont fontWithName:@"04b03" size:18];
     xsScoreLabel.backgroundColor = [UIColor clearColor];
     xsScoreLabel.textColor = UIColorFromRGB(0xFF0095);
@@ -180,7 +180,7 @@
     xsUnlimitedLabel.textAlignment = UITextAlignmentCenter;
     
     
-    UILabel *lUnlimitedScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.highScoreScrollView.frame.size.width/4.0, self.view.frame.size.height/8.0*6.0, self.highScoreScrollView.frame.size.width/4.0*3.0-20, 50.0)];
+    UILabel *lUnlimitedScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.highScoreScrollView.frame.size.width/4.0, self.view.frame.size.height/8.0*6.0, self.highScoreScrollView.frame.size.width/8.0*5.0, 50.0)];
     lUnlimitedScoreLabel.font = [UIFont fontWithName:@"04b03" size:18];
     lUnlimitedScoreLabel.backgroundColor = [UIColor clearColor];
     lUnlimitedScoreLabel.textColor = UIColorFromRGB(0xFF0095);
@@ -192,7 +192,7 @@
     }
     lUnlimitedScoreLabel.textAlignment = UITextAlignmentRight;
     
-    UILabel *mUnlimitedScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.highScoreScrollView.frame.size.width/4.0, self.view.frame.size.height/8.0*7.0, self.highScoreScrollView.frame.size.width/4.0*3.0-20, 50.0)];
+    UILabel *mUnlimitedScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.highScoreScrollView.frame.size.width/4.0, self.view.frame.size.height/8.0*7.0, self.highScoreScrollView.frame.size.width/8.0*5.0, 50.0)];
     mUnlimitedScoreLabel.font = [UIFont fontWithName:@"04b03" size:18];
     mUnlimitedScoreLabel.backgroundColor = [UIColor clearColor];
     mUnlimitedScoreLabel.textColor = UIColorFromRGB(0xFF0095);
@@ -204,7 +204,7 @@
     }
     mUnlimitedScoreLabel.textAlignment = UITextAlignmentRight;
     
-    UILabel *sUnlimitedScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.highScoreScrollView.frame.size.width/4.0, self.view.frame.size.height/8.0*8.0, self.highScoreScrollView.frame.size.width/4.0*3.0-20, 50.0)];
+    UILabel *sUnlimitedScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.highScoreScrollView.frame.size.width/4.0, self.view.frame.size.height/8.0*8.0, self.highScoreScrollView.frame.size.width/8.0*5.0, 50.0)];
     sUnlimitedScoreLabel.font = [UIFont fontWithName:@"04b03" size:18];
     sUnlimitedScoreLabel.backgroundColor = [UIColor clearColor];
     sUnlimitedScoreLabel.textColor = UIColorFromRGB(0xFF0095);
@@ -216,7 +216,7 @@
     }
     sUnlimitedScoreLabel.textAlignment = UITextAlignmentRight;
     
-    UILabel *xsUnlimitedScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.highScoreScrollView.frame.size.width/4.0, self.view.frame.size.height/8.0*9.0, self.highScoreScrollView.frame.size.width/4.0*3.0-20, 50.0)];
+    UILabel *xsUnlimitedScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.highScoreScrollView.frame.size.width/4.0, self.view.frame.size.height/8.0*9.0, self.highScoreScrollView.frame.size.width/8.0*5.0, 50.0)];
     xsUnlimitedScoreLabel.font = [UIFont fontWithName:@"04b03" size:18];
     xsUnlimitedScoreLabel.backgroundColor = [UIColor clearColor];
     xsUnlimitedScoreLabel.textColor = UIColorFromRGB(0xFF0095);
