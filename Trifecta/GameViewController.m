@@ -157,6 +157,9 @@
     //    self.view.layer.sublayers = nil;
     self.hasHighScore = NO;
     [self.gameBoard removeFromSuperview];
+    [self.scoreTextLabel removeFromSuperview];
+    [self.soundButton removeFromSuperview];
+    [self.pauseButton removeFromSuperview];
 }
 
 
@@ -168,8 +171,13 @@
 //    [self countdownTimeBarBlinkingWithColor:UIColorFromRGB(0xAD00FF)];
     double sizeOfCell = (self.view.frame.size.width-(self.view.frame.size.width*.075))/self.numColumns;
     int numRows = (self.view.frame.size.height-(self.view.frame.size.height*.13333))/sizeOfCell;
+    int boardGameHeight = self.view.frame.size.height*0.8671875;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        numRows = boardGameHeight/sizeOfCell;
+    } 
+    
     int boardGameWidth = self.numColumns * sizeOfCell;
-    int boardGameHeight = numRows * sizeOfCell;
+    boardGameHeight = numRows * sizeOfCell;
     double boardGameYStart = (self.view.frame.size.height - boardGameHeight)/2.0 + 20.0;
     double boardGameXStart = (self.view.frame.size.width - boardGameWidth)/2.0;
     NSMutableArray *tempColumns = [NSMutableArray new];
@@ -182,7 +190,7 @@
     [self.view addSubview:self.gameBoard];
     int randomSeedNumber = arc4random();
     srand(randomSeedNumber);
-    self.scoreTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.view.frame.size.width -20, 40)];
+    self.scoreTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height/40.0, self.view.frame.size.width -20, 40)];
     self.scoreTextLabel.font = [UIFont fontWithName:@"04b03" size:24];
     self.scoreTextLabel.textColor = UIColorFromRGB(0xFF0095);
     self.scoreTextLabel.text=[NSString stringWithFormat:@"Score: %d",self.gameBoard.score];
@@ -191,18 +199,20 @@
     [self.view addSubview:self.scoreTextLabel];
     
     self.pauseButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.pauseButton setBackgroundImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
-    self.pauseButton.frame = CGRectMake(self.view.frame.size.width/16.0*15.0-20, 20, 20 , 20);
+    [self.pauseButton setBackgroundImage:[UIImage imageNamed:@"pause24.png"] forState:UIControlStateNormal];
+    self.pauseButton.frame = CGRectMake(self.view.frame.size.width/16.0*15.0-20, self.view.frame.size.height/24.0, 24 , 24);
+    self.pauseButton.contentMode = UIViewContentModeCenter;
     [self.pauseButton addTarget:self action:@selector(pauseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.pauseButton];
     
     self.soundButton = [UIButton buttonWithType:UIButtonTypeCustom];
     if (self.sound) {
-        [self.soundButton setBackgroundImage:[UIImage imageNamed:@"sound.png"] forState:UIControlStateNormal];
+        [self.soundButton setBackgroundImage:[UIImage imageNamed:@"sound24.png"] forState:UIControlStateNormal];
     } else {
-        [self.soundButton setBackgroundImage:[UIImage imageNamed:@"mute.png"] forState:UIControlStateNormal];
+        [self.soundButton setBackgroundImage:[UIImage imageNamed:@"mute24.png"] forState:UIControlStateNormal];
     }
-    self.soundButton.frame = CGRectMake(self.view.frame.size.width/16.0, 20, 20 , 20);
+    self.soundButton.frame = CGRectMake(self.view.frame.size.width/16.0, self.view.frame.size.height/24.0, 24 , 24);
+    self.soundButton.contentMode = UIViewContentModeCenter;
     [self.soundButton addTarget:self action:@selector(soundButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.soundButton];
     
@@ -269,10 +279,10 @@
 }
 -(void) soundButtonPressed:(UIButton *) button {
     if (self.sound) {
-        [self.soundButton setBackgroundImage:[UIImage imageNamed:@"mute.png"] forState:UIControlStateNormal];
+        [self.soundButton setBackgroundImage:[UIImage imageNamed:@"mute24.png"] forState:UIControlStateNormal];
 
     } else {
-        [self.soundButton setBackgroundImage:[UIImage imageNamed:@"sound.png"] forState:UIControlStateNormal];
+        [self.soundButton setBackgroundImage:[UIImage imageNamed:@"sound24.png"] forState:UIControlStateNormal];
     }
     self.sound =!self.sound;
     [self saveSoundSettingToUserDefaults];
