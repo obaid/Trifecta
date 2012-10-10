@@ -20,6 +20,8 @@
 @property (nonatomic) CALayer *timeBar;
 @property (nonatomic) NSInteger highScore;
 @property (nonatomic, strong) NSTimer *timeBarTimer;
+@property (nonatomic) BOOL timeBarIsDarkRed;
+@property (nonatomic, strong) NSTimer *runningOutOfTimeTimer;
 @property (nonatomic, strong) NSTimer *addCellsTimer;
 @property (nonatomic) BOOL hasHighScore;
 @property (nonatomic, strong) AVAudioPlayer *playerFail;
@@ -53,9 +55,11 @@
 }
 
 -(void) countdownTimeBar {
+    int timePastCounter = self.view.frame.size.width/64;
     if (self.timePast <= self.view.frame.size.width) {
-        self.timeBar.frame = CGRectMake(0,0, self.view.frame.size.width - self.timePast, 5);
-        self.timePast +=5;
+        self.timeBar.frame = CGRectMake(0,0, self.view.frame.size.width - self.timePast, timePastCounter);
+        self.timePast +=timePastCounter;
+        [self countdownTimeBarBlinkingWithColor:UIColorFromRGB(0xAD00FF)];
     } else {
         [self gameOver];
         if (self.hasHighScore) {
@@ -65,6 +69,15 @@
         }
         
     }
+}
+-(void) countdownTimeBarBlinkingWithColor:(UIColor *)color {
+    if (self.timeBarIsDarkRed) {
+        self.timeBar.backgroundColor = [[UIColor redColor] CGColor];
+    } else {
+        self.timeBar.backgroundColor = [color CGColor];
+        
+    }
+    self.timeBarIsDarkRed = !self.timeBarIsDarkRed;
 }
 -(void) lossByBlocks {
     if (self.gameType == 1) {
@@ -79,6 +92,7 @@
 -(void) gameOver {
     [self.timeBarTimer invalidate];
     [self.addCellsTimer invalidate];
+    [self.runningOutOfTimeTimer invalidate];
     self.highScore = [self getHighScoreFromUserDefaultsForSize:self.numColumns withGameType:self.gameType];
     if (self.gameBoard.score > self.highScore) {
         self.hasHighScore = YES;
@@ -121,6 +135,7 @@
         if (buttonIndex == 0) {
             [self setupCellsTimerWithInterval:0.3];
             [self setupTimerBarWithInterval:1.0];
+            [self setupRunningOutOfTimeTimer];
         } else if (buttonIndex == 1){
             //end game
             [self dismissModalViewControllerAnimated:YES];
@@ -148,6 +163,8 @@
 {
     //    self.numColumns = 20;
     self.timePast = 0;
+    self.timeBarIsDarkRed = NO;
+    [self countdownTimeBarBlinkingWithColor:UIColorFromRGB(0xAD00FF)];
     double sizeOfCell = (self.view.frame.size.width-(self.view.frame.size.width*.075))/self.numColumns;
     int numRows = (self.view.frame.size.height-(self.view.frame.size.height*.13333))/sizeOfCell;
     int boardGameWidth = self.numColumns * sizeOfCell;
@@ -198,6 +215,7 @@
         self.timeBar.frame = CGRectMake(0,0, self.view.frame.size.width, 5);
         [self.view.layer addSublayer:self.timeBar];
         [self setupTimerBarWithInterval:1.0];
+        [self setupRunningOutOfTimeTimer];
         
     }
     [self setupCellsTimerWithInterval:0.3];
@@ -234,7 +252,14 @@
     self.addCellsTimer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(addNewCells) userInfo:nil repeats:YES];
     
 }
-
+-(void) setupRunningOutOfTimeTimer {
+    self.runningOutOfTimeTimer = [NSTimer scheduledTimerWithTimeInterval:.15 target:self selector:@selector(runningOutOfTime) userInfo:nil repeats:YES];
+}
+-(void) runningOutOfTime {
+    if (self.view.frame.size.width - self.timePast < (5*(self.view.frame.size.width/64))) {
+        [self countdownTimeBarBlinkingWithColor:[UIColor whiteColor]];
+    }
+}
 -(void) soundButtonPressed:(UIButton *) button {
     if (self.sound) {
         [self.soundButton setBackgroundImage:[UIImage imageNamed:@"mute.png"] forState:UIControlStateNormal];
@@ -249,6 +274,7 @@
 -(void) pauseButtonPressed:(UIButton*) button {
     [self.timeBarTimer invalidate];
     [self.addCellsTimer invalidate];
+    [self.runningOutOfTimeTimer invalidate];
     
     //Use an action sheet instead of an alertview
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -272,6 +298,7 @@
     if (buttonIndex == 0) {
         [self setupCellsTimerWithInterval:0.3];
         [self setupTimerBarWithInterval:1.0];
+        [self setupRunningOutOfTimeTimer];
     } else if (buttonIndex == 1){
         //end game
         [self dismissModalViewControllerAnimated:YES];
