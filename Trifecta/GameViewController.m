@@ -20,7 +20,7 @@
 @property (nonatomic) CALayer *timeBar;
 @property (nonatomic) NSInteger highScore;
 @property (nonatomic, strong) NSTimer *timeBarTimer;
-@property (nonatomic) BOOL timeBarIsDarkRed;
+@property (nonatomic) BOOL timeBarIsNotRed;
 @property (nonatomic, strong) NSTimer *runningOutOfTimeTimer;
 @property (nonatomic, strong) NSTimer *addCellsTimer;
 @property (nonatomic) BOOL hasHighScore;
@@ -59,7 +59,7 @@
     if (self.timePast <= self.view.frame.size.width) {
         self.timeBar.frame = CGRectMake(0,0, self.view.frame.size.width - self.timePast, timePastCounter);
         self.timePast +=timePastCounter;
-        [self countdownTimeBarBlinkingWithColor:UIColorFromRGB(0xAD00FF)];
+//        [self countdownTimeBarBlinkingWithColor:UIColorFromRGB(0xAD00FF)];
     } else {
         [self gameOver];
         if (self.hasHighScore) {
@@ -71,13 +71,14 @@
     }
 }
 -(void) countdownTimeBarBlinkingWithColor:(UIColor *)color {
-    if (self.timeBarIsDarkRed) {
+    if (self.timeBarIsNotRed) {
         self.timeBar.backgroundColor = [[UIColor redColor] CGColor];
+        self.view.backgroundColor = [UIColor whiteColor];
     } else {
         self.timeBar.backgroundColor = [color CGColor];
-        
+        self.view.backgroundColor = UIColorFromRGB(0xFFE2F3);
     }
-    self.timeBarIsDarkRed = !self.timeBarIsDarkRed;
+    self.timeBarIsNotRed = !self.timeBarIsNotRed;
 }
 -(void) lossByBlocks {
     if (self.gameType == 1) {
@@ -163,8 +164,8 @@
 {
     //    self.numColumns = 20;
     self.timePast = 0;
-    self.timeBarIsDarkRed = NO;
-    [self countdownTimeBarBlinkingWithColor:UIColorFromRGB(0xAD00FF)];
+    self.timeBarIsNotRed = NO;
+//    [self countdownTimeBarBlinkingWithColor:UIColorFromRGB(0xAD00FF)];
     double sizeOfCell = (self.view.frame.size.width-(self.view.frame.size.width*.075))/self.numColumns;
     int numRows = (self.view.frame.size.height-(self.view.frame.size.height*.13333))/sizeOfCell;
     int boardGameWidth = self.numColumns * sizeOfCell;
@@ -185,6 +186,7 @@
     self.scoreTextLabel.font = [UIFont fontWithName:@"04b03" size:24];
     self.scoreTextLabel.textColor = UIColorFromRGB(0xFF0095);
     self.scoreTextLabel.text=[NSString stringWithFormat:@"Score: %d",self.gameBoard.score];
+    self.scoreTextLabel.backgroundColor = [UIColor clearColor];
     self.scoreTextLabel.textAlignment = UITextAlignmentCenter;
     [self.view addSubview:self.scoreTextLabel];
     
@@ -258,6 +260,11 @@
 -(void) runningOutOfTime {
     if (self.view.frame.size.width - self.timePast < (5*(self.view.frame.size.width/64))) {
         [self countdownTimeBarBlinkingWithColor:[UIColor whiteColor]];
+    } else {
+        if (self.timeBarIsNotRed) {
+            self.view.backgroundColor = [UIColor whiteColor];
+            self.timeBar.backgroundColor = [[UIColor redColor] CGColor];
+        }
     }
 }
 -(void) soundButtonPressed:(UIButton *) button {

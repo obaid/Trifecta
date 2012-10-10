@@ -211,6 +211,12 @@ typedef void (^animationCompletionBlock)(void);
     //bonusLayer.opacity = 0.0;
     
     CALayer *shadowLayer = [CALayer new];
+    if (self.touchPoint.x < 75) {
+        self.touchPoint = CGPointMake(75, self.touchPoint.y);
+    }
+    if (self.touchPoint.x > self.frame.size.width - 75) {
+        self.touchPoint = CGPointMake(self.frame.size.width - 75, self.touchPoint.y);
+    }
     shadowLayer.frame = CGRectMake(self.touchPoint.x, self.touchPoint.y, 150, 50);
     shadowLayer.position = self.touchPoint;
     shadowLayer.backgroundColor = [[UIColor clearColor] CGColor];
