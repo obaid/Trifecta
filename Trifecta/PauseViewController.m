@@ -44,7 +44,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.pauseView.layer.backgroundColor = [[UIColor colorWithRed:0 green:0 blue:0 alpha:0.4] CGColor];
+    self.pauseView.layer.backgroundColor = [[UIColor colorWithRed:0 green:0 blue:0 alpha:0.6] CGColor];
     self.pauseView.layer.borderColor = [[UIColor whiteColor] CGColor];
     self.pauseView.layer.borderWidth = 1;
     self.pauseView.layer.cornerRadius = 10;
