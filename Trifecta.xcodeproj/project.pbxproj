@@ -53,6 +53,17 @@
 		2590C2F51623ACC10078A1A8 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2590C2F41623ACC10078A1A8 /* Icon-72@2x.png */; };
 		2590C3001623E8690078A1A8 /* mute.png in Resources */ = {isa = PBXBuildFile; fileRef = 2590C2FE1623E8690078A1A8 /* mute.png */; };
 		2590C3011623E8690078A1A8 /* sound.png in Resources */ = {isa = PBXBuildFile; fileRef = 2590C2FF1623E8690078A1A8 /* sound.png */; };
+		25D172AB162BDFF800597891 /* pink_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D172A7162BDFF800597891 /* pink_button.png */; };
+		25D172AC162BDFF800597891 /* dark_pink_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D172A8162BDFF800597891 /* dark_pink_button.png */; };
+		25D172AD162BDFF800597891 /* dark_pink_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D172A9162BDFF800597891 /* dark_pink_button@2x.png */; };
+		25D172AE162BDFF800597891 /* pink_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D172AA162BDFF800597891 /* pink_button@2x.png */; };
+		25D172B3162BE6B000597891 /* PauseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D172B1162BE6B000597891 /* PauseViewController.m */; };
+		25D172B4162BE6B000597891 /* PauseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D172B2162BE6B000597891 /* PauseViewController.xib */; };
+		25D172B9162BEA6900597891 /* black_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D172B5162BEA6900597891 /* black_button.png */; };
+		25D172BA162BEA6900597891 /* blue_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D172B6162BEA6900597891 /* blue_button.png */; };
+		25D172BB162BEA6900597891 /* blue_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D172B7162BEA6900597891 /* blue_button@2x.png */; };
+		25D172BC162BEA6900597891 /* black_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D172B8162BEA6900597891 /* black_button@2x.png */; };
+		25D172BE162BFE9A00597891 /* PauseViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D172BD162BFE9A00597891 /* PauseViewController-iPad.xib */; };
 		25D46BCD16249F9300FA04F0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D46BCC16249F9300FA04F0 /* Default-568h@2x.png */; };
 		25D46BD01624B8B700FA04F0 /* TrifectaViewController-5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D46BCF1624B8B700FA04F0 /* TrifectaViewController-5.xib */; };
 		25D46BD21624C35600FA04F0 /* bitfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25D46BD11624C35600FA04F0 /* bitfont.ttf */; };
@@ -119,6 +130,18 @@
 		2590C2F41623ACC10078A1A8 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		2590C2FE1623E8690078A1A8 /* mute.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mute.png; path = Trifecta/mute.png; sourceTree = "<group>"; };
 		2590C2FF1623E8690078A1A8 /* sound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sound.png; path = Trifecta/sound.png; sourceTree = "<group>"; };
+		25D172A7162BDFF800597891 /* pink_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pink_button.png; path = Trifecta/pink_button.png; sourceTree = "<group>"; };
+		25D172A8162BDFF800597891 /* dark_pink_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dark_pink_button.png; path = Trifecta/dark_pink_button.png; sourceTree = "<group>"; };
+		25D172A9162BDFF800597891 /* dark_pink_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dark_pink_button@2x.png"; path = "Trifecta/dark_pink_button@2x.png"; sourceTree = "<group>"; };
+		25D172AA162BDFF800597891 /* pink_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pink_button@2x.png"; path = "Trifecta/pink_button@2x.png"; sourceTree = "<group>"; };
+		25D172B0162BE6B000597891 /* PauseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseViewController.h; sourceTree = "<group>"; };
+		25D172B1162BE6B000597891 /* PauseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PauseViewController.m; sourceTree = "<group>"; };
+		25D172B2162BE6B000597891 /* PauseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PauseViewController.xib; sourceTree = "<group>"; };
+		25D172B5162BEA6900597891 /* black_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = black_button.png; path = Trifecta/black_button.png; sourceTree = "<group>"; };
+		25D172B6162BEA6900597891 /* blue_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blue_button.png; path = Trifecta/blue_button.png; sourceTree = "<group>"; };
+		25D172B7162BEA6900597891 /* blue_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blue_button@2x.png"; path = "Trifecta/blue_button@2x.png"; sourceTree = "<group>"; };
+		25D172B8162BEA6900597891 /* black_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "black_button@2x.png"; path = "Trifecta/black_button@2x.png"; sourceTree = "<group>"; };
+		25D172BD162BFE9A00597891 /* PauseViewController-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PauseViewController-iPad.xib"; sourceTree = "<group>"; };
 		25D46BCC16249F9300FA04F0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		25D46BCF1624B8B700FA04F0 /* TrifectaViewController-5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "TrifectaViewController-5.xib"; sourceTree = "<group>"; };
 		25D46BD11624C35600FA04F0 /* bitfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = bitfont.ttf; sourceTree = "<group>"; };
@@ -181,6 +204,10 @@
 				16FBD26F162B476D00BA0BF8 /* PopupViewController.h */,
 				16FBD270162B476D00BA0BF8 /* PopupViewController.m */,
 				16FBD271162B476D00BA0BF8 /* PopupViewController.xib */,
+				25D172B0162BE6B000597891 /* PauseViewController.h */,
+				25D172B1162BE6B000597891 /* PauseViewController.m */,
+				25D172B2162BE6B000597891 /* PauseViewController.xib */,
+				25D172BD162BFE9A00597891 /* PauseViewController-iPad.xib */,
 				2563582915F8156C00CA812E /* Cell.h */,
 				2563582A15F8156C00CA812E /* Cell.m */,
 				2563582315F8112900CA812E /* Column.h */,
@@ -222,6 +249,14 @@
 		2563584715F9933200CA812E /* images */ = {
 			isa = PBXGroup;
 			children = (
+				25D172B5162BEA6900597891 /* black_button.png */,
+				25D172B6162BEA6900597891 /* blue_button.png */,
+				25D172B7162BEA6900597891 /* blue_button@2x.png */,
+				25D172B8162BEA6900597891 /* black_button@2x.png */,
+				25D172A7162BDFF800597891 /* pink_button.png */,
+				25D172A8162BDFF800597891 /* dark_pink_button.png */,
+				25D172A9162BDFF800597891 /* dark_pink_button@2x.png */,
+				25D172AA162BDFF800597891 /* pink_button@2x.png */,
 				2564D83716252EF000F67A9B /* pause24.png */,
 				2564D83816252EF000F67A9B /* pause24@2x.png */,
 				2564D83916252EF000F67A9B /* sound24.png */,
@@ -339,6 +374,16 @@
 				2564D84116252EF100F67A9B /* mute24.png in Resources */,
 				2564D84216252EF100F67A9B /* mute24@2x.png in Resources */,
 				16FBD273162B476D00BA0BF8 /* PopupViewController.xib in Resources */,
+				25D172AB162BDFF800597891 /* pink_button.png in Resources */,
+				25D172AC162BDFF800597891 /* dark_pink_button.png in Resources */,
+				25D172AD162BDFF800597891 /* dark_pink_button@2x.png in Resources */,
+				25D172AE162BDFF800597891 /* pink_button@2x.png in Resources */,
+				25D172B4162BE6B000597891 /* PauseViewController.xib in Resources */,
+				25D172B9162BEA6900597891 /* black_button.png in Resources */,
+				25D172BA162BEA6900597891 /* blue_button.png in Resources */,
+				25D172BB162BEA6900597891 /* blue_button@2x.png in Resources */,
+				25D172BC162BEA6900597891 /* black_button@2x.png in Resources */,
+				25D172BE162BFE9A00597891 /* PauseViewController-iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,6 +404,7 @@
 				254381E0161CE02B0071A415 /* InfoViewController.m in Sources */,
 				2590C2D316234BF40078A1A8 /* HighScoresViewController.m in Sources */,
 				16FBD272162B476D00BA0BF8 /* PopupViewController.m in Sources */,
+				25D172B3162BE6B000597891 /* PauseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

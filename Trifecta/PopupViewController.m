@@ -7,6 +7,8 @@
 //
 
 #import "PopupViewController.h"
+#import <QuartzCore/QuartzCore.h>
+
 
 @interface PopupViewController ()
 @property (strong, nonatomic) NSString* firstLabelText;
@@ -39,12 +41,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.popUpView.alpha = .9;
+    self.popUpView.layer.backgroundColor = [[UIColor colorWithRed:0 green:0 blue:0 alpha:0.6] CGColor];
+    self.popUpView.layer.borderColor = [[UIColor whiteColor] CGColor];
+    self.popUpView.layer.borderWidth = 1;
+    self.popUpView.layer.cornerRadius = 10;
+    self.popUpView.layer.shadowColor = [[UIColor blackColor] CGColor];
+    self.popUpView.layer.shadowOpacity = 0.6;
+    self.popUpView.layer.shadowOffset = CGSizeMake(0.0,0.0);
+    self.firstLabel.font = [UIFont fontWithName:@"04b03" size:16];
+    self.secondLabel.font = [UIFont fontWithName:@"04b03" size:16];
+    self.noButtonLabel.titleLabel.font = [UIFont fontWithName:@"04b03" size:18];
+    self.yesButtonLabel.titleLabel.font = [UIFont fontWithName:@"04b03" size:18];
+    self.noButtonLabel.backgroundColor = [UIColor clearColor];
+    self.yesButtonLabel.backgroundColor = [UIColor clearColor];
     self.firstLabel.text = self.firstLabelText;
     self.secondLabel.text = self.secondLabelText;
     self.noButtonLabel.titleLabel.text = self.noButtonText;
     self.yesButtonLabel.titleLabel.text = self.yesButtonText;
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)didReceiveMemoryWarning

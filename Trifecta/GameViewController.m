@@ -5,15 +5,16 @@
 //  Created by Kris Fields & Ran Tao on 9.5.12.
 //  Copyright (c) 2012 Kris Fields & Ran Tao. All rights reserved.
 //
+#import <QuartzCore/QuartzCore.h>
+#import <AVFoundation/AVFoundation.h>
 #import "GameViewController.h"
 #import "Column.h"
 #import "Cell.h"
 #import "GameBoardView.h"
-#import <QuartzCore/QuartzCore.h>
-#import <AVFoundation/AVFoundation.h>
 #import "PopupViewController.h"
+#import "PauseViewController.h"
 
-@interface GameViewController () </*UIAlertViewDelegate, */UIActionSheetDelegate, PopUpViewDelegate>
+@interface GameViewController () </*UIAlertViewDelegate,UIActionSheetDelegate,*/ PopUpViewDelegate, PauseViewDelegate>
 @property (nonatomic, strong) GameBoardView* gameBoard;
 
 @property (nonatomic) UIButton *pauseButton;
@@ -27,6 +28,7 @@
 @property (nonatomic) BOOL hasHighScore;
 @property (nonatomic, strong) AVAudioPlayer *playerFail;
 @property (nonatomic, strong) PopupViewController *popUpViewController;
+@property (nonatomic, strong) PauseViewController *pauseViewController;
 
 @end
 
@@ -100,7 +102,7 @@
             self.popUpViewController = [[PopupViewController alloc] initWithFirstLabel:@"Too many blocks! Play again?\nNew high score!" andSecondLabel:[NSString stringWithFormat:@"Your final score was: %d", self.gameBoard.score] andNoButtonText:@"No thanks" andYesButtonText:@"Yes please"];
         } else {
 //            [[[UIAlertView alloc] initWithTitle:@"Too many blocks! Play again?" message:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
-            self.popUpViewController = [[PopupViewController alloc] initWithFirstLabel:@"RAN!  Please make me pretty!" andSecondLabel:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] andNoButtonText:@"No thanks" andYesButtonText:@"Yes please"];
+            self.popUpViewController = [[PopupViewController alloc] initWithFirstLabel:@"Too many blocks! Play again?" andSecondLabel:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] andNoButtonText:@"No thanks" andYesButtonText:@"Yes please"];
         }
         self.popUpViewController.delegate = self;
         [self.view addSubview:self.popUpViewController.view];
@@ -290,43 +292,44 @@
     [self.addCellsTimer invalidate];
     [self.runningOutOfTimeTimer invalidate];
     
+    self.pauseViewController = [[PauseViewController alloc] initWithNibName:@"PauseViewController" bundle:nil];
+    self.pauseViewController.delegate = self;
+    [self.view addSubview:self.pauseViewController.view];
+    
     //Use an action sheet instead of an alertview
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        // The device is an iPad running iPhone 3.2 or later.
-        UIActionSheet *pauseAction = [[UIActionSheet alloc] initWithTitle:@"TRIFECTA PAUSED" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles: @"Continue Playing", @"I Give Up", nil];
-        [pauseAction showInView:self.view];
-    }
-    else
-    {
-        // The device is an iPhone or iPod touch.
-        UIActionSheet *pauseAction = [[UIActionSheet alloc] initWithTitle:@"TRIFECTA PAUSED" delegate:self cancelButtonTitle:@"I Give Up" destructiveButtonTitle:nil otherButtonTitles: @"Continue Playing",nil];
-        [pauseAction showInView:self.view];
-    }
-    
-    
-    
+//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+//    {
+//        // The device is an iPad running iPhone 3.2 or later.
+//        UIActionSheet *pauseAction = [[UIActionSheet alloc] initWithTitle:@"TRIFECTA PAUSED" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles: @"Continue Playing", @"I Give Up", nil];
+//        [pauseAction showInView:self.view];
+//    }
+//    else
+//    {
+//        // The device is an iPhone or iPod touch.
+//        UIActionSheet *pauseAction = [[UIActionSheet alloc] initWithTitle:@"TRIFECTA PAUSED" delegate:self cancelButtonTitle:@"I Give Up" destructiveButtonTitle:nil otherButtonTitles: @"Continue Playing",nil];
+//        [pauseAction showInView:self.view];
+//    }
 }
 
--(void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        [self setupCellsTimerWithInterval:0.3];
-        [self setupTimerBarWithInterval:1.0];
-        [self setupRunningOutOfTimeTimer];
-    } else if (buttonIndex == 1){
-        //end game
-        [self dismissModalViewControllerAnimated:YES];
-    } else {
-        if (self.sound) {
-            NSString *music = [[NSBundle mainBundle] pathForResource:@"failed" ofType:@"wav"];
-            self.playerFail = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:music] error:NULL];
-            [self.playerFail play];
-        }
-        UIButton *randomButton = [UIButton new];
-        [self pauseButtonPressed:randomButton];
-        //        [self actionSheet:actionSheet clickedButtonAtIndex:0];
-    }
-}
+//-(void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+//    if (buttonIndex == 0) {
+//        [self setupCellsTimerWithInterval:0.3];
+//        [self setupTimerBarWithInterval:1.0];
+//        [self setupRunningOutOfTimeTimer];
+//    } else if (buttonIndex == 1){
+//        //end game
+//        [self dismissModalViewControllerAnimated:YES];
+//    } else {
+//        if (self.sound) {
+//            NSString *music = [[NSBundle mainBundle] pathForResource:@"failed" ofType:@"wav"];
+//            self.playerFail = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:music] error:NULL];
+//            [self.playerFail play];
+//        }
+//        UIButton *randomButton = [UIButton new];
+//        [self pauseButtonPressed:randomButton];
+//        //        [self actionSheet:actionSheet clickedButtonAtIndex:0];
+//    }
+//}
 
 -(UIColor *)randomColor
 {
@@ -394,6 +397,18 @@
 {
     [self tearDownGame];
     [self setUpGame];
+}
+
+-(void) continueButtonPressed {
+    [self.pauseViewController.view removeFromSuperview];
+    [self setupCellsTimerWithInterval:0.3];
+    [self setupTimerBarWithInterval:1.0];
+    [self setupRunningOutOfTimeTimer];
+    
+}
+-(void) giveUpButtonPressed {
+    [self dismissModalViewControllerAnimated:YES];
+
 }
 
 @end

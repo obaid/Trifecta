@@ -17,14 +17,14 @@
 
 @interface PopupViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIView *popUpView;
-@property (weak, nonatomic) id<PopUpViewDelegate> delegate;
-- (IBAction)yesButton:(id)sender;
-
-- (IBAction)noButton:(id)sender;
-
+@property (weak, nonatomic) id <PopUpViewDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UILabel *firstLabel;
 @property (weak, nonatomic) IBOutlet UILabel *secondLabel;
 @property (weak, nonatomic) IBOutlet UIButton *yesButtonLabel;
 @property (weak, nonatomic) IBOutlet UIButton *noButtonLabel;
+
 - (id)initWithFirstLabel:(NSString *)firstLabel andSecondLabel:(NSString *)secondLabel andNoButtonText:(NSString *)noButton andYesButtonText: (NSString *)yesButton;
+- (IBAction)yesButton:(id)sender;
+- (IBAction)noButton:(id)sender;
+
 @end
