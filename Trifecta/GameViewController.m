@@ -25,6 +25,7 @@
 @property (nonatomic) BOOL timeBarIsNotRed;
 @property (nonatomic, strong) NSTimer *runningOutOfTimeTimer;
 @property (nonatomic, strong) NSTimer *addCellsTimer;
+@property (nonatomic, strong) NSTimer *blocksCloseToTopTimer;
 @property (nonatomic) BOOL hasHighScore;
 @property (nonatomic, strong) AVAudioPlayer *playerFail;
 @property (nonatomic, strong) PopupViewController *popUpViewController;
@@ -228,6 +229,8 @@
         [self setupTimerBarWithInterval:1.0];
         [self setupRunningOutOfTimeTimer];
         
+    } else {
+        [self setupBlocksCloseToTopTimer];
     }
     [self setupCellsTimerWithInterval:0.3];
     
@@ -276,6 +279,26 @@
         }
     }
 }
+-(void) setupBlocksCloseToTopTimer {
+    self.blocksCloseToTopTimer = [NSTimer scheduledTimerWithTimeInterval:.15 target:self selector:@selector(blocksCloseToTop) userInfo:nil repeats:YES];
+}
+-(void) blocksCloseToTop {
+    if ([self areAnyColumnsAlmostFull]) {
+        [self countdownTimeBarBlinkingWithColor:[UIColor whiteColor]];
+    } else {
+        if (self.timeBarIsNotRed) {
+            self.view.backgroundColor = [UIColor whiteColor];
+        }
+    }
+}
+-(BOOL) areAnyColumnsAlmostFull {
+    for (Column *column in self.gameBoard.columns) {
+        if ([column.cells count] >= (column.numRows - 1)) {
+            return YES;
+        }
+    }
+    return NO;
+}
 -(void) soundButtonPressed:(UIButton *) button {
     if (self.sound) {
         [self.soundButton setBackgroundImage:[UIImage imageNamed:@"mute24.png"] forState:UIControlStateNormal];
@@ -291,6 +314,7 @@
     [self.timeBarTimer invalidate];
     [self.addCellsTimer invalidate];
     [self.runningOutOfTimeTimer invalidate];
+    [self.blocksCloseToTopTimer invalidate];
     
     self.pauseViewController = [[PauseViewController alloc] initWithNibName:@"PauseViewController" bundle:nil];
     self.pauseViewController.delegate = self;
@@ -404,6 +428,7 @@
     [self setupCellsTimerWithInterval:0.3];
     [self setupTimerBarWithInterval:1.0];
     [self setupRunningOutOfTimeTimer];
+    [self setupBlocksCloseToTopTimer];
     
 }
 -(void) giveUpButtonPressed {
