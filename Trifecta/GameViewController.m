@@ -211,7 +211,8 @@
     self.soundButton.contentMode = UIViewContentModeCenter;
     [self.soundButton addTarget:self action:@selector(soundButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.soundButton];
-    
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
     NSString *music = [[NSBundle mainBundle] pathForResource:@"failed" ofType:@"wav"];
     self.playerFail = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:music] error:NULL];
     [self.playerFail prepareToPlay];

@@ -37,7 +37,8 @@ typedef void (^animationCompletionBlock)(void);
         //self.backgroundColor = UIColorFromRGB(0xD7F6FD);
         self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"hex.png"]];
         self.clipsToBounds = YES;
-        
+        AVAudioSession *session = [AVAudioSession sharedInstance];
+        [session setCategory:AVAudioSessionCategoryPlayback error:nil];
         NSString *music = [[NSBundle mainBundle] pathForResource:@"success" ofType:@"wav"];
         self.playerSucess = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:music] error:NULL];
         [self.playerSucess prepareToPlay];
