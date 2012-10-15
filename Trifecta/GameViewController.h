@@ -13,5 +13,6 @@
 @property (nonatomic) int gameType;
 @property (nonatomic) int timePast;
 @property (nonatomic) BOOL sound;
+@property (nonatomic) UILabel *scoreTextLabel;
 -(void) lossByBlocks;
 @end

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16FBD272162B476D00BA0BF8 /* PopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16FBD270162B476D00BA0BF8 /* PopupViewController.m */; };
+		16FBD273162B476D00BA0BF8 /* PopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16FBD271162B476D00BA0BF8 /* PopupViewController.xib */; };
 		250C826F16197A1100EE933B /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 250C826E16197A1100EE933B /* pause.png */; };
 		252F24C2161984D6001B3EDB /* pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 252F24C0161984D6001B3EDB /* pause@2x.png */; };
 		252F24CA1619998B001B3EDB /* start.png in Resources */ = {isa = PBXBuildFile; fileRef = 252F24C81619998B001B3EDB /* start.png */; };
@@ -59,6 +61,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		16FBD26F162B476D00BA0BF8 /* PopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupViewController.h; sourceTree = "<group>"; };
+		16FBD270162B476D00BA0BF8 /* PopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopupViewController.m; sourceTree = "<group>"; };
+		16FBD271162B476D00BA0BF8 /* PopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopupViewController.xib; sourceTree = "<group>"; };
 		250C826E16197A1100EE933B /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = Trifecta/pause.png; sourceTree = "<group>"; };
 		252F24C0161984D6001B3EDB /* pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pause@2x.png"; path = "Trifecta/pause@2x.png"; sourceTree = "<group>"; };
 		252F24C81619998B001B3EDB /* start.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = start.png; path = Trifecta/start.png; sourceTree = "<group>"; };
@@ -173,6 +178,9 @@
 			children = (
 				2563583315F83A9500CA812E /* GameViewController.h */,
 				2563583415F83A9500CA812E /* GameViewController.m */,
+				16FBD26F162B476D00BA0BF8 /* PopupViewController.h */,
+				16FBD270162B476D00BA0BF8 /* PopupViewController.m */,
+				16FBD271162B476D00BA0BF8 /* PopupViewController.xib */,
 				2563582915F8156C00CA812E /* Cell.h */,
 				2563582A15F8156C00CA812E /* Cell.m */,
 				2563582315F8112900CA812E /* Column.h */,
@@ -330,6 +338,7 @@
 				2564D84016252EF100F67A9B /* sound24@2x.png in Resources */,
 				2564D84116252EF100F67A9B /* mute24.png in Resources */,
 				2564D84216252EF100F67A9B /* mute24@2x.png in Resources */,
+				16FBD273162B476D00BA0BF8 /* PopupViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,6 +358,7 @@
 				2563584B15F9936200CA812E /* TrifectaViewController.m in Sources */,
 				254381E0161CE02B0071A415 /* InfoViewController.m in Sources */,
 				2590C2D316234BF40078A1A8 /* HighScoresViewController.m in Sources */,
+				16FBD272162B476D00BA0BF8 /* PopupViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,10 +11,11 @@
 #import "GameBoardView.h"
 #import <QuartzCore/QuartzCore.h>
 #import <AVFoundation/AVFoundation.h>
+#import "PopupViewController.h"
 
-@interface GameViewController () <UIAlertViewDelegate, UIActionSheetDelegate>
+@interface GameViewController () </*UIAlertViewDelegate, */UIActionSheetDelegate, PopUpViewDelegate>
 @property (nonatomic, strong) GameBoardView* gameBoard;
-@property (nonatomic) UILabel *scoreTextLabel;
+
 @property (nonatomic) UIButton *pauseButton;
 @property (nonatomic) UIButton *soundButton;
 @property (nonatomic) CALayer *timeBar;
@@ -25,6 +26,7 @@
 @property (nonatomic, strong) NSTimer *addCellsTimer;
 @property (nonatomic) BOOL hasHighScore;
 @property (nonatomic, strong) AVAudioPlayer *playerFail;
+@property (nonatomic, strong) PopupViewController *popUpViewController;
 
 @end
 
@@ -63,11 +65,15 @@
     } else {
         [self gameOver];
         if (self.hasHighScore) {
-            [[[UIAlertView alloc] initWithTitle:@"Time's up! Play again?\nNew high score!" message:[NSString stringWithFormat:@"Your final score was: %d", self.gameBoard.score] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
+//            [[[UIAlertView alloc] initWithTitle:@"Time's up! Play again?\nNew high score!" message:[NSString stringWithFormat:@"Your final score was: %d", self.gameBoard.score] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
+            self.popUpViewController = [[PopupViewController alloc] initWithFirstLabel:@"Time's up! Play again?\nNew high score!" andSecondLabel:[NSString stringWithFormat:@"Your final score was: %d", self.gameBoard.score] andNoButtonText:@"No thanks" andYesButtonText:@"Yes please"];
         } else {
-            [[[UIAlertView alloc] initWithTitle:@"Time's up! Play again?" message:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
-        }
-        
+//            [[[UIAlertView alloc] initWithTitle:@"Time's up! Play again?" message:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
+            self.popUpViewController = [[PopupViewController alloc] initWithFirstLabel:@"Time's up! Play again?" andSecondLabel:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] andNoButtonText:@"No thanks" andYesButtonText:@"Yes please"];        }
+        self.popUpViewController.delegate = self;
+        [self.view addSubview:self.popUpViewController.view];
+    
+    
     }
 }
 -(void) countdownTimeBarBlinkingWithColor:(UIColor *)color {
@@ -80,20 +86,31 @@
     }
     self.timeBarIsNotRed = !self.timeBarIsNotRed;
 }
+- (void) disableGameBoard
+{
+    self.gameBoard.userInteractionEnabled = NO;
+    self.pauseButton.userInteractionEnabled = NO;
+    self.soundButton.userInteractionEnabled = NO;
+}
 -(void) lossByBlocks {
     if (self.gameType == 1) {
         [self gameOver];
         if (self.hasHighScore) {
-            [[[UIAlertView alloc] initWithTitle:@"Too many blocks! Play again?\nNew high score!" message:[NSString stringWithFormat:@"Your final score was: %d", self.gameBoard.score] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
+//            [[[UIAlertView alloc] initWithTitle:@"Too many blocks! Play again?\nNew high score!" message:[NSString stringWithFormat:@"Your final score was: %d", self.gameBoard.score] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
+            self.popUpViewController = [[PopupViewController alloc] initWithFirstLabel:@"Too many blocks! Play again?\nNew high score!" andSecondLabel:[NSString stringWithFormat:@"Your final score was: %d", self.gameBoard.score] andNoButtonText:@"No thanks" andYesButtonText:@"Yes please"];
         } else {
-            [[[UIAlertView alloc] initWithTitle:@"Too many blocks! Play again?" message:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
+//            [[[UIAlertView alloc] initWithTitle:@"Too many blocks! Play again?" message:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
+            self.popUpViewController = [[PopupViewController alloc] initWithFirstLabel:@"RAN!  Make me pretty!  PLEASE!" andSecondLabel:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] andNoButtonText:@"No thanks" andYesButtonText:@"Yes please"];
         }
+        self.popUpViewController.delegate = self;
+        [self.view addSubview:self.popUpViewController.view];
     }
 }
 -(void) gameOver {
     [self.timeBarTimer invalidate];
     [self.addCellsTimer invalidate];
     [self.runningOutOfTimeTimer invalidate];
+    [self disableGameBoard];
     self.highScore = [self getHighScoreFromUserDefaultsForSize:self.numColumns withGameType:self.gameType];
     if (self.gameBoard.score > self.highScore) {
         self.hasHighScore = YES;
@@ -130,27 +147,7 @@
     [self.gameBoard addNewCellWithColor:[self randomColor]withSize:self.gameBoard.frame.size.width / self.numColumns];
 }
 
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (alertView.tag ==1) {
-        if (buttonIndex == 0) {
-            [self setupCellsTimerWithInterval:0.3];
-            [self setupTimerBarWithInterval:1.0];
-            [self setupRunningOutOfTimeTimer];
-        } else if (buttonIndex == 1){
-            //end game
-            [self dismissModalViewControllerAnimated:YES];
-        }
-    } else {
-        if (buttonIndex == 0) {
-            [self dismissModalViewControllerAnimated:YES];
-        }
-        else {
-            [self tearDownGame];
-            [self setUpGame];
-        }
-    }
-}
+
 
 -(void)tearDownGame
 {
@@ -186,7 +183,6 @@
     self.gameBoard.numRows = numRows;
     self.gameBoard.gameViewController = self;
     self.gameBoard.numColumns = self.numColumns;
-    
     [self.view addSubview:self.gameBoard];
     int randomSeedNumber = arc4random();
     srand(randomSeedNumber);
@@ -353,19 +349,50 @@
     }
     
 }
--(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    CGPoint touchPoint = [[touches anyObject] locationInView:self.gameBoard];
-    if (CGRectContainsPoint(self.gameBoard.bounds, touchPoint)){
-        [self.gameBoard touchedAtPoint:touchPoint andEndedMove:NO];
-    }
-}
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    CGPoint touchPoint = [[touches anyObject] locationInView:self.gameBoard];
-    if (CGRectContainsPoint(self.gameBoard.bounds, touchPoint)){
-        [self.gameBoard touchedAtPoint:touchPoint andEndedMove:YES];
-        self.scoreTextLabel.text = [NSString stringWithFormat:@"Score: %d",self.gameBoard.score];
-    }
-}
+//-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+//    CGPoint touchPoint = [[touches anyObject] locationInView:self.gameBoard];
+//    if (CGRectContainsPoint(self.gameBoard.bounds, touchPoint)){
+//        [self.gameBoard touchedAtPoint:touchPoint andEndedMove:NO];
+//    }
+//}
+//-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+//    CGPoint touchPoint = [[touches anyObject] locationInView:self.gameBoard];
+//    if (CGRectContainsPoint(self.gameBoard.bounds, touchPoint)){
+//        [self.gameBoard touchedAtPoint:touchPoint andEndedMove:YES];
+//        self.scoreTextLabel.text = [NSString stringWithFormat:@"Score: %d",self.gameBoard.score];
+//    }
+//}
 
+//-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    if (alertView.tag ==1) {
+//        if (buttonIndex == 0) {
+//            [self setupCellsTimerWithInterval:0.3];
+//            [self setupTimerBarWithInterval:1.0];
+//            [self setupRunningOutOfTimeTimer];
+//        } else if (buttonIndex == 1){
+//            //end game
+//            [self dismissModalViewControllerAnimated:YES];
+//        }
+//    } else {
+//        if (buttonIndex == 0) {
+//            [self dismissModalViewControllerAnimated:YES];
+//        }
+//        else {
+//            [self tearDownGame];
+//            [self setUpGame];
+//        }
+//    }
+//}
+
+- (void)noButtonPressed
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
+- (void)yesButtonPressed
+{
+    [self tearDownGame];
+    [self setUpGame];
+}
 
 @end

@@ -411,5 +411,19 @@ typedef void (^animationCompletionBlock)(void);
     [[[self.columns objectAtIndex:cell.column] cells] removeObject:cell];
 }
 
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    CGPoint touchPoint = [[touches anyObject] locationInView:self];
+    if (CGRectContainsPoint(self.bounds, touchPoint)){
+        [self touchedAtPoint:touchPoint andEndedMove:NO];
+    }
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    CGPoint touchPoint = [[touches anyObject] locationInView:self];
+    if (CGRectContainsPoint(self.bounds, touchPoint)){
+        [self touchedAtPoint:touchPoint andEndedMove:YES];
+        self.gameViewController.scoreTextLabel.text = [NSString stringWithFormat:@"Score: %d",self.score];
+    }
+}
 
 @end
