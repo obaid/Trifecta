@@ -100,7 +100,7 @@
             self.popUpViewController = [[PopupViewController alloc] initWithFirstLabel:@"Too many blocks! Play again?\nNew high score!" andSecondLabel:[NSString stringWithFormat:@"Your final score was: %d", self.gameBoard.score] andNoButtonText:@"No thanks" andYesButtonText:@"Yes please"];
         } else {
 //            [[[UIAlertView alloc] initWithTitle:@"Too many blocks! Play again?" message:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles: @"Yes please", nil] show];
-            self.popUpViewController = [[PopupViewController alloc] initWithFirstLabel:@"RAN!  Make me pretty!  PLEASE!" andSecondLabel:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] andNoButtonText:@"No thanks" andYesButtonText:@"Yes please"];
+            self.popUpViewController = [[PopupViewController alloc] initWithFirstLabel:@"RAN!  Please make me pretty!" andSecondLabel:[NSString stringWithFormat:@"Your final score was: %d\nYour high score is: %d",self.gameBoard.score, self.highScore] andNoButtonText:@"No thanks" andYesButtonText:@"Yes please"];
         }
         self.popUpViewController.delegate = self;
         [self.view addSubview:self.popUpViewController.view];
