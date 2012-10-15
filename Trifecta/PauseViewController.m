@@ -29,7 +29,7 @@
     if (self) {
 
     }
-    return self;    return self;
+    return self;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

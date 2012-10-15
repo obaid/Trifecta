@@ -64,6 +64,7 @@
 		25D172BB162BEA6900597891 /* blue_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D172B7162BEA6900597891 /* blue_button@2x.png */; };
 		25D172BC162BEA6900597891 /* black_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D172B8162BEA6900597891 /* black_button@2x.png */; };
 		25D172BE162BFE9A00597891 /* PauseViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D172BD162BFE9A00597891 /* PauseViewController-iPad.xib */; };
+		25D172C0162C05D900597891 /* PopupViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D172BF162C05D900597891 /* PopupViewController-iPad.xib */; };
 		25D46BCD16249F9300FA04F0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25D46BCC16249F9300FA04F0 /* Default-568h@2x.png */; };
 		25D46BD01624B8B700FA04F0 /* TrifectaViewController-5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D46BCF1624B8B700FA04F0 /* TrifectaViewController-5.xib */; };
 		25D46BD21624C35600FA04F0 /* bitfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25D46BD11624C35600FA04F0 /* bitfont.ttf */; };
@@ -142,6 +143,7 @@
 		25D172B7162BEA6900597891 /* blue_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blue_button@2x.png"; path = "Trifecta/blue_button@2x.png"; sourceTree = "<group>"; };
 		25D172B8162BEA6900597891 /* black_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "black_button@2x.png"; path = "Trifecta/black_button@2x.png"; sourceTree = "<group>"; };
 		25D172BD162BFE9A00597891 /* PauseViewController-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PauseViewController-iPad.xib"; sourceTree = "<group>"; };
+		25D172BF162C05D900597891 /* PopupViewController-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PopupViewController-iPad.xib"; sourceTree = "<group>"; };
 		25D46BCC16249F9300FA04F0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		25D46BCF1624B8B700FA04F0 /* TrifectaViewController-5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "TrifectaViewController-5.xib"; sourceTree = "<group>"; };
 		25D46BD11624C35600FA04F0 /* bitfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = bitfont.ttf; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				16FBD26F162B476D00BA0BF8 /* PopupViewController.h */,
 				16FBD270162B476D00BA0BF8 /* PopupViewController.m */,
 				16FBD271162B476D00BA0BF8 /* PopupViewController.xib */,
+				25D172BF162C05D900597891 /* PopupViewController-iPad.xib */,
 				25D172B0162BE6B000597891 /* PauseViewController.h */,
 				25D172B1162BE6B000597891 /* PauseViewController.m */,
 				25D172B2162BE6B000597891 /* PauseViewController.xib */,
@@ -384,6 +387,7 @@
 				25D172BB162BEA6900597891 /* blue_button@2x.png in Resources */,
 				25D172BC162BEA6900597891 /* black_button@2x.png in Resources */,
 				25D172BE162BFE9A00597891 /* PauseViewController-iPad.xib in Resources */,
+				25D172C0162C05D900597891 /* PopupViewController-iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

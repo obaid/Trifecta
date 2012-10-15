@@ -19,14 +19,29 @@
 
 @implementation PopupViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    NSString *nibName = nil;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        nibName = @"PopupViewController";
+    } else {
+        nibName = @"PopupViewController-iPad";
+    }
+    NSBundle *bundle = nil;
+    self = [super initWithNibName:nibName bundle:bundle];
     if (self) {
-        // Custom initialization
+        
     }
     return self;
 }
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    
+    return [self init];
+}
+
+
 -(id)initWithFirstLabel:(NSString *)firstLabel andSecondLabel:(NSString *)secondLabel andNoButtonText:(NSString *)noButton andYesButtonText:(NSString *)yesButton
 {
     self = [super init];
