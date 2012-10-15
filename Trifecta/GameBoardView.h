@@ -16,6 +16,8 @@
 @property (nonatomic) int numRows;
 @property (nonatomic) int score;
 @property (nonatomic) int counter;
+@property (nonatomic) int cellsCleared;
+@property (nonatomic) int level;
 @property (weak, nonatomic) GameViewController *gameViewController;
 -(void) frameEachCellWithCell:(Cell*) cell;
 -(void) touchedAtPoint:(CGPoint) point andEndedMove:(BOOL)didEndMove;

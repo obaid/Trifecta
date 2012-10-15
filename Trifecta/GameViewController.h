@@ -13,6 +13,9 @@
 @property (nonatomic) int gameType;
 @property (nonatomic) int timePast;
 @property (nonatomic) BOOL sound;
+@property (nonatomic, strong) NSTimer *addCellsTimer;
 @property (nonatomic) UILabel *scoreTextLabel;
+@property (nonatomic) double cellTimerInterval;
 -(void) lossByBlocks;
+-(void) setupCellsTimerWithInterval:(double) interval;
 @end

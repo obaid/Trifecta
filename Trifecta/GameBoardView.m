@@ -175,6 +175,7 @@ typedef void (^animationCompletionBlock)(void);
 }
 
 -(void) calculateScore:(int) totalToDelete {
+    self.cellsCleared += totalToDelete;
     double levelMultiplier = (self.numColumns/8.0)*(self.numColumns/8.0);
     int scoredPoints = totalToDelete*totalToDelete*10*levelMultiplier;
     self.score += scoredPoints;
@@ -193,6 +194,12 @@ typedef void (^animationCompletionBlock)(void);
         if (self.gameViewController.sound) {
             [self playSuccessfulSound];
         }
+    }
+    if (self.gameViewController.gameType == 1 && self.cellsCleared / (self.level*10) >= self.level) {
+        [self.gameViewController.addCellsTimer invalidate];
+        self.level += 1;
+        self.gameViewController.cellTimerInterval = 3.0/self.level;
+        [self.gameViewController setupCellsTimerWithInterval:self.gameViewController.cellTimerInterval];
     }
 }
 

@@ -24,7 +24,6 @@
 @property (nonatomic, strong) NSTimer *timeBarTimer;
 @property (nonatomic) BOOL timeBarIsNotRed;
 @property (nonatomic, strong) NSTimer *runningOutOfTimeTimer;
-@property (nonatomic, strong) NSTimer *addCellsTimer;
 @property (nonatomic, strong) NSTimer *blocksCloseToTopTimer;
 @property (nonatomic) BOOL hasHighScore;
 @property (nonatomic, strong) AVAudioPlayer *playerFail;
@@ -113,6 +112,7 @@
     [self.timeBarTimer invalidate];
     [self.addCellsTimer invalidate];
     [self.runningOutOfTimeTimer invalidate];
+    [self.blocksCloseToTopTimer invalidate];
     [self disableGameBoard];
     self.highScore = [self getHighScoreFromUserDefaultsForSize:self.numColumns withGameType:self.gameType];
     if (self.gameBoard.score > self.highScore) {
@@ -184,6 +184,8 @@
     self.gameBoard = [[GameBoardView alloc] initWithFrame:CGRectMake(boardGameXStart, boardGameYStart, boardGameWidth, boardGameHeight)];
     self.gameBoard.counter = 0;
     self.gameBoard.numRows = numRows;
+    self.gameBoard.cellsCleared = 0;
+    self.gameBoard.level = 1;
     self.gameBoard.gameViewController = self;
     self.gameBoard.numColumns = self.numColumns;
     [self.view addSubview:self.gameBoard];
@@ -222,17 +224,20 @@
     
     
     if (self.gameType == 0) {
+        self.cellTimerInterval = .3;
         self.timeBar = [CALayer new];
         self.timeBar.backgroundColor = [[UIColor redColor] CGColor];
         self.timeBar.frame = CGRectMake(0,0, self.view.frame.size.width, 5);
         [self.view.layer addSublayer:self.timeBar];
         [self setupTimerBarWithInterval:1.0];
         [self setupRunningOutOfTimeTimer];
-        
+        [self setupCellsTimerWithInterval:self.cellTimerInterval];
     } else {
+        self.cellTimerInterval = 3;
         [self setupBlocksCloseToTopTimer];
+        [self setupCellsTimerWithInterval:self.cellTimerInterval];
     }
-    [self setupCellsTimerWithInterval:0.3];
+    
     
     
     
@@ -425,10 +430,13 @@
 
 -(void) continueButtonPressed {
     [self.pauseViewController.view removeFromSuperview];
-    [self setupCellsTimerWithInterval:0.3];
+    [self setupCellsTimerWithInterval:self.cellTimerInterval];
     [self setupTimerBarWithInterval:1.0];
-    [self setupRunningOutOfTimeTimer];
-    [self setupBlocksCloseToTopTimer];
+    if (self.gameType == 0) {
+        [self setupRunningOutOfTimeTimer];
+    } else {
+        [self setupBlocksCloseToTopTimer];
+    }
     
 }
 -(void) giveUpButtonPressed {
